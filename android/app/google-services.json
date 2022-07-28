@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "539296003820",
+    "project_id": "orderbook-52df3",
+    "storage_bucket": "orderbook-52df3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539296003820:android:3821687d25eacb10ca57c9",
+        "android_client_info": {
+          "package_name": "com.example.orderbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539296003820-87lp9ntf7cro689t17jt4296qe5nk47h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.orderbook",
+            "certificate_hash": "5f1551fbbcf5745b16eb76c2633de6240208eaba"
+          }
+        },
+        {
+          "client_id": "539296003820-lgt40c1349616ksg0nainu31ihuav9lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDknCNl6Ni4mFSTZiyDFhfg1x_NsMz6Nz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539296003820-lgt40c1349616ksg0nainu31ihuav9lm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
