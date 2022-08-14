@@ -1,0 +1,57 @@
+class AppStrings {
+  static const noRouteFound = "No Route Found";
+  static const appName = "OrderBook";
+  static const registerWelcomeText =
+      "Enjoy a unique experience in the world of restaurants and cafes";
+  static const createAccount = "Create Account";
+  static const loginWelcomeText = "Welcome Back!";
+  static const hintPhone = "PhoneNumber";
+  static const firstName = "First Name";
+  static const name = "Name";
+  static const lastName = "Last Name";
+  static const loginText = "Login";
+  static const signupText = "SignUp";
+  static const homeText = "Home";
+  static const offers = "Offers";
+  static const verificationCode = "Enter Verification Code";
+  static const enterOTP = "Enter OTP";
+  static const otpText = "We Will Sent OTP Code On Your Number";
+  static const otpNotReceive = "Didn't you receive a code? Resend";
+  static const publisherItems = "Publisher-Items";
+  static const publisherRestaurant = "Publisher-Restaurant";
+  static const dontHaveAccount = "Don't Have Account? ";
+  static const alreadyHaveAccount = "Already Have Account? ";
+  static const validPhone = "Enter valid Phone Number";
+  static const fieldNotEmpty = "The field doesn't have to be empty";
+  static const phoneStart09 = "Phone number should start with 09";
+  static const myProfile = "My Profile";
+  static const setting = "Setting";
+  static const about = "About";
+  static const reports = "Reports";
+  static const logout = "Logout";
+  static const appVersion = "OrderBook for Android \n V1.0.0";
+  static const profileText = "Profile";
+  static const qrCode = "QR Code";
+  static const restaurant = "Restaurant";
+  static const reservations = "Reservations";
+  static const orders = "Orders";
+  static const favoriteRestaurant = "FavoriteRestaurant";
+  static const search = "search...";
+  static const language = "Language";
+  static const englishText = "English";
+  static const arabicText = "Arabic";
+  static const theme= "theme";
+  static const restaurantProfile= "Restaurant Profile";
+  static const expiredReservation= "Expired Reservation";
+  static const pendingReservation= "Pending Reservation";
+  static const currentReservation= "Current Reservation";
+  static const onBoardingsubTitle1 = "Hello OnBoarding SubTittle 1";
+  static const onBoardingTitle2 = "Hello OnBoarding Tittle 2";
+  static const onBoardingsubTitle2 = "Hello OnBoarding SubTittle 2";
+  static const onBoardingTitle3 = "Hello OnBoarding Tittle 3";
+  static const onBoardingsubTitle3 = "Hello OnBoarding SubTittle 3";
+  static const onBoardingTitle4 = "Hello OnBoarding Tittle 4";
+  static const onBoardingsubTitle4 = "Hello OnBoarding SubTittle 4";
+
+  static const skip = "Skip";
+}
