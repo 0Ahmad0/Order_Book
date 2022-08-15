@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/presentation/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:orderbook/presentation/home/home_view.dart';
+import 'package:orderbook/presentation/login/login_view_model.dart';
 import 'package:orderbook/presentation/register/register_view.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
@@ -27,11 +28,22 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  LoginViewModel loginViewModel = LoginViewModel();
   final TextEditingController phoneNumber = TextEditingController();
   bool type = false;
   final TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loginViewModel.start();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

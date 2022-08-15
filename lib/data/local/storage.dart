@@ -10,6 +10,9 @@ class AppStorage {
   static const languageKEY = "language";
   static const isLoginedKEY = "isLogin";
   static const avatarKEY = "avatar";
+  static const nameKEY = "name";
+  static const phoneNumberKEY = "phoneNumber";
+  static const tokenKEY = "token";
 
   static init() async {
     if (!_storage.hasData(isLoginedKEY)) {

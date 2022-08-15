@@ -1,12 +1,36 @@
 import 'package:firebase_auth/firebase_auth.dart';
 //User
 class User{
-  String firstName;
-  String lastName;
-  String avatar;
+  //String firstName;
+ // String lastName;
+  String name;
+  int avatarId;
   String phoneNumber;
-
-  User(this.firstName,this.lastName,this.avatar,this.phoneNumber);
+  int id;
+ String token ;
+  User({this.name="", this.avatarId=0, this.phoneNumber="", this.id=0, this.token=""});
+  factory User.fromJson(Map<String,dynamic> responseData){
+    return User(
+      id: responseData["data"]['id'],
+      name: responseData["data"]['name'],
+        phoneNumber:  responseData["data"]['phone_number'],
+        avatarId:  responseData["data"]['avatar_id'],
+      token: responseData["meta"]['access_token'],
+    );
+  }
+  toJson(){
+    return {
+      "data": {
+        'id':this.id,
+        'name':name,
+        'phone_number':phoneNumber,
+        'avatar_id':avatarId,
+      },
+      "meta":{
+        'access_token':token
+      }
+    };
+  }
 }
 
 //Advance
@@ -40,4 +64,19 @@ class Restaurant{
        this.rate = 1,
       required this.imagesRestaurant
       });
+}
+//Offers
+class Offers{
+  String? image;
+  Restaurant? restaurant;
+  String? text;
+  Offers({this.image,this.restaurant,this.text});
+}
+//StoryObject
+class StoryObject{
+  Offers? offers;
+  int? numberOfStory;
+  int? currentIndex;
+
+  StoryObject({this.offers, this.numberOfStory, this.currentIndex});
 }

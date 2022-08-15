@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/data/local/change_theme.dart';
 import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
@@ -40,7 +41,26 @@ class _MyAppState extends State<MyApp> {
   }
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppModel>.value(
+    return MultiProvider(
+        providers:[
+          ChangeNotifierProvider(create: (_)=>AuthProvider()),
+
+        ],
+      child: ChangeNotifierProvider<AppModel>.value(
+        value: appModel,
+        child: Consumer<AppModel>(
+            builder: (context, value, child) {
+              return GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                onGenerateRoute: RoutesGenerator.getRoute,
+
+                initialRoute: Routes.splashRoot,
+                theme: getApplicationTheme(isDark: appModel.darkTheme),
+              );
+            }
+        ),
+      ), );
+    /*ChangeNotifierProvider<AppModel>.value(
       value: appModel,
       child: Consumer<AppModel>(
           builder: (context, value, child) {
@@ -53,7 +73,7 @@ class _MyAppState extends State<MyApp> {
            );
           }
       ),
-    );
+    );*/
   }
 }
 /*

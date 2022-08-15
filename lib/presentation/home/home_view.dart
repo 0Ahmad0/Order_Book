@@ -4,6 +4,7 @@ import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/domain/models.dart';
+import 'package:orderbook/presentation/home/home_view_model.dart';
 import 'package:orderbook/presentation/login/login_view.dart';
 import 'package:orderbook/presentation/profile/profile_view.dart';
 import 'package:orderbook/presentation/qr/qr_view.dart';
@@ -30,6 +31,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  HomeViewModel _homeViewModel = HomeViewModel();
   bool itemType = false;
   bool restaurantType = false;
   bool fav = false;
@@ -52,7 +54,15 @@ class _HomeViewState extends State<HomeView> {
       "assets/images/2.jpg",
     ]
   };
-
+  _bind(){
+    _homeViewModel.start();
+  }
+  @override
+  void initState() {
+    _bind();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -106,102 +116,111 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget offerSection(index,_) {
-    return GestureDetector(
-      onTap: () {
-        print(index);
-        print(_images["img"][index]);
-        showDialog(
-            context: _, builder: (__){
-          return StoryPageView(
-            onPageLimitReached: (){
-              Navigator.pop(context);
-            },
-              onPageChanged: (pageIndex){
-              index = pageIndex;
-              setState((){});
-              },
-              itemBuilder: (__,pageIndex,storyIndex){
+    return StreamBuilder<bool>(
+      builder: (context, snapshot) {
+         //if(snapshot.data==null){
+           print("Ff");
+          // return SizedBox();
 
-                return Stack(
-                  children: [
-                    Positioned.fill(
-                      child: Container(color: Colors.black),
-                    ),
-                    Positioned.fill(
-                      child: Image.asset(
-                        _images["img"][pageIndex],
-                        fit: BoxFit.cover,
-                        width: 100,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 44, left: 8),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 32,
-                            width: 32,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(_images["img"][pageIndex]),
-                                fit: BoxFit.cover,
-                              ),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "RRRR${index+5}",
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-              storyLength: (indexPage){
-                print(indexPage);
-                return 1;
-              },
-              pageLength: _images["img"].length
-          );
-        });
-      },
-      child: Container(
-        width: Sizer.getW(context) * 0.27,
-        margin: const EdgeInsets.symmetric(
-            horizontal: AppMargin.m4, vertical: AppMargin.m8),
-        padding: const EdgeInsets.all(AppPadding.p14),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            // color: Colors.orange,
-            borderRadius: BorderRadius.circular(AppSize.s14),
-            image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    ColorManager.black.withOpacity(.6), BlendMode.darken),
-                fit: BoxFit.cover,
-                image: AssetImage(index == 0
-                    ? "assets/images/img.png"
-                    : _images["img"][index]))),
-        child: Transform.rotate(
-          angle: 290,
-          child: Text(
-            index == 0 ? "" : "Offer ${index * 2}%",
-            textAlign: TextAlign.center,
-            style: getMediumStyle(
-                color: ColorManager.white,
-                fontSize: Sizer.getW(context) * 0.04),
-          ),
-        ),
-      ),
-    );
+           return GestureDetector(
+             onTap: () {
+               print(index);
+               print(_images["img"][index]);
+               showDialog(
+                   context: _, builder: (__){
+                 return StoryPageView(
+                     onPageLimitReached: (){
+                       Navigator.pop(context);
+                     },
+                     onPageChanged: (pageIndex){
+                       //index = pageIndex;
+                       _homeViewModel.onStoryChanged(pageIndex);
+                      // setState((){});
+                     },
+                     itemBuilder: (__,pageIndex,storyIndex){
+
+                       return Stack(
+                         children: [
+                           Positioned.fill(
+                             child: Container(color: Colors.black),
+                           ),
+                           Positioned.fill(
+                             child: Image.asset(
+                               _images["img"][pageIndex],
+                               fit: BoxFit.cover,
+                               width: 100,
+                             ),
+                           ),
+                           Padding(
+                             padding: const EdgeInsets.only(top: 44, left: 8),
+                             child: Row(
+                               children: [
+                                 Container(
+                                   height: 32,
+                                   width: 32,
+                                   decoration: BoxDecoration(
+                                     image: DecorationImage(
+                                       image: AssetImage(_images["img"][pageIndex]),
+                                       fit: BoxFit.cover,
+                                     ),
+                                     shape: BoxShape.circle,
+                                   ),
+                                 ),
+                                 const SizedBox(
+                                   width: 8,
+                                 ),
+                                 Text(
+                                   "RRRR${index+5}",
+                                   style: TextStyle(
+                                     fontSize: 17,
+                                     color: Colors.white,
+                                     fontWeight: FontWeight.bold,
+                                   ),
+                                 ),
+                               ],
+                             ),
+                           ),
+                         ],
+                       );
+                     },
+                     storyLength: (indexPage){
+                       print(indexPage);
+                       return 1;
+                     },
+                     pageLength: _images["img"].length
+                 );
+               });
+             },
+             child: Container(
+               width: Sizer.getW(context) * 0.27,
+               margin: const EdgeInsets.symmetric(
+                   horizontal: AppMargin.m4, vertical: AppMargin.m8),
+               padding: const EdgeInsets.all(AppPadding.p14),
+               alignment: Alignment.center,
+               decoration: BoxDecoration(
+                 // color: Colors.orange,
+                   borderRadius: BorderRadius.circular(AppSize.s14),
+                   image: DecorationImage(
+                       colorFilter: ColorFilter.mode(
+                           ColorManager.black.withOpacity(.6), BlendMode.darken),
+                       fit: BoxFit.cover,
+                       image: AssetImage(index == 0
+                           ? "assets/images/img.png"
+                           : _images["img"][index]))),
+               child: Transform.rotate(
+                 angle: 290,
+                 child: Text(
+                   index == 0 ? "" : "Offer ${index * 2}%",
+                   textAlign: TextAlign.center,
+                   style: getMediumStyle(
+                       color: ColorManager.white,
+                       fontSize: Sizer.getW(context) * 0.04),
+                 ),
+               ),
+             ),
+           );
+
+      });
   }
 
   Widget itemsSection(index) {

@@ -45,7 +45,10 @@ with SingleTickerProviderStateMixin{
      await AppStorage.storageRead(key: AppStorage.isLoginedKEY)
      ?
      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>
-         BottomNavBarView()
+        // BottomNavBarView()
+       //HomeView()
+     LoginView()
+
 
      ))
          :

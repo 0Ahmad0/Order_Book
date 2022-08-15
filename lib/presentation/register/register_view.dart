@@ -8,12 +8,15 @@ import 'package:flutter_svg/parser.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:orderbook/api/auth/auth_provider.dart';
+import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/otp/otp_view.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:orderbook/presentation/utils/user_storage_data.dart';
+import 'package:provider/provider.dart';
 import '../login/login_view.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
@@ -40,6 +43,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
         backgroundColor: ColorManager.lightPrimary,
@@ -168,25 +172,15 @@ class _RegisterViewState extends State<RegisterView> {
                                 text: AppStrings.signupText,
                                 onTap: () {
                                   if (_formKey.currentState!.validate()) {
-                                    Get.defaultDialog(
-                                        backgroundColor: ColorManager.white4,
-                                        title: "Successful SignUp",
-                                        titleStyle: getRegularStyle(
-                                            color: ColorManager.black,
-                                            fontSize: Sizer.getW(context) * 0.04),
-                                        content: Icon(
-                                          Icons.check_circle,
-                                          size: AppSize.s60,
-                                          color: ColorManager.success,
-                                        ),
-                                        radius: 4.0);
-                                    Timer(Duration(seconds: 3), () {
-                                      Navigator.pop(context);
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(builder:
-                                              (ctx)=>OTPView())
-                                      );
-                                    });
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder:
+                                            (ctx)=>OTPView(
+                                              User(
+                                                name: firstName.text+" "+lastName.text,
+                                                phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
+                                              )
+                                            ))
+                                    );
                                   }
                                 }),
                             const SizedBox(
@@ -202,6 +196,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
+
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:orderbook/presentation/home/home_view.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
@@ -11,13 +12,15 @@ import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
+import '../../api/auth/auth_provider.dart';
 import '../resources/style_manager.dart';
 
 class OTPView extends StatefulWidget {
-  const OTPView({Key? key}) : super(key: key);
-
+  User user = User();
+  OTPView(this.user);
   @override
   State<OTPView> createState() => _OTPViewState();
 }
@@ -26,6 +29,7 @@ class _OTPViewState extends State<OTPView> {
   final otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -85,6 +89,7 @@ class _OTPViewState extends State<OTPView> {
                         ),
                         autoFocus: true,
                         currentCode: "",
+
                         onCodeSubmitted: (val) {
                           print("Done");
                           Get.dialog(
@@ -109,7 +114,9 @@ class _OTPViewState extends State<OTPView> {
                                 MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
                           });
                         },
-                        onCodeChanged: (val) {},
+                        onCodeChanged: (val) {
+
+                        },
                         codeLength: 6),
                     const SizedBox(height: AppSize.s10,),
                     TextButton(onPressed: (){}, child: Text(
