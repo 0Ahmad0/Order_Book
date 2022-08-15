@@ -10,9 +10,9 @@ import '../app_url/app_url.dart';
 
 class HomeProvider extends ChangeNotifier{
   User user = User();
-  void getUser(){
+  late List<Offers> listOffers;
+  late List<Restaurant> listRestaurants;
 
-  }
   /*
   Future<Map<String,dynamic>> register(String fName,String lName,String name,String phoneNumber,int avatarId,String deviceId) async{
     /*final Map<String,dynamic> bodyData={

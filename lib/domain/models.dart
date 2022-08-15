@@ -15,7 +15,7 @@ class User{
       name: responseData["data"]['name'],
         phoneNumber:  responseData["data"]['phone_number'],
         avatarId:  responseData["data"]['avatar_id'],
-      token: responseData["meta"]['access_token'],
+      token: responseData["meta"]!=null?responseData["meta"]['access_token']:Advance.token,
     );
   }
   toJson(){
@@ -71,6 +71,24 @@ class Offers{
   Restaurant? restaurant;
   String? text;
   Offers({this.image,this.restaurant,this.text});
+}
+//item
+class Item{
+  int? id;
+  String? name;
+  String? description;
+  String? image;
+  int? price;
+  String? quantity;
+  Restaurant? restaurant=Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: "");
+  Item(
+      {this.id=1,
+      this.name="name",
+      this.description="description",
+      this.image="",
+      this.price= 0,
+      this.quantity="",
+      this.restaurant});
 }
 //StoryObject
 class StoryObject{

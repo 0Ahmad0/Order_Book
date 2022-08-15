@@ -223,7 +223,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                         print(result);
                         Const.TOAST(context,textToast: result["message"]);
                         Navigator.pop(context);
-                        print(Advance.token);
+
                         if(result["status"]){
                           Navigator.pop(context);
                           Navigator.pushReplacement(context,
@@ -236,7 +236,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
 
                         }
 
-                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>LoginView()));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>LoginView()));
                         // print(await AppStorage.storageRead(key: AppStorage.isLoginedKEY));
                       }),
                 ],

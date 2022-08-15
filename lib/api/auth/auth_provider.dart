@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -7,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:orderbook/api/app_url/app_url.dart';
 import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
+import 'package:orderbook/presentation/utils/dataLocal.dart';
 class AuthProvider extends ChangeNotifier{
   Future<Map<String,dynamic>> register(String fName,String lName,String name,String phoneNumber,int avatarId,String deviceId) async{
     /*final Map<String,dynamic> bodyData={
@@ -43,15 +45,32 @@ class AuthProvider extends ChangeNotifier{
   }
   Future<Map<String,dynamic>> Logout(String token) async{
 //    print( Uri.parse( AppUrl.login));
+  //  print(token);
     return await delete(
       Uri.parse( AppUrl.logout)
       ,headers: {
       "Accept":"application/json",
-      'Token':token,
+      "Authorization": "Bearer $token"
+      //'token': '$token',
     },
     ).then(onValueOut).catchError(onError);
   }
+  Future<Map<String,dynamic>> updateProfile(String token,String name,int avatar_id) async{
+
+    return await put(
+      Uri.parse( AppUrl.updateProfile)
+      ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token"
+    },
+      body: {
+        'name':"name",
+      },
+    ).then(onValueUpdate).catchError(onError);
+  }
+
   static onError(error){
+
     return{
       'status':false,
       'message':"Unsuccessful Request",
@@ -146,11 +165,14 @@ class AuthProvider extends ChangeNotifier{
     }
   static Future<Map<String,dynamic>> onValueOut(http.Response response)async{
     var result;
-    final Map<String,dynamic> responseData= json.decode(response.body);
-    print(responseData);
-    print("status code ${response.statusCode}");
-    if(response.statusCode==201){
-      User userData = User.fromJson(responseData);
+     Map<String,dynamic> responseData= {};
+    if(!response.body.isEmpty){
+      responseData = json.decode(response.body);
+      print(await responseData);
+    }
+    print("status code ${await response.statusCode}");
+    if(response.statusCode==200){
+      //User userData = User.fromJson(responseData);
       AppStorage.depose();
       result ={
         'status':true,
@@ -166,5 +188,32 @@ class AuthProvider extends ChangeNotifier{
     }
     return result;
   }
+  static Future<Map<String,dynamic>> onValueUpdate(http.Response response)async{
+    var result;
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+    if(response.statusCode==200){
 
+      User userData = User.fromJson(responseData);
+      await AppStorage.storageWrite(
+          key: AppStorage.nameKEY,
+          value: userData.name
+      );
+
+      DataLocal.user.name =userData.name;
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
 }

@@ -12,7 +12,9 @@ import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/dataLocal.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:provider/provider.dart';
 
+import '../../api/auth/auth_provider.dart';
 import '../resources/style_manager.dart';
 import '../utils/const.dart';
 
@@ -49,6 +51,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -213,11 +216,26 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             ButtonApp(
                 text: " Save ",
-                onTap: () {
+                onTap: () async {
                   Const.LOADIG(context);
+                  var result =await authProvider.updateProfile(Advance.token,name.text,1);
+                  print(result);
+                  Const.TOAST(context,textToast: result["message"]);
+                  Navigator.pop(context);
+
+                  if(result["status"]){
+                    print(name);
+                    /// SnackBar(content: Text("k"));
+                    //print("done register");
+                    // Const.TOAST(context,textToast: result["message"]);
+                  }else{
+                    /// SnackBar(content: Text("o"));
+
+                  }
+                  /*Const.LOADIG(context);
                   Timer(Duration(milliseconds: 1500), () {
                     Navigator.pop(context);
-                  });
+                  });*/
                 }),
             const SizedBox(
               height: AppSize.s10,
