@@ -1,13 +1,19 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:orderbook/api/app_url/app_url.dart';
-import 'package:orderbook/data/local/storage.dart';
-import 'package:orderbook/domain/models.dart';
-class AuthProvider extends ChangeNotifier{
+
+import '../../domain/models.dart';
+import '../app_url/app_url.dart';
+
+class HomeProvider extends ChangeNotifier{
+  User user = User();
+  void getUser(){
+
+  }
+  /*
   Future<Map<String,dynamic>> register(String fName,String lName,String name,String phoneNumber,int avatarId,String deviceId) async{
     /*final Map<String,dynamic> bodyData={
       'name':name,
@@ -15,12 +21,12 @@ class AuthProvider extends ChangeNotifier{
       'device_id':deviceId,
       'avatar_id':avatarId.toString(),
     };*/
-   // print( Uri.parse( AppUrl.register));
+    // print( Uri.parse( AppUrl.register));
     return await post(
       Uri.parse( AppUrl.register)
       ,headers: {
-        "Accept":"application/json"
-      },
+      "Accept":"application/json"
+    },
       body: {
         'name':name,
         'phone_number':phoneNumber,
@@ -45,14 +51,14 @@ class AuthProvider extends ChangeNotifier{
     return{
       'status':false,
       'message':"Unsuccessful Request",
-    //  'data':error==null?"":error
+      //  'data':error==null?"":error
     };
   }
   static Future<Map<String,dynamic>> onValueReg(http.Response response)async{
     var result;
     final Map<String,dynamic> responseData= json.decode(response.body);
     //print(responseData);
-   // print("status code $response.statusCode");
+    // print("status code $response.statusCode");
     if(response.statusCode==201){
       User userData = User.fromJson(responseData);
       /*
@@ -92,7 +98,7 @@ class AuthProvider extends ChangeNotifier{
     var result;
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
-     print("status code ${response.statusCode}");
+    print("status code ${response.statusCode}");
     if(response.statusCode==200){
       User userData = User.fromJson(responseData);
       AppStorage.init();
@@ -108,17 +114,13 @@ class AuthProvider extends ChangeNotifier{
           key: AppStorage.isLoginedKEY,
           value: true
       );
-     /* AppStorage.storageWrite(
+      /* AppStorage.storageWrite(
           key: AppStorage.avatarKEY,
           value: userData.avatarId
       );*/
       AppStorage.storageWrite(
           key: AppStorage.tokenKEY,
           value: userData.token
-      );
-      AppStorage.storageWrite(
-          key: AppStorage.idKEY,
-          value: userData.id
       );
       result ={
         'status':true,
@@ -132,7 +134,7 @@ class AuthProvider extends ChangeNotifier{
         'data':responseData
       };
     }
-      return result;
-    }
+    return result;
+  }*/
 
 }

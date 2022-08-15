@@ -40,6 +40,7 @@ class _OTPViewState extends State<OTPView> {
     if(result["status"]){
       Get.off(() =>LoginView());
       /// SnackBar(content: Text("k"));
+
       //print("done register");
     }else{
 
@@ -51,16 +52,19 @@ class _OTPViewState extends State<OTPView> {
     Const.LOADIG(context);
     var result =await authProvider.Login( widget.user.phoneNumber);
     print(result);
+    Const.TOAST(context,textToast: result["message"]);
     Navigator.pop(context);
+
     if(result["status"]){
       Navigator.pop(context);
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
       /// SnackBar(content: Text("k"));
       //print("done register");
+     // Const.TOAST(context,textToast: result["message"]);
     }else{
       /// SnackBar(content: Text("o"));
-      // print("field register");
+
     }
   }
   @override

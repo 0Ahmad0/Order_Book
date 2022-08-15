@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:animate_icons/animate_icons.dart';
 import 'package:orderbook/domain/models.dart';
@@ -21,6 +23,7 @@ import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 import '../../data/local/change_theme.dart';
 import '../../data/local/storage.dart';
+import '../utils/dataLocal.dart';
 class BottomNavBarView extends StatefulWidget {
   const BottomNavBarView({Key? key}) : super(key: key);
 
@@ -56,7 +59,8 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
     ];
   }
   @override
-  void initState(){
+  Future<void> initState() async {
+ await  DataLocal.getData();
     fillList();
     super.initState();
   }
@@ -99,11 +103,16 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                 children: [
                   UserAccountsDrawerHeader(
                     accountName: Text(
-                      "Ahmad Alhariri",
+                     // AppStorage.storageRead(key:AppStorage.nameKEY),
+                      DataLocal.user.name.isEmpty?
+                      "Ahmad Alhariri":
+                          DataLocal.user.name,
                       style: getRegularStyle(color: ColorManager.white),
                     ),
                     accountEmail: Text(
-                      "+963 954872922",
+                      DataLocal.user.phoneNumber.isEmpty?
+                      "+963 954872922":
+                      DataLocal.user.phoneNumber,
                       style: getLightStyle(color: ColorManager.blackF2),
                     ),
                     currentAccountPicture: GestureDetector(

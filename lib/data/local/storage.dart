@@ -13,6 +13,7 @@ class AppStorage {
   static const nameKEY = "name";
   static const phoneNumberKEY = "phoneNumber";
   static const tokenKEY = "token";
+  static const idKEY = "id";
 
   static init() async {
     if (!_storage.hasData(isLoginedKEY)) {
@@ -46,6 +47,10 @@ class AppStorage {
   static Future<dynamic> storageRead({key}) async => await _storage.read(key);
 
   static Future<void> storageDelete({key}) async => await _storage.remove(key).then((value) => print("delete key successful"));
-
+static depose() async {
+  await _storage.remove(idKEY);
+  await _storage.remove(phoneNumberKEY);
+  await _storage.write(isLoginedKEY, false);
+}
 
 }
