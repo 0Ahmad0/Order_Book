@@ -34,11 +34,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _initAppTheme();
+   // _initAppTheme();
   }
-  void _initAppTheme() async {
+ /* void _initAppTheme() async {
     appModel.darkTheme = await AppStorage.storageRead(key: AppStorage.themeKEY);
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

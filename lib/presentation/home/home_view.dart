@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/home/home_view_model.dart';
 import 'package:orderbook/presentation/login/login_view.dart';
@@ -65,7 +66,9 @@ class _HomeViewState extends State<HomeView> {
   }
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return /*ChangeNotifierProvider<AppModel>(
+      create: AppModel.,
+      builder: ,)*/Padding(
       padding: EdgeInsets.only(
           left: AppPadding.p14, top: AppPadding.p10, bottom: AppPadding.p10),
       child: Column(
@@ -116,10 +119,11 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget offerSection(index,_) {
-    return StreamBuilder<bool>(
+    return  StreamBuilder<bool>(
       builder: (context, snapshot) {
          //if(snapshot.data==null){
-           print("Ff");
+         //  print("Ff");
+
           // return SizedBox();
 
            return GestureDetector(

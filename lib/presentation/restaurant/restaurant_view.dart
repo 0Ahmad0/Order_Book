@@ -57,7 +57,9 @@ class _RestaurantViewState extends State<RestaurantView> {
               hintText: AppStrings.search,
               prefixIcon: IconButton(
                 icon: Icon(Icons.search),
-                onPressed: () {},
+                onPressed: () {
+
+                },
               ),
             ),
             onFieldSubmitted: (val) {

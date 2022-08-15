@@ -13,6 +13,7 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 
 import '../resources/style_manager.dart';
+import '../utils/const.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -212,18 +213,7 @@ class _ProfileViewState extends State<ProfileView> {
             ButtonApp(
                 text: " Save ",
                 onTap: () {
-                  Get.dialog(Center(
-                    child: Container(
-                        alignment: Alignment.center,
-                        width: Sizer.getW(context) * 0.2,
-                        height: Sizer.getW(context) * 0.2,
-                        decoration: BoxDecoration(
-                            color: ColorManager.white,
-                            borderRadius: BorderRadius.circular(AppSize.s8)),
-                        child: LoadingAnimationWidget.inkDrop(
-                            color: ColorManager.lightPrimary,
-                            size: Sizer.getW(context) * 0.1)),
-                  ));
+                  Const.LOADIG(context);
                   Timer(Duration(milliseconds: 1500), () {
                     Navigator.pop(context);
                   });

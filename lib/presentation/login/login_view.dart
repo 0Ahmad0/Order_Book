@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/presentation/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:orderbook/presentation/home/home_view.dart';
 import 'package:orderbook/presentation/login/login_view_model.dart';
@@ -13,12 +14,16 @@ import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:provider/provider.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 import '../../data/local/storage.dart';
+import '../../domain/models.dart';
+import '../otp/otp_view.dart';
 import '../resources/routes_manager.dart';
 import '../resources/style_manager.dart';
 import '../resources/values_manager.dart';
+import '../utils/const.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -46,6 +51,7 @@ class _LoginViewState extends State<LoginView> {
   }
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -98,8 +104,21 @@ class _LoginViewState extends State<LoginView> {
                       ButtonApp(
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
-                        onTap: () {
+                        onTap: () async {
                           if (_formKey.currentState!.validate()) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder:
+                                    (ctx)=>OTPView(
+                                    User(
+                                        phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
+                                    ),
+                                    false
+                                ))
+                            );
+                          }
+
+
+                          /*if (_formKey.currentState!.validate()) {
                             AppStorage.init();
                             AppStorage.storageWrite(
                                 key: AppStorage.isLoginedKEY,
@@ -117,12 +136,12 @@ class _LoginViewState extends State<LoginView> {
                                   color: ColorManager.success,
                                 ),
                                 radius: 4.0);
-                            Timer(Duration(seconds: 3), () async{
+                           /* Timer(Duration(seconds: 3), () async{
                               Navigator.pop(context);
                               Navigator.pushReplacement(context,
                                   MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
-                            });
-                          }
+                            });*/
+                          }*/
                         },
                       ),
                       const SizedBox(

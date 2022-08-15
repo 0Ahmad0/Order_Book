@@ -178,7 +178,8 @@ class _RegisterViewState extends State<RegisterView> {
                                               User(
                                                 name: firstName.text+" "+lastName.text,
                                                 phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
-                                              )
+                                              ),
+                                              true
                                             ))
                                     );
                                   }
