@@ -37,10 +37,12 @@ class _OTPViewState extends State<OTPView> {
     var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "ii");
     // var result =await authProvider.register("", "","temp", "+963970807997", 1, "igjui70iikii");
     print(result["message"]);
+    Const.TOAST(context,textToast: result["message"]);
+
     Navigator.pop(context);
     if(result["status"]){
       Get.off(() =>LoginView());
-      /// SnackBar(content: Text("k"));
+      /// SnackBar(content: Text("k"));s
 
       //print("done register");
     }else{

@@ -60,6 +60,9 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
       },
     ];
   }
+  Future<void> getData() async {
+    await DataLocal.getData();
+  }
   @override
   void initState() {
 

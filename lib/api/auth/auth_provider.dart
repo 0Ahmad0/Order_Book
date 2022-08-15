@@ -31,6 +31,18 @@ class AuthProvider extends ChangeNotifier{
       },
     ).then(onValueReg).catchError(onError);
   }
+  Future<Map<String,dynamic>> checkNumber(String phoneNumber) async{
+//    print( Uri.parse( AppUrl.login));
+    return await post(
+      Uri.parse( AppUrl.checkNumber)
+      ,headers: {
+      "Accept":"application/json"
+    },
+      body: {
+        'phone_number':phoneNumber,
+      },
+    ).then(onValueCheckNum).catchError(onError);
+  }
   Future<Map<String,dynamic>> Login(String phoneNumber) async{
 //    print( Uri.parse( AppUrl.login));
     return await post(
@@ -43,6 +55,7 @@ class AuthProvider extends ChangeNotifier{
       },
     ).then(onValueLog).catchError(onError);
   }
+
   Future<Map<String,dynamic>> Logout(String token) async{
 //    print( Uri.parse( AppUrl.login));
   //  print(token);
@@ -64,7 +77,7 @@ class AuthProvider extends ChangeNotifier{
       "Authorization": "Bearer $token"
     },
       body: {
-        'name':"name",
+        'name':name,
       },
     ).then(onValueUpdate).catchError(onError);
   }
@@ -124,16 +137,16 @@ class AuthProvider extends ChangeNotifier{
      print("status code ${response.statusCode}");
     if(response.statusCode==200){
       User userData = User.fromJson(responseData);
-      AppStorage.init();
-      AppStorage.storageWrite(
+      await AppStorage.init();
+      await AppStorage.storageWrite(
           key: AppStorage.nameKEY,
           value: userData.name
       );
-      AppStorage.storageWrite(
+      await AppStorage.storageWrite(
           key: AppStorage.phoneNumberKEY,
           value: userData.phoneNumber
       );
-      AppStorage.storageWrite(
+      await   AppStorage.storageWrite(
           key: AppStorage.isLoginedKEY,
           value: true
       );
@@ -141,11 +154,11 @@ class AuthProvider extends ChangeNotifier{
           key: AppStorage.avatarKEY,
           value: userData.avatarId
       );*/
-      AppStorage.storageWrite(
+      await AppStorage.storageWrite(
           key: AppStorage.tokenKEY,
           value: userData.token
       );
-      AppStorage.storageWrite(
+      await AppStorage.storageWrite(
           key: AppStorage.idKEY,
           value: userData.id
       );
@@ -202,6 +215,31 @@ class AuthProvider extends ChangeNotifier{
       );
 
       DataLocal.user.name =userData.name;
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  static Future<Map<String,dynamic>> onValueCheckNum(http.Response response)async{
+    var result;
+    Map<String,dynamic> responseData= {};
+    if(!response.body.isEmpty){
+      responseData = json.decode(response.body);
+      print(await responseData);
+    }
+    print("status code ${ response.statusCode}");
+    if(response.statusCode==200){
+      //User userData = User.fromJson(responseData);
+      AppStorage.depose();
       result ={
         'status':true,
         'message':"Successful Request",
