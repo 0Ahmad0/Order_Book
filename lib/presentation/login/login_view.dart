@@ -105,6 +105,7 @@ class _LoginViewState extends State<LoginView> {
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
                         onTap: () async {
+                          Const.TOAST(context,textToast: "Hello");
                           if (_formKey.currentState!.validate()) {
                             Navigator.push(context,
                                 MaterialPageRoute(builder:

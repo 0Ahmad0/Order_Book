@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:orderbook/presentation/resources/style_manager.dart';
 
 import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
@@ -21,5 +23,15 @@ class Const{
               color: ColorManager.lightPrimary,
               size: Sizer.getW(context) * 0.1)),
     ));
+  }
+
+  static TOAST(BuildContext context,{String textToast = "This Is Toast"}){
+    showToast(
+        textToast,
+      context: context,
+    animation:StyledToastAnimation.fadeScale,
+      textStyle: getRegularStyle(color: ColorManager.white)
+    );
+
   }
 }
