@@ -4,6 +4,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 
 import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
@@ -33,5 +34,9 @@ class Const{
       textStyle: getRegularStyle(color: ColorManager.white)
     );
 
+  }
+
+  static Future<String?> getDeviceId()async{
+    return  await PlatformDeviceId.getDeviceId;
   }
 }

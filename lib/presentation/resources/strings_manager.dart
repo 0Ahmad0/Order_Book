@@ -45,6 +45,9 @@ class AppStrings {
   static const expiredReservation= "Expired Reservation";
   static const pendingReservation= "Pending Reservation";
   static const currentReservation= "Current Reservation";
+  static const rate= "Rate";
+  static const pobuler= "Pobuler";
+  static const gbs= "GPS";
   static const onBoardingsubTitle1 = "Hello OnBoarding SubTittle 1";
   static const onBoardingTitle2 = "Hello OnBoarding Tittle 2";
   static const onBoardingsubTitle2 = "Hello OnBoarding SubTittle 2";

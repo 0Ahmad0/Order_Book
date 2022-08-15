@@ -54,6 +54,29 @@ class _RestaurantViewState extends State<RestaurantView> {
           TextFormField(
             controller: search,
             decoration: InputDecoration(
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: ColorManager.lightPrimary
+                )
+              ),
+              focusedBorder: UnderlineInputBorder(
+                 borderSide: BorderSide(
+                  color: ColorManager.lightPrimary,
+                     width: 1.5
+                 )
+              ),
+              disabledBorder: UnderlineInputBorder(
+                 borderSide: BorderSide(
+                  color: ColorManager.lightPrimary,
+                     width: 1.5
+                 )
+              ),
+              enabledBorder: UnderlineInputBorder(
+                 borderSide: BorderSide(
+                  color: ColorManager.lightPrimary,
+                     width: 1.5
+                 )
+              ),
               hintText: AppStrings.search,
               prefixIcon: IconButton(
                 icon: Icon(Icons.search),
@@ -92,7 +115,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 0
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text("Fillter")),
+                        child: Text(AppStrings.rate)),
                   ),
                 ),
                 Expanded(
@@ -107,65 +130,9 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 1
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text("Pobuler")),
+                        child: Text(AppStrings.pobuler)),
                   ),
                 ),
-                Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: DropdownButtonFormField(
-                        onTap: () {
-                          currentSelect = 2;
-                          setState(() {});
-                        },
-                        selectedItemBuilder: (_) {
-                          return places
-                              .map((e) =>
-                              Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  e,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ))
-                              .toList();
-                        },
-                        iconEnabledColor: ColorManager.white,
-                        iconDisabledColor: ColorManager.white,
-                        isExpanded: true,
-                        style: getRegularStyle(color: ColorManager.white),
-                        alignment: Alignment.center,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: currentSelect == 2
-                              ? ColorManager.lightPrimary
-                              : Colors.transparent,
-                          hintText: "category",
-                          hintStyle: getRegularStyle(
-                            color: ColorManager.white,
-                          ),
-                          border: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                        ),
-                        items: places
-                            .map((e) =>
-                            DropdownMenuItem(
-                              child: Center(
-                                child: Text(
-                                  e,
-                                  style: getRegularStyle(
-                                      color: ColorManager.black),
-                                ),
-                              ),
-                              value: e,
-                            ))
-                            .toList(),
-                        onChanged: (val) {},
-                      ),
-                    )),
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
@@ -180,7 +147,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 3
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text("GPS")),
+                        child: Text(AppStrings.gbs)),
                   ),
                 ),
               ],

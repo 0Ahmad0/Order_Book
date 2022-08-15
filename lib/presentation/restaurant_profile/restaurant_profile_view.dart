@@ -1,6 +1,9 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:orderbook/domain/models.dart';
+import 'package:orderbook/presentation/location_restaurant_map/location_restaurant_map_view.dart';
 import 'package:orderbook/presentation/login/login_view.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
@@ -54,74 +57,104 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
               children: <Widget>[
                 Hero(
                     tag: widget.restaurant.rate!,
-                    child: Container(
-                      width: Sizer.getW(context) * 0.25,
-                      height: Sizer.getW(context) * 0.25,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(widget.restaurant.imageLogo!))),
+                    child: InkWell(
+                      onTap: (){
+                        Get.dialog(
+                          Center(
+                            child: Image.asset(
+                              widget.restaurant.imageLogo!,
+                              width: double.infinity,
+                              height: Sizer.getW(context),
+                            ),
+                          )
+                        );
+                      },
+                      child: Container(
+                        width: Sizer.getW(context) * 0.25,
+                        height: Sizer.getW(context) * 0.25,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage(widget.restaurant.imageLogo!))),
+                      ),
                     )),
                 const SizedBox(
                   height: AppSize.s10,
                 ),
-                Card(
-                  elevation: 10.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      ListTile(
-                        leading: Icon(Icons.restaurant),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(Icons.restaurant),
+                      title: Text(
+                        widget.restaurant.name!,
+                        style: getBoldStyle(
+                            color: ColorManager.black,
+                            fontSize: Sizer.getW(context) * 0.04),
+                      ),
+                    ),
+                    const Divider(
+                      height: 0.0,
+                      color: ColorManager.lightGray,
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.phone),
                         title: Text(
-                          widget.restaurant.name!,
-                          style: getBoldStyle(
-                              color: ColorManager.black,
-                              fontSize: Sizer.getW(context) * 0.04),
-                        ),
-                      ),
-                      const Divider(
-                        height: 0.0,
-                        color: ColorManager.lightGray,
-                      ),
-                      ListTile(
-                          leading: Icon(Icons.phone),
-                          title: Text(
-                            "${widget.restaurant.phoneNumber!}",
-                            style: getRegularStyle(
-                                color: ColorManager.blackF2,
-                                fontSize: Sizer.getW(context) * 0.035),
-                          )),
-                      const Divider(
-                        height: 0.0,
-                        color: ColorManager.lightGray,
-                      ),
-                      ListTile(
-                          leading: Icon(Icons.location_pin),
-                          title: Text(
-                            widget.restaurant.address!,
-                            style: getRegularStyle(
-                                color: ColorManager.blackF2,
-                                fontSize: Sizer.getW(context) * 0.035),
-                          )),
+                          "${widget.restaurant.phoneNumber!}",
+                          style: getRegularStyle(
+                              color: ColorManager.blackF2,
+                              fontSize: Sizer.getW(context) * 0.035),
+                        )),
+                    const Divider(
+                      height: 0.0,
+                      color: ColorManager.lightGray,
+                    ),
+                    ListTile(
+                      onTap: (){
+                        Get.to(()=>RestaurantLocationView(
+                            latitude:33.51592843335949,
+                            longitude: 36.31083943986069
+                        ));
+                      },
+                        leading: Icon(Icons.location_pin),
+                        title: Text(
+                          widget.restaurant.address!,
+                          style: getRegularStyle(
+                              color: ColorManager.blackF2,
+                              fontSize: Sizer.getW(context) * 0.035),
+                        )),
+                    const Divider(
+                      height: 0.0,
+                      color: ColorManager.lightGray,
+                    ),
+                    ListTile(
+                        leading: Icon(Icons.details),
+                        title: Text(
+                          widget.restaurant.details!,
+                          style: getRegularStyle(
+                              color: ColorManager.blackF2,
+                              fontSize: Sizer.getW(context) * 0.03),
+                        )),
 
-                    ],
-                  ),
+                  ],
                 ),
                 SwipedCardSection(
                   cards: widget.restaurant.imagesRestaurant!,
                 ),
-                const SizedBox(height: AppSize.s10,),
-                const SizedBox(height: AppSize.s10,),
-
-                ButtonApp(
-                  text: "Mune",
-                  onTap: (){},
+                const SizedBox(height: AppSize.s20,),
+                Expanded(
+                  child: ButtonApp(
+                    text: "Mune",
+                    onTap: (){},
+                  ),
                 ),
                 const SizedBox(height: AppSize.s10,),
-                ButtonApp(
-                  text: "Restaurant Map",
-                  onTap: (){},
+                Expanded(
+                  child: ButtonApp(
+                    text: "Restaurant Map",
+                    onTap: (){},
+                  ),
                 ),
 
               ],
@@ -174,7 +207,7 @@ class _SwipedCardSectionState extends State<SwipedCardSection> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 2,
+      flex: 3,
       child: AppinioSwiper(
         onSwipe: (index){
           print(index);

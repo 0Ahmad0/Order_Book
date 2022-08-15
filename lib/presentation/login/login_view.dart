@@ -14,11 +14,13 @@ import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 import '../../data/local/storage.dart';
 import '../../domain/models.dart';
+import '../location_restaurant_map/location_restaurant_map_view.dart';
 import '../otp/otp_view.dart';
 import '../resources/routes_manager.dart';
 import '../resources/style_manager.dart';
@@ -49,6 +51,7 @@ class _LoginViewState extends State<LoginView> {
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -105,7 +108,6 @@ class _LoginViewState extends State<LoginView> {
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
                         onTap: () async {
-                          Const.TOAST(context,textToast: "Hello");
                           if (_formKey.currentState!.validate()) {
                             Navigator.push(context,
                                 MaterialPageRoute(builder:
@@ -173,7 +175,7 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           )
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),

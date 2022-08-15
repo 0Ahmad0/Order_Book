@@ -142,7 +142,6 @@ class _HomeViewState extends State<HomeView> {
                       // setState((){});
                      },
                      itemBuilder: (__,pageIndex,storyIndex){
-
                        return Stack(
                          children: [
                            Positioned.fill(
@@ -187,6 +186,7 @@ class _HomeViewState extends State<HomeView> {
                          ],
                        );
                      },
+
                      storyLength: (indexPage){
                        print(indexPage);
                        return 1;
