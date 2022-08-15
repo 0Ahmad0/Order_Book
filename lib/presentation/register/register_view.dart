@@ -173,12 +173,7 @@ class _RegisterViewState extends State<RegisterView> {
                             ButtonApp(
                                 text: AppStrings.signupText,
                                 onTap: () async {
-                                  Const.LOADIG(context);
-                                  var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
-                                 // print(result);
-                                  Const.TOAST(context,textToast: result["message"]);
-                                  Navigator.pop(context);
-                                  if(result["status"]){
+
                                     if (_formKey.currentState!.validate()) {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder:
@@ -191,10 +186,6 @@ class _RegisterViewState extends State<RegisterView> {
                                           ))
                                       );
                                     }
-                                  }else{
-                                    /// SnackBar(content: Text("o"));
-
-                                  }
 
                                 }),
                             const SizedBox(

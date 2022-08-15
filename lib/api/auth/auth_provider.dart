@@ -231,6 +231,7 @@ class AuthProvider extends ChangeNotifier{
   }
   static Future<Map<String,dynamic>> onValueCheckNum(http.Response response)async{
     var result;
+
     Map<String,dynamic> responseData= {};
     if(!response.body.isEmpty){
       responseData = json.decode(response.body);
@@ -246,11 +247,13 @@ class AuthProvider extends ChangeNotifier{
         'data':responseData
       };
     }else {
+
       result ={
         'status':false,
         'message':responseData["message"],
         'data':responseData
       };
+
     }
     return result;
   }

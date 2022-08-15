@@ -107,15 +107,21 @@ class _LoginViewState extends State<LoginView> {
                         onTap: () async {
                           Const.TOAST(context,textToast: "Hello");
                           if (_formKey.currentState!.validate()) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder:
-                                    (ctx)=>OTPView(
-                                    User(
-                                        phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
-                                    ),
-                                    false
-                                ))
-                            );
+                            Const.LOADIG(context);
+                            var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
+                            Navigator.pop(context);
+                            if(result["status"]){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder:
+                                      (ctx)=>OTPView(
+                                      User(
+                                          phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
+                                      ),
+                                      false
+                                  ))
+                              );
+                            }
+
                           }
 
 
