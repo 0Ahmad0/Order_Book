@@ -41,6 +41,16 @@ class AuthProvider extends ChangeNotifier{
       },
     ).then(onValueLog).catchError(onError);
   }
+  Future<Map<String,dynamic>> Logout(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    return await delete(
+      Uri.parse( AppUrl.logout)
+      ,headers: {
+      "Accept":"application/json",
+      'Token':token,
+    },
+    ).then(onValueOut).catchError(onError);
+  }
   static onError(error){
     return{
       'status':false,
@@ -134,5 +144,27 @@ class AuthProvider extends ChangeNotifier{
     }
       return result;
     }
+  static Future<Map<String,dynamic>> onValueOut(http.Response response)async{
+    var result;
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+    if(response.statusCode==201){
+      User userData = User.fromJson(responseData);
+      AppStorage.depose();
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
 
 }

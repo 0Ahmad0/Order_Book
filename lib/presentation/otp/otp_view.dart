@@ -19,6 +19,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../api/auth/auth_provider.dart';
 import '../resources/style_manager.dart';
+import '../utils/dataLocal.dart';
 
 class OTPView extends StatefulWidget {
   User user = User();
@@ -54,8 +55,8 @@ class _OTPViewState extends State<OTPView> {
     print(result);
     Const.TOAST(context,textToast: result["message"]);
     Navigator.pop(context);
-
     if(result["status"]){
+      await DataLocal.getData();
       Navigator.pop(context);
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));

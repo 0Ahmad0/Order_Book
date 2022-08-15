@@ -21,8 +21,10 @@ import 'package:provider/provider.dart';
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
+import '../../api/auth/auth_provider.dart';
 import '../../data/local/change_theme.dart';
 import '../../data/local/storage.dart';
+import '../utils/const.dart';
 import '../utils/dataLocal.dart';
 class BottomNavBarView extends StatefulWidget {
   const BottomNavBarView({Key? key}) : super(key: key);
@@ -59,13 +61,14 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
     ];
   }
   @override
-  Future<void> initState() async {
- await  DataLocal.getData();
+  void initState() {
+
     fillList();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     final appModel = Provider.of<AppModel>(context);
     return Scaffold(
       appBar: AppBar(
@@ -211,11 +214,29 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                       leadingIcon: Icons.logout,
                       traling: null,
                       onTap: () async{
-                        await AppStorage.storageWrite(
+                        /*await AppStorage.storageWrite(
                             key: AppStorage.isLoginedKEY,
                             value: false
-                        );
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>LoginView()));
+                        );*/
+                        Const.LOADIG(context);
+                        var result =await authProvider.Logout(Advance.token);
+                        print(result);
+                        Const.TOAST(context,textToast: result["message"]);
+                        Navigator.pop(context);
+                        print(Advance.token);
+                        if(result["status"]){
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
+                          /// SnackBar(content: Text("k"));
+                          //print("done register");
+                          // Const.TOAST(context,textToast: result["message"]);
+                        }else{
+                          /// SnackBar(content: Text("o"));
+
+                        }
+
+                        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>LoginView()));
                         // print(await AppStorage.storageRead(key: AppStorage.isLoginedKEY));
                       }),
                 ],

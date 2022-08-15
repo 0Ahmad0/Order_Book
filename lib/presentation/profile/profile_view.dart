@@ -10,6 +10,7 @@ import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
+import 'package:orderbook/presentation/utils/dataLocal.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 
 import '../resources/style_manager.dart';
@@ -23,8 +24,8 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final phoneNumber = TextEditingController(text: "+963 954872922");
-  final name = TextEditingController(text: "Ahmad Alhariri");
+  final phoneNumber = TextEditingController(text: DataLocal.user.phoneNumber/*"+963 954872922"*/);
+  final name = TextEditingController(text: DataLocal.user.name.isEmpty?"Ahmad Alhariri":DataLocal.user.name);
   bool type = false;
   Map _images = {
     "img": [
