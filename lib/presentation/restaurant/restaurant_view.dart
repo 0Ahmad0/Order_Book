@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:like_button/like_button.dart';
+import 'package:orderbook/api/app_url/app_url.dart';
 import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
@@ -13,6 +15,7 @@ import '../../api/resturant/resturants_provider.dart';
 import '../../domain/models.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
+import '../utils/const.dart';
 
 class RestaurantView extends StatefulWidget {
   const RestaurantView({Key? key}) : super(key: key);
@@ -170,7 +173,11 @@ class _RestaurantViewState extends State<RestaurantView> {
 
               //  print(snapshot.error);
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return Expanded(
+                  child: Center(
+                    child: Const.SHOWLOADINGINDECATOR(),
+                  ),
+                );
                 //Const.CIRCLE(context);
               } else if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
@@ -182,6 +189,8 @@ class _RestaurantViewState extends State<RestaurantView> {
                       child: ListView.builder(
                         itemCount: listRestaurant.length,
                         itemBuilder: (_, index) {
+                          print(AppUrl.baseUrlImage+listRestaurant[index].imageLogo!);
+
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -237,7 +246,14 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                       AppSize.s14),
                                                   image: DecorationImage(
                                                       fit: BoxFit.fill,
-                                                      image: AssetImage(ImagesAssets.loginBackground)
+                                                      image:
+                                                      // CachedNetworkImageProvider(
+                                                      //
+                                                      //   // "http://order-book.chi-team.com/api/storage/app/public/vendorsLogos/qNmqkRmFMOaE6qA07vCTfx4oST3HdX8iPi1MRwHA.png"
+                                                      //   "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg"
+                                                      // )
+
+                                                      AssetImage(ImagesAssets.loginBackground)
                                                   )
                                               ),
                                             ),
