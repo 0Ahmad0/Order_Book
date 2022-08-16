@@ -64,13 +64,34 @@ class Restaurant{
        this.rate = 1,
       required this.imagesRestaurant
       });
+  factory Restaurant.fromJson(Map<String,dynamic> responseData){
+    return Restaurant(
+      imageLogo: responseData['imageLogo'],
+      name: responseData['name'],
+      address:  responseData['address'],
+      details:  responseData['details'],
+      phoneNumber:responseData["phoneNumber"],
+      isFavorite:responseData["isFavorite"],
+      rate: responseData['rate'],
+        imagesRestaurant:responseData["imagesRestaurant"],
+    );
+  }
 }
 //Offers
 class Offers{
+  String? id;
   String? image;
   Restaurant? restaurant;
   String? text;
-  Offers({this.image,this.restaurant,this.text});
+  Offers({this.id,this.image,this.restaurant,this.text});
+  factory Offers.fromJson(Map<String,dynamic> responseData){
+    return Offers(
+      id: responseData['id'],
+      image: responseData['image'],
+      text: responseData['text'],
+      restaurant: responseData!=null?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
+    );
+  }
 }
 //item
 class Item{
@@ -89,6 +110,17 @@ class Item{
       this.price= 0,
       this.quantity="",
       this.restaurant});
+  factory Item.fromJson(Map<String,dynamic> responseData){
+    return Item(
+      id: responseData['id'],
+      name: responseData['name'],
+      description:  responseData['phone_number'],
+      image:  responseData['avatar_id'],
+      price:responseData["price"],
+      quantity:responseData["quantity"],
+      restaurant: responseData!=null?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
+    );
+  }
 }
 //StoryObject
 class StoryObject{

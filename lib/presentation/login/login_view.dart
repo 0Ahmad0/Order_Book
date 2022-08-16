@@ -105,12 +105,11 @@ class _LoginViewState extends State<LoginView> {
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
                         onTap: () async {
-                          Const.TOAST(context,textToast: "Hello");
                           if (_formKey.currentState!.validate()) {
                             Const.LOADIG(context);
                             var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
                             Navigator.pop(context);
-                            if(result["status"]){
+                            if(!result["status"]){
                               Navigator.push(context,
                                   MaterialPageRoute(builder:
                                       (ctx)=>OTPView(
@@ -120,6 +119,8 @@ class _LoginViewState extends State<LoginView> {
                                       false
                                   ))
                               );
+                            }else{
+                              Const.TOAST(context,textToast: "The phone number not has found");
                             }
 
                           }

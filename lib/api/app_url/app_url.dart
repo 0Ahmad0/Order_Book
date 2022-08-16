@@ -9,4 +9,7 @@ class AppUrl{
   static const String updateProfile =baseUrl+"user/update";
   static const String deleteProfile =baseUrl+"user/deleteMyAccount";
 
+  static const String trendingItems =baseUrl+"item/trendingItems";
+  static const String trendingOffers =baseUrl+"offer/availableOffers";
+
 }

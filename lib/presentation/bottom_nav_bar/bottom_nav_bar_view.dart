@@ -71,6 +71,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
   }
   @override
   Widget build(BuildContext context) {
+
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     final appModel = Provider.of<AppModel>(context);
     return Scaffold(
@@ -230,7 +231,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                         if(result["status"]){
                           Navigator.pop(context);
                           Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
+                              MaterialPageRoute(builder: (ctx)=>LoginView()));
                           /// SnackBar(content: Text("k"));
                           //print("done register");
                           // Const.TOAST(context,textToast: result["message"]);
@@ -239,7 +240,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
 
                         }
 
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>LoginView()));
+                      //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>LoginView()));
                         // print(await AppStorage.storageRead(key: AppStorage.isLoginedKEY));
                       }),
                 ],
