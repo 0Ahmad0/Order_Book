@@ -4,7 +4,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/presentation/bottom_nav_bar/bottom_nav_bar_view.dart';
@@ -15,13 +14,11 @@ import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
-import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 import '../../data/local/storage.dart';
 import '../../domain/models.dart';
-import '../location_restaurant_map/location_restaurant_map_view.dart';
 import '../otp/otp_view.dart';
 import '../resources/routes_manager.dart';
 import '../resources/style_manager.dart';
@@ -41,20 +38,17 @@ class _LoginViewState extends State<LoginView> {
   bool type = false;
   final TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  var showTextFiled = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loginViewModel.start();
+   // loginViewModel.start();
   }
-
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -75,22 +69,21 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       CustomTextFiled(
                         controller: phoneNumber,
-                        textInputType: TextInputType.phone,
-                        textInputAction: TextInputAction.done,
-                        maxLength: 10,
-                        validator: (val) {
-                          if (val!.trim().isEmpty) {
-                            return AppStrings.fieldNotEmpty;
-                          }
-                          if (!val.toString().isPhoneNumber ||
-                              val.length != 10) {
-                            return AppStrings.validPhone;
-                          }
-                          if (!val.startsWith("09")) {
-                            return AppStrings.phoneStart09;
-                          }
-                          return null;
-                        },
+                          textInputType: TextInputType.phone,
+                          textInputAction:TextInputAction.done,
+                          maxLength: 10,
+                          validator:(val) {
+                            if(val!.trim().isEmpty){
+                              return AppStrings.fieldNotEmpty;
+                            }
+                            if(!val.toString().isPhoneNumber || val.length!=10){
+                              return AppStrings.validPhone;
+                            }
+                            if(!val.startsWith("09")){
+                              return AppStrings.phoneStart09;
+                            }
+                            return null;
+                          },
                         onChange: (val) {
                           if (val.trim().isNotEmpty) {
                             type = true;
@@ -100,9 +93,10 @@ class _LoginViewState extends State<LoginView> {
                             setState(() {});
                           }
                         },
-                        prefixIcon: Icons.phone,
-                        hintText: AppStrings.hintPhone,
-                        validFiled: type,
+                          prefixIcon: Icons.phone,
+                          hintText: AppStrings.hintPhone,
+                          validFiled: type,
+
                       ),
                       const SizedBox(
                         height: AppSize.s20,
@@ -110,18 +104,27 @@ class _LoginViewState extends State<LoginView> {
                       ButtonApp(
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
-                        onTap: () {
-                          // Const.SHOWRATEDIALOOG(context);
+                        onTap: () async {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (ctx) => OTPView(
-                                        User(
-                                            phoneNumber: phoneNumber.text
-                                                .replaceFirst("0", "+963")),
-                                        false)));
+                            Const.LOADIG(context);
+                            var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
+                            Navigator.pop(context);
+                            if(!result["status"]){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder:
+                                      (ctx)=>OTPView(
+                                      User(
+                                          phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
+                                      ),
+                                      false
+                                  ))
+                              );
+                            }else{
+                              Const.TOAST(context,textToast: "The phone number not has found");
+                            }
+
                           }
+
 
                           /*if (_formKey.currentState!.validate()) {
                             AppStorage.init();
@@ -177,7 +180,7 @@ class _LoginViewState extends State<LoginView> {
                             ),
                           )
                         ],
-                      ),
+                      )
                     ],
                   ),
                 ),
@@ -186,6 +189,7 @@ class _LoginViewState extends State<LoginView> {
           ),
         ],
       ),
+
     );
   }
 
@@ -295,18 +299,20 @@ class CustomTextFiled extends StatefulWidget {
   final String hintText;
   bool validFiled;
 
-  CustomTextFiled(
+
+   CustomTextFiled(
       {super.key,
       required this.controller,
-      this.textInputType = TextInputType.text,
-      this.textInputAction = TextInputAction.next,
-      this.autoFocus = false,
-      this.maxLength = 0,
+       this.textInputType = TextInputType.text,
+       this.textInputAction = TextInputAction.next,
+       this.autoFocus = false,
+       this.maxLength = 0,
       required this.validator,
       required this.onChange,
       required this.prefixIcon,
       required this.hintText,
-      this.validFiled = false});
+        this.validFiled = false
+      });
 
   @override
   State<CustomTextFiled> createState() => _CustomTextFiledState();

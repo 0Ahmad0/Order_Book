@@ -20,6 +20,8 @@ import 'package:provider/provider.dart';
 import '../login/login_view.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
+import '../utils/const.dart';
+import '../utils/dataLocal.dart';
 
 var isDark = false.obs;
 
@@ -43,7 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
         backgroundColor: ColorManager.lightPrimary,
@@ -170,19 +172,30 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             ButtonApp(
                                 text: AppStrings.signupText,
-                                onTap: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder:
-                                            (ctx)=>OTPView(
+                                onTap: () async {
+                                  Const.LOADIG(context);
+                                  var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
+                                //  print(result);
+                                  Const.TOAST(context,textToast: result["message"]);
+                                  Navigator.pop(context);
+                                  if(result["status"]){
+                                    if (_formKey.currentState!.validate()) {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder:
+                                              (ctx)=>OTPView(
                                               User(
-                                                name: firstName.text+" "+lastName.text,
-                                                phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
+                                                  name: firstName.text+" "+lastName.text,
+                                                  phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
                                               ),
                                               true
-                                            ))
-                                    );
+                                          ))
+                                      );
+                                    }
+                                  }else{
+                                    /// SnackBar(content: Text("o"));
+
                                   }
+
                                 }),
                             const SizedBox(
                               height: AppSize.s4,

@@ -19,6 +19,7 @@ import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../api/auth/auth_provider.dart';
 import '../resources/style_manager.dart';
+import '../utils/dataLocal.dart';
 
 class OTPView extends StatefulWidget {
   User user = User();
@@ -33,16 +34,16 @@ class _OTPViewState extends State<OTPView> {
   Future<void> register(AuthProvider authProvider) async {
     Const.LOADIG(context);
     //  var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "ii");
-    var result =await authProvider.register("", "",widget.user.name,
-        widget.user.phoneNumber,
-        widget.user.avatarId,
-        "i5i");
+    var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "ioi");
     // var result =await authProvider.register("", "","temp", "+963970807997", 1, "igjui70iikii");
     print(result["message"]);
+    Const.TOAST(context,textToast: result["message"]);
+
     Navigator.pop(context);
     if(result["status"]){
       Get.off(() =>LoginView());
-      /// SnackBar(content: Text("k"));
+      /// SnackBar(content: Text("k"));s
+
       //print("done register");
     }else{
 
@@ -54,16 +55,19 @@ class _OTPViewState extends State<OTPView> {
     Const.LOADIG(context);
     var result =await authProvider.Login( widget.user.phoneNumber);
     print(result);
+    Const.TOAST(context,textToast: result["message"]);
     Navigator.pop(context);
     if(result["status"]){
+      await DataLocal.getData();
       Navigator.pop(context);
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
       /// SnackBar(content: Text("k"));
       //print("done register");
+     // Const.TOAST(context,textToast: result["message"]);
     }else{
       /// SnackBar(content: Text("o"));
-      // print("field register");
+
     }
   }
   @override
@@ -155,9 +159,7 @@ class _OTPViewState extends State<OTPView> {
                         },
                         onCodeChanged: (val) async {
                     if(val!=null&&val.length>5){
-                        await (widget.register)
-                            ?register(authProvider)
-                            :login(authProvider);
+                        await (widget.register)?register(authProvider):login(authProvider);
 
 
                     /*  Timer(Duration(seconds: 3), (){

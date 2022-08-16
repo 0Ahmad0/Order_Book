@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:like_button/like_button.dart';
+import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/restaurant_profile/restaurant_profile_view.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:provider/provider.dart';
 
+import '../../api/resturant/resturants_provider.dart';
 import '../../domain/models.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
@@ -44,6 +47,8 @@ class _RestaurantViewState extends State<RestaurantView> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    //RestaurantsProvider restaurantsProvider = Provider.of<RestaurantsProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppPadding.p10,

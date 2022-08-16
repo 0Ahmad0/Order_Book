@@ -13,6 +13,7 @@ import 'package:orderbook/presentation/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:orderbook/presentation/home/home_view.dart';
 import 'package:orderbook/presentation/login/login_view.dart';
 import 'package:orderbook/presentation/register/register_view.dart';
+import 'package:orderbook/presentation/utils/dataLocal.dart';
 import '../animation/animation_page.dart';
 import '../resources/theme_manager.dart';
 import '../utils/sizer.dart';
@@ -42,20 +43,25 @@ with SingleTickerProviderStateMixin{
   _goNext() async{
     // print("Advance==> ${Advance.isLogined}" );
     // Navigator.pushReplacementNamed(context, Routes.registerRoot);
-     await AppStorage.storageRead(key: AppStorage.isLoginedKEY)
-     ?
-     Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>
-        // BottomNavBarView()
-       //HomeView()
-     LoginView()
+    if(await AppStorage.storageRead(key: AppStorage.isLoginedKEY)){
+      await DataLocal.getData();
+      Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>
+          BottomNavBarView()
+        //HomeView()
+        // LoginView()
 
 
-     ))
-         :
-     Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>
-         LoginView()
+      ));
+    }
 
-     ));
+         else{
+
+       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>
+           LoginView()
+
+
+
+     )); }
      // Get.changeTheme(getApplicationTheme(isDark:Advance.theme ));
 
   }
