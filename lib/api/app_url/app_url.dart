@@ -16,5 +16,6 @@ class AppUrl{
   static const String ratingRestaurant =baseUrl+"vendor/getVendorsByRating";
   static const String locationRestaurant =baseUrl+"vendor/getVendorsByLocation";// /33.7/36.7
   static const String searchRestaurant =baseUrl+"vendor/searchByName/";// /a
+  static const String trendingRestaurant =baseUrl+"vendor/getTrendingVendors";
 
 }

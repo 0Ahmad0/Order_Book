@@ -16,6 +16,7 @@ class HomeProvider extends ChangeNotifier{
   late List<RestaurantViews> listRatingRestaurant;
   late List<RestaurantViews> listLocationRestaurant;
   late List<RestaurantViews> listSearchRestaurant;
+  late List<RestaurantViews> listTrendingRestaurant;
   List<RestaurantViews> listRestaurant= [];
   bool recRestaurant=false;
 
@@ -82,10 +83,24 @@ class HomeProvider extends ChangeNotifier{
     }
     ).then(onValueSearchRestaurant).catchError(onError1);
   }
+  Future<Map<String,dynamic>> trendingRestaurant(String token) async{
+   // print( Uri.parse( AppUrl.searchRestaurant));
+    //print( token);
+    recRestaurant=false;
+    return await get(
+        Uri.parse( AppUrl.trendingRestaurant)
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onValueTrendingRestaurant).catchError(onError1);
+  }
 
   Future<Map<String,dynamic>> recList(String token,String search,String path,int index) async{
     if(0==index) return await ratingRestaurant(token);
     else if(2==index) return await searchRestaurant(token,search);
+    else if(1==index) return await trendingRestaurant(token);
     else if(3==index) return await locationRestaurant(token,path);
     else return await ratingRestaurant(token);
   }
@@ -108,7 +123,7 @@ class HomeProvider extends ChangeNotifier{
     if(response.statusCode==200){
       listTrendingItems=[];
       //listTrendingItems.clear();
-int i=0;
+      int i=0;
       for(var element in responseData["data"]){
        // print(element);
 
@@ -237,6 +252,37 @@ int i=0;
         listSearchRestaurant.add(restaurantViews);
       }
       listRestaurant=listSearchRestaurant;
+      recRestaurant=true;
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onValueTrendingRestaurant(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    // listRatingRestaurant=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+    if(response.statusCode==200){
+      listTrendingRestaurant=[];
+      listRestaurant=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+        RestaurantViews restaurantViews =RestaurantViews.fromJson(element);
+        listTrendingRestaurant.add(restaurantViews);
+      }
+      listRestaurant=listTrendingRestaurant;
       recRestaurant=true;
       result ={
         'status':true,

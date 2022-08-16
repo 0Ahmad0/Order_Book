@@ -131,7 +131,7 @@ class _LoginViewState extends State<LoginView> {
 
                             if(await AppStorage.storageRead(key :AppStorage.isRegisterKEY)&&phone==phoneNumber.text.replaceFirst("0","+963" )){
                               Navigator.pop(context);
-                              login(authProvider);
+                             await login(authProvider);
                             }
                             var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
                             Navigator.pop(context);
