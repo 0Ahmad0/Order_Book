@@ -14,7 +14,11 @@ class HomeProvider extends ChangeNotifier{
   late List<Restaurant> listRestaurants;
   late List<Item> listTrendingItems;
   late List<RestaurantViews> listRatingRestaurant;
-  bool recRatingRestaurant=false;
+  late List<RestaurantViews> listLocationRestaurant;
+  late List<RestaurantViews> listSearchRestaurant;
+  List<RestaurantViews> listRestaurant= [];
+  bool recRestaurant=false;
+
   Future<Map<String,dynamic>> trendingItems(String token) async{
 //    print( Uri.parse( AppUrl.login));
 
@@ -42,7 +46,7 @@ class HomeProvider extends ChangeNotifier{
   Future<Map<String,dynamic>> ratingRestaurant(String token) async{
     //print( Uri.parse( AppUrl.login));
     //print( token);
-    recRatingRestaurant=false;
+    recRestaurant=false;
     return await get(
         Uri.parse( AppUrl.ratingRestaurant)
         ,headers: {
@@ -52,7 +56,39 @@ class HomeProvider extends ChangeNotifier{
     }
     ).then(onValueRatingRestaurant).catchError(onError1);
   }
+  Future<Map<String,dynamic>> locationRestaurant(String token,String path) async{
+    //print( Uri.parse( AppUrl.login));
+    //print( token);
+    recRestaurant=false;
+    return await get(
+        Uri.parse( AppUrl.locationRestaurant+path)
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onValueLocationRestaurant).catchError(onError1);
+  }
+  Future<Map<String,dynamic>> searchRestaurant(String token,String search) async{
+    print( Uri.parse( AppUrl.searchRestaurant+search));
+    //print( token);
+    recRestaurant=false;
+    return await get(
+        Uri.parse( AppUrl.searchRestaurant+search)
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onValueSearchRestaurant).catchError(onError1);
+  }
 
+  Future<Map<String,dynamic>> recList(String token,String search,String path,int index) async{
+    if(0==index) return await ratingRestaurant(token);
+    else if(2==index) return await searchRestaurant(token,search);
+    else if(3==index) return await locationRestaurant(token,path);
+    else return await ratingRestaurant(token);
+  }
    onError1(error){
      print(error);
     return{
@@ -133,12 +169,76 @@ int i=0;
     print("status code ${response.statusCode}");
     if(response.statusCode==200){
       listRatingRestaurant=[];
+      listRestaurant=[];
       //listTrendingItems.clear();
       for(var element in responseData["data"]){
         RestaurantViews restaurantViews =RestaurantViews.fromJson(element);
         listRatingRestaurant.add(restaurantViews);
       }
-      recRatingRestaurant=true;
+      listRestaurant=listRatingRestaurant;
+      recRestaurant=true;
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onValueLocationRestaurant(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    // listRatingRestaurant=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+    if(response.statusCode==200){
+      listLocationRestaurant=[];
+      listRestaurant=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+        RestaurantViews restaurantViews =RestaurantViews.fromJson(element);
+        listLocationRestaurant.add(restaurantViews);
+      }
+      listRestaurant=listLocationRestaurant;
+      recRestaurant=true;
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onValueSearchRestaurant(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    // listRatingRestaurant=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+    if(response.statusCode==200){
+      listSearchRestaurant=[];
+      listRestaurant=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+        RestaurantViews restaurantViews =RestaurantViews.fromJson(element);
+        listSearchRestaurant.add(restaurantViews);
+      }
+      listRestaurant=listSearchRestaurant;
+      recRestaurant=true;
       result ={
         'status':true,
         'message':"Successful Request",

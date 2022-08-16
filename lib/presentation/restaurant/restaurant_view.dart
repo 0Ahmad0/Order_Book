@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:like_button/like_button.dart';
+import 'package:orderbook/api/app_url/app_url.dart';
 import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
@@ -44,7 +46,6 @@ class _RestaurantViewState extends State<RestaurantView> {
       "assets/images/2.jpg",
     ]
   };
-  List<RestaurantViews> listRestaurant= [];
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +88,11 @@ class _RestaurantViewState extends State<RestaurantView> {
               prefixIcon: IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
+                 // print("vvv");
+                  currentSelect=2;
+                  setState(() {
+
+                  });
                  // print("ff");
                 },
               ),
@@ -143,6 +149,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
+
                       currentSelect = 3;
                       setState(() {});
                     },
@@ -164,7 +171,7 @@ class _RestaurantViewState extends State<RestaurantView> {
             height: AppSize.s4,
           ),
           FutureBuilder(
-            future: authProvider.ratingRestaurant(Advance.token),
+            future: authProvider.recList(Advance.token,search.text,"/33.6/36.7",currentSelect),
             builder: (
                 context, snapshot,) {
 
@@ -175,12 +182,12 @@ class _RestaurantViewState extends State<RestaurantView> {
               } else if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
                   return const Text('Error');
-                } else if (authProvider.recRatingRestaurant) {
-                  listRestaurant=authProvider.listRatingRestaurant;
+                } else if (authProvider.recRestaurant) {
+
                   return
                     Expanded(
                       child: ListView.builder(
-                        itemCount: listRestaurant.length,
+                        itemCount: authProvider.listRestaurant.length,
                         itemBuilder: (_, index) {
                           return GestureDetector(
                             onTap: () {
@@ -210,7 +217,8 @@ class _RestaurantViewState extends State<RestaurantView> {
                                       borderRadius: BorderRadius.circular(AppSize.s14),
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: AssetImage("assets/images/img.png"),
+                                        image:(AssetImage("assets/images/img.png"))
+                                        ,
                                         colorFilter: ColorFilter.mode(
                                           ColorManager.black.withOpacity(.7),
                                           BlendMode.darken,
@@ -237,7 +245,10 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                       AppSize.s14),
                                                   image: DecorationImage(
                                                       fit: BoxFit.fill,
-                                                      image: AssetImage(ImagesAssets.loginBackground)
+                                                      image:CachedNetworkImageProvider(
+                                                          authProvider. listRestaurant[index].imageLogo==null?ImagesAssets.loginBackground:
+                                                        AppUrl.baseUrl1+authProvider.listRestaurant[index].imageLogo!
+                                                      ) //AssetImage(ImagesAssets.loginBackground)
                                                   )
                                               ),
                                             ),
@@ -253,7 +264,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                   .start,
                                               children: [
                                                 Text(
-                                                  (listRestaurant[index].name==null)?"Burger King":listRestaurant[index].name!,
+                                                  (authProvider.listRestaurant[index].name==null)?"Burger King":authProvider.listRestaurant[index].name!,
                                                   style: getBoldStyle(
                                                       color: ColorManager.white,
                                                       fontSize:
@@ -296,7 +307,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          listRestaurant[index].rate!,
+                                          authProvider.listRestaurant[index].rate!,
                                         //  "5",
                                           style: getLightStyle(
                                               color: ColorManager.lightPrimary),

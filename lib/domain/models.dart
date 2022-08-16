@@ -98,7 +98,7 @@ class RestaurantViews{
       });
   factory RestaurantViews.fromJson(Map<String,dynamic> responseData){
     return RestaurantViews(
-      imageLogo: responseData['imageLogo'],
+      imageLogo: responseData['logo'],
       name: responseData['name'],
       longitude:  responseData['longitude'],
       latitude:  responseData['latitude'],
