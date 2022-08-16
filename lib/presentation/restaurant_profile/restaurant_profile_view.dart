@@ -1,4 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 
+import '../../api/app_url/app_url.dart';
 import '../map_tables/map_tables_view.dart';
 
 
@@ -64,11 +66,42 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                       onTap: (){
                         Get.dialog(
                           Center(
-                            child: Image.asset(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                Spacer(),
+
+                                CachedNetworkImage(
+                                  fit: BoxFit.fill,
+                                  width: double.infinity,
+                                  height: Sizer.getW(context) * 0.7,
+                                  imageUrl:
+                                  "${AppUrl.baseUrlImage}${widget.restaurant.imageLogo!}",
+                                  // "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg",
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                            //    colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                          ),
+                                        ),
+                                      ),
+                                  placeholder: (context, url) =>
+                                      CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                            /*Image.asset(
                               widget.restaurant.imageLogo!,
                               width: double.infinity,
                               height: Sizer.getW(context),
-                            ),
+                            ),*/
                           )
                         );
                       },
@@ -79,8 +112,10 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: AssetImage(widget.restaurant.imageLogo!))),
-                      ),
+                                image:CachedNetworkImageProvider("${
+                                    AppUrl.baseUrlImage}${
+                                    widget.restaurant.imageLogo}",),// AssetImage(widget.restaurant.imageLogo!)
+                            )), ),
                     )),
                 const SizedBox(
                   height: AppSize.s10,
@@ -97,7 +132,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                             fontSize: Sizer.getW(context) * 0.04),
                       ),
                     ),
-                    const Divider(
+                    /*const Divider(
                       height: 0.0,
                       color: ColorManager.lightGray,
                     ),
@@ -108,7 +143,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                           style: getRegularStyle(
                               color: ColorManager.blackF2,
                               fontSize: Sizer.getW(context) * 0.035),
-                        )),
+                        )),*/
                     const Divider(
                       height: 0.0,
                       color: ColorManager.lightGray,
@@ -131,7 +166,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                       height: 0.0,
                       color: ColorManager.lightGray,
                     ),
-                    ListTile(
+                    /*ListTile(
                         leading: Icon(Icons.details),
                         title: Text(
                           widget.restaurant.details!,
@@ -139,7 +174,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                               color: ColorManager.blackF2,
                               fontSize: Sizer.getW(context) * 0.03),
                         )),
-
+                    */
                   ],
                 ),
                 SwipedCardSection(
@@ -224,7 +259,7 @@ class _SwipedCardSectionState extends State<SwipedCardSection> {
               borderRadius: BorderRadius.circular(AppSize.s14),
               image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage(e)
+                  image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${e['image']}",),//AssetImage(e)
               )
           ),
         )

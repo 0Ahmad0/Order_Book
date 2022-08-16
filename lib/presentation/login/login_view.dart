@@ -129,7 +129,7 @@ class _LoginViewState extends State<LoginView> {
                             Const.LOADIG(context);
                             var a =await AppStorage.storageRead(key:AppStorage.phoneNumberKEY);
                             var q =await AppStorage.storageRead(key:AppStorage.isRegisterKEY);
-                            if(await a!=null&&await q!=null){
+                            if( a!=null&& q!=null){
                               String phone =await AppStorage.storageRead(key: AppStorage.phoneNumberKEY);
                               if(await AppStorage.storageRead(key :AppStorage.isRegisterKEY)&&phone==phoneNumber.text.replaceFirst("0","+963" )){
                                 Navigator.pop(context);

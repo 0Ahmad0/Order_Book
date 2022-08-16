@@ -143,7 +143,11 @@ class AuthProvider extends  HomeProvider{
           key: AppStorage.phoneNumberKEY,
           value: userData.phoneNumber
       );
-
+      await   AppStorage.storageWrite(
+          key: AppStorage.isLoginedKEY,
+          value: true
+      );
+      Advance.isLogined=true;
      /* AppStorage.storageWrite(
           key: AppStorage.avatarKEY,
           value: userData.avatarId
@@ -229,7 +233,7 @@ class AuthProvider extends  HomeProvider{
     Map<String,dynamic> responseData= {};
     if(!response.body.isEmpty){
       responseData = json.decode(response.body);
-      print(await responseData);
+      //print(await responseData);
     }
     print("status code ${ response.statusCode}");
     if(response.statusCode==200){

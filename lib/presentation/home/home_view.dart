@@ -387,8 +387,8 @@ print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
                 ),
                 const SizedBox(width: AppSize.s10,),
                 Text(
-                  "Restaurant Name",
-                  // "${authProvider.listTrendingItems[index].restaurant}",
+                  "",
+                  // "${authProvider.listTrendingItems[index].restaurant?.name}",
                   //index == 10 ? "" : "Items ${index + 1}",
                   textAlign: TextAlign.center,
                   style: getLightStyle(

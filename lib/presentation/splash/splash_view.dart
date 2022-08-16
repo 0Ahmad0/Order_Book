@@ -35,15 +35,18 @@ class _SplashViewState extends State<SplashView>
 with SingleTickerProviderStateMixin{
   Timer? _timer;
   late AnimationController _controller;
-  startDelay() {
+  startDelay() async{
+    //print("Advance==> ${Advance.isLogined}" );
     _controller.forward();
-    _timer = Timer(const Duration(seconds: AppConstants.splashDelay), _goNext);
+    _timer = Timer(const Duration(seconds: AppConstants.splashDelay),await _goNext);
   }
 
   _goNext() async{
-    // print("Advance==> ${Advance.isLogined}" );
+    //print("Advance==> ${Advance.isLogined}" );
     // Navigator.pushReplacementNamed(context, Routes.registerRoot);
-    if(await AppStorage.storageRead(key: AppStorage.isLoginedKEY)){
+    bool isLoginedKEY =await AppStorage.storageRead(key: AppStorage.isLoginedKEY);
+    print("isLoginedKEY > ${isLoginedKEY}" );
+    if(await AppStorage.storageRead(key: AppStorage.isLoginedKEY)||Advance.isLogined){
       await DataLocal.getData();
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>
           BottomNavBarView()

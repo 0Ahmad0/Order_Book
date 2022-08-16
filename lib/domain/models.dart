@@ -52,8 +52,8 @@ class Restaurant{
   String? details;
   String? phoneNumber;
   bool? isFavorite;
-  int? rate;
-  List<String>? imagesRestaurant;
+  String? rate;
+  List<dynamic>? imagesRestaurant;
 
   Restaurant(
       {
@@ -63,7 +63,7 @@ class Restaurant{
       required this.details,
       required this.phoneNumber,
        this.isFavorite = false,
-       this.rate = 1,
+       this.rate = "1",
       required this.imagesRestaurant
       });
   factory Restaurant.fromJson(Map<String,dynamic> responseData){
@@ -87,6 +87,7 @@ class RestaurantViews{
   String? latitude;
   bool? isFavorite;
   String? rate;
+  List<dynamic>? images=[];
 
   RestaurantViews(
       {
@@ -97,6 +98,7 @@ class RestaurantViews{
          this.id,
         this.isFavorite = false,
         this.rate = "3",
+        this.images,
       });
   factory RestaurantViews.fromJson(Map<String,dynamic> responseData){
     return RestaurantViews(
@@ -107,6 +109,7 @@ class RestaurantViews{
       id:responseData["id"],
       isFavorite:responseData["isFavorite"]!=null?responseData["isFavorite"]:false,
       rate: responseData['rate']!=null?responseData['rate'].toString().substring(0,2):"3",
+      images: responseData['images'],
     );
   }
 }
