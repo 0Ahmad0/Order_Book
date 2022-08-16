@@ -281,6 +281,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                 // "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg",
                                                 imageBuilder: (context, imageProvider) => Container(
                                                   decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(AppSize.s14),
                                                     image: DecorationImage(
                                                         image: imageProvider,
                                                         fit: BoxFit.cover,
@@ -288,7 +289,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                         ),
                                                   ),
                                                 ),
-                                                placeholder: (context, url) => CircularProgressIndicator(),
+                                                placeholder: (context, url) => Const.SHOWLOADINGINDECATOR(),
                                                 errorWidget: (context, url, error) => Icon(Icons.error),
                                               ),
                                             ),
@@ -308,7 +309,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                   style: getBoldStyle(
                                                       color: ColorManager.white,
                                                       fontSize:
-                                                      Sizer.getW(context) * 0.045),
+                                                      Sizer.getW(context) * 0.035),
                                                 ),
                                                 const SizedBox(
                                                   height: AppSize.s10,

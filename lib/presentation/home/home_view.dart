@@ -191,128 +191,154 @@ class _HomeViewState extends State<HomeView> {
     ;
   }
 
-  Widget offerSection(index,_) {
-    return  StreamBuilder<bool>(
-      builder: (context, snapshot) {
-         //if(snapshot.data==null){
-         //  print("Ff");
+  Widget offerSection(index, _) {
+    return GestureDetector(
+      onTap: () {
+        print(index);
+        // print(_images["img"][index]);
+        showDialog(
+            context: _,
+            builder: (__) {
+              return Dismissible(
+                direction: DismissDirection.vertical,
+                key: Key(index.toString()),
+                onDismissed: (v) {
+                  Navigator.pop(context);
+                },
+                child: StoryPageView(
+                    onPageLimitReached: () {
+                      Navigator.pop(context);
+                    },
+                    onPageChanged: (pageIndex) {
+                      index = pageIndex;
+                      // _homeViewModel.onStoryChanged(pageIndex);
+                      setState(() {});
+                    },
+                    itemBuilder: (__, pageIndex, storyIndex) {
+                      return Stack(
+                        children: [
+                          Positioned.fill(
+                              child: Container(
+                                color: ColorManager.black,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Spacer(),
+                                    Spacer(),
 
-          // return SizedBox();
-
-           return GestureDetector(
-             onTap: () {
-               print(index);
-              // print(_images["img"][index]);
-               showDialog(
-                   context: _, builder: (__){
-                 return Dismissible(
-                   direction: DismissDirection.vertical,
-                   key: Key(index.toString()),
-                   onDismissed: (v){
-                     Navigator.pop(context);
-                   },
-                   child:
-                   StoryPageView(
-                       onPageLimitReached: (){
-                         Navigator.pop(context);
-                       },
-                       onPageChanged: (pageIndex){
-                         index = pageIndex;
-                         // _homeViewModel.onStoryChanged(pageIndex);
-                        setState((){});
-                       },
-                       itemBuilder: (__,pageIndex,storyIndex){
-                         return Stack(
-                           children: [
-                             Positioned.fill(
-                               child: Container(color: Colors.black),
-                             ),
-
-                             Positioned.fill(
-                               child:
-                               Image.asset(
-                                 _images["img"][pageIndex],//TODO: hariri do this
-                                 fit: BoxFit.cover,
-                                 width: 100,
-                               ),
-                             ),
-                             Padding(
-                               padding: const EdgeInsets.only(top: 44, left: 8),
-                               child: Row(
-                                 children: [
-                                   Container(
-                                     height: 32,
-                                     width: 32,
-                                     decoration: BoxDecoration(
-                                       image: DecorationImage(//TODO: hariri do this
-                                         image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listOffers[index].restaurantViews?.imageLogo}",),//AssetImage(_images["img"][pageIndex]),
-                                         fit: BoxFit.cover,
-                                       ),
-                                       shape: BoxShape.circle,
-                                     ),
-                                   ),
-                                   const SizedBox(
-                                     width: 8,
-                                   ),
-                                   Text(
-                                    "${ authProvider.listOffers[index].name}",
-                                 //    "RRRR${index+5}",
-                                     style: TextStyle(
-                                       fontSize: 17,
-                                       color: Colors.white,
-                                       fontWeight: FontWeight.bold,
-                                     ),
-                                   ),
-                                 ],
-                               ),
-                             ),
-                           ],
-                         );
-                       },
-
-                       storyLength: (indexPage){
-                         print(indexPage);
-                         return 1;
-                       },
-                       pageLength: authProvider.listOffers.length
-                   ),
-                 );
-               });
-             },
-             child: Container(
-               width: Sizer.getW(context) * 0.27,
-               margin: const EdgeInsets.symmetric(
-                   horizontal: AppMargin.m4, vertical: AppMargin.m8),
-               padding: const EdgeInsets.all(AppPadding.p14),
-               alignment: Alignment.center,
-               decoration: BoxDecoration(
-                 // color: Colors.orange,
-                   borderRadius: BorderRadius.circular(AppSize.s14),
-                   image: DecorationImage(
-                       colorFilter: ColorFilter.mode(
-                           ColorManager.black.withOpacity(.6), BlendMode.darken),
-                       fit: BoxFit.cover,
-                     //TODO: hariri do this
-                       image:CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",),
-        // AssetImage(index == 0
-                           //? "assets/images/img.png"
-                           //: //_images["img"][index]))),
-               )),
-               child: Transform.rotate(
-                 angle: 290,
-                 child: Text(
-                   //index == 0 ? "" :
-                   "Offer ${index * 2}%",
-                   textAlign: TextAlign.center,
-                   style: getMediumStyle(
-                       color: ColorManager.white,
-                       fontSize: Sizer.getW(context) * 0.04),
-                 ),
-               ),
-             ),
-           );
-
-      });
+                                    CachedNetworkImage(
+                                      fit: BoxFit.fill,
+                                      width: double.infinity,
+                                      height: Sizer.getW(context) * 0.7,
+                                      imageUrl:
+                                      "${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",
+                                      // "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg",
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                                //    colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                              ),
+                                            ),
+                                          ),
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
+                                    Spacer(),
+                                    Container(
+                                      padding: const EdgeInsets.all(AppPadding.p20),
+                                      child: Text(
+                                        "${authProvider.listOffers[index].description}",
+                                        textAlign: TextAlign.center,
+                                        style: getRegularStyle(color: ColorManager.white,
+                                            fontSize: Sizer.getW(context) * 0.035
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 44, left: 8),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 32,
+                                  width: 32,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                        "${AppUrl.baseUrlImage}${authProvider.listOffers[index].restaurantViews?.imageLogo}",
+                                      ),
+                                      //AssetImage(_images["img"][pageIndex]),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "${authProvider.listOffers[index].name}",
+                                  //    "RRRR${index+5}",
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    storyLength: (indexPage) {
+                      print(indexPage);
+                      return 1;
+                    },
+                    pageLength: authProvider.listOffers.length),
+              );
+            });
+      },
+      child: Container(
+        width: Sizer.getW(context) * 0.27,
+        margin: const EdgeInsets.symmetric(
+            horizontal: AppMargin.m4, vertical: AppMargin.m8),
+        padding: const EdgeInsets.all(AppPadding.p14),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          // color: Colors.orange,
+            borderRadius: BorderRadius.circular(AppSize.s14),
+            image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  ColorManager.black.withOpacity(.6), BlendMode.darken),
+              fit: BoxFit.cover,
+              image: CachedNetworkImageProvider(
+                "${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",
+              ),
+              // AssetImage(index == 0
+              //? "assets/images/img.png"
+              //: //_images["img"][index]))),
+            )),
+        child: Transform.rotate(
+          angle: 290,
+          child: Text(
+            //index == 0 ? "" :
+            "Offer ${index * 2}%",
+            textAlign: TextAlign.center,
+            style: getMediumStyle(
+                color: ColorManager.white,
+                fontSize: Sizer.getW(context) * 0.04),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget itemsSection(index,_) {
