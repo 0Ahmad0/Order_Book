@@ -77,6 +77,37 @@ class Restaurant{
     );
   }
 }
+class RestaurantViews{
+  String? imageLogo;
+  String? name;
+  int? id;
+  String? longitude;
+  String? latitude;
+  bool? isFavorite;
+  String? rate;
+
+  RestaurantViews(
+      {
+         this.imageLogo,
+         this.name,
+         this.longitude,
+         this.latitude,
+         this.id,
+        this.isFavorite = false,
+        this.rate = "3",
+      });
+  factory RestaurantViews.fromJson(Map<String,dynamic> responseData){
+    return RestaurantViews(
+      imageLogo: responseData['imageLogo'],
+      name: responseData['name'],
+      longitude:  responseData['longitude'],
+      latitude:  responseData['latitude'],
+      id:responseData["id"],
+      isFavorite:responseData["isFavorite"]!=null?responseData["isFavorite"]:false,
+      rate: responseData['rate']!=null?responseData['rate'].toString().substring(0,2):"3",
+    );
+  }
+}
 //Offers
 class Offers{
   String? id;

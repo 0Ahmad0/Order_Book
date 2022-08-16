@@ -13,7 +13,8 @@ class HomeProvider extends ChangeNotifier{
   late List<Offers> listOffers ;
   late List<Restaurant> listRestaurants;
   late List<Item> listTrendingItems;
-  late List<Restaurant> listRatingRestaurant;
+  late List<RestaurantViews> listRatingRestaurant;
+  bool recRatingRestaurant=false;
   Future<Map<String,dynamic>> trendingItems(String token) async{
 //    print( Uri.parse( AppUrl.login));
 
@@ -39,8 +40,9 @@ class HomeProvider extends ChangeNotifier{
     ).then(onValuetrendingOffers).catchError(onError1);
   }
   Future<Map<String,dynamic>> ratingRestaurant(String token) async{
-    print( Uri.parse( AppUrl.login));
-
+    //print( Uri.parse( AppUrl.login));
+    //print( token);
+    recRatingRestaurant=false;
     return await get(
         Uri.parse( AppUrl.ratingRestaurant)
         ,headers: {
@@ -133,9 +135,10 @@ int i=0;
       listRatingRestaurant=[];
       //listTrendingItems.clear();
       for(var element in responseData["data"]){
-        Restaurant restaurant =Restaurant.fromJson(element);
-        listRatingRestaurant.add(restaurant);
+        RestaurantViews restaurantViews =RestaurantViews.fromJson(element);
+        listRatingRestaurant.add(restaurantViews);
       }
+      recRatingRestaurant=true;
       result ={
         'status':true,
         'message':"Successful Request",
