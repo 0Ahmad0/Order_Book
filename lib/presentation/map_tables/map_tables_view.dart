@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:orderbook/presentation/add_reservations/add_reservations_view.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
@@ -66,6 +68,7 @@ class _MapTablesViewState extends State<MapTablesView> {
               itemBuilder: (_,index){
                 return GestureDetector(
                   onTap: () {
+                    Get.to(()=>AddReservationsView());
                   },
                   child: Stack(
                     children: [

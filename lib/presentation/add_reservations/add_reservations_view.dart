@@ -11,6 +11,7 @@ import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:intl/intl.dart';
 
 import '../login/login_view.dart';
+import '../resources/strings_manager.dart';
 
 
 class AddReservationsView extends StatefulWidget {
@@ -21,14 +22,14 @@ class AddReservationsView extends StatefulWidget {
 }
 
 class _AddReservationsViewState extends State<AddReservationsView> {
-  final personNumber = TextEditingController();
+  final personNumber = TextEditingController(text: "1");
   final tableNumber = TextEditingController(text: "0");
   final dateReservations = TextEditingController(text: "${
   DateFormat.yMd().format(DateTime.now())
   }");
   final reviews = TextEditingController();
    DateTime _selectedDate = DateTime.now();
-  int numPerson = 0;
+  int numPerson = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +47,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage(ImagesAssets.loginBackground)),
+                      image: AssetImage(ImagesAssets.tableImage)),
                   borderRadius: BorderRadius.circular(AppSize.s14),
                   boxShadow: [
                     BoxShadow(
@@ -71,7 +72,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                            "Table Number",
+                            AppStrings.tableNumber,
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035
@@ -108,7 +109,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                            "Person Number",
+                            AppStrings.personNumber,
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035
@@ -121,8 +122,8 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                                 children: [
                                   InkWell(
                                     onTap: (){
-                                      if(numPerson>=0)
-                                        numPerson++;
+                                      if(numPerson>1)
+                                        numPerson--;
                                       personNumber.text = numPerson.toString();
 
                                       setState((){});
@@ -154,8 +155,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                                   SizedBox(width: AppSize.s6,),
                                   InkWell(
                                     onTap: (){
-                                      if(numPerson>=0)
-                                        numPerson--;
+                                        numPerson++;
                                       personNumber.text = numPerson.toString();
                                       setState((){});
                                     },
@@ -180,7 +180,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                            "Date Reservations",
+                            AppStrings.dateReservations,
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035
@@ -224,7 +224,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                            "Reviews ",
+                            AppStrings.reviews,
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035
