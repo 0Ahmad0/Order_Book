@@ -124,6 +124,7 @@ class Offers{
     return Offers(
       id: responseData['id'],
       name:responseData['name'],
+      image:responseData['image'],
       description:responseData['description'],
       price:responseData['price'],
       restaurantViews:RestaurantViews.fromJson(responseData['vendor']),

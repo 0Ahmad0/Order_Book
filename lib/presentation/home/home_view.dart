@@ -210,25 +210,12 @@ class _HomeViewState extends State<HomeView> {
                              ),
 
                              Positioned.fill(
-                               child:   CachedNetworkImage(
-                                 imageUrl: "${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",
-                                 imageBuilder: (context, imageProvider) => Container(
-                                   decoration: BoxDecoration(
-                                     image: DecorationImage(
-                                         image: imageProvider,
-                                         fit: BoxFit.cover,
-                                         colorFilter:
-                                         ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
-                                   ),
-                                 ),
-                                 placeholder: (context, url) => CircularProgressIndicator(),
-                                 errorWidget: (context, url, error) => Icon(Icons.error),
-                               ),
-                               /*Image.asset(
-                                 _images["img"][pageIndex],
+                               child:
+                               Image.asset(
+                                 _images["img"][pageIndex],//TODO: hariri do this
                                  fit: BoxFit.cover,
                                  width: 100,
-                               ),*/
+                               ),
                              ),
                              Padding(
                                padding: const EdgeInsets.only(top: 44, left: 8),
@@ -238,8 +225,8 @@ class _HomeViewState extends State<HomeView> {
                                      height: 32,
                                      width: 32,
                                      decoration: BoxDecoration(
-                                       image: DecorationImage(
-                                         image: AssetImage(_images["img"][pageIndex]),
+                                       image: DecorationImage(//TODO: hariri do this
+                                         image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listOffers[index].restaurantViews?.imageLogo}",),//AssetImage(_images["img"][pageIndex]),
                                          fit: BoxFit.cover,
                                        ),
                                        shape: BoxShape.circle,
@@ -286,13 +273,17 @@ class _HomeViewState extends State<HomeView> {
                        colorFilter: ColorFilter.mode(
                            ColorManager.black.withOpacity(.6), BlendMode.darken),
                        fit: BoxFit.cover,
-                       image: AssetImage(index == 0
-                           ? "assets/images/img.png"
-                           : _images["img"][index]))),
+                     //TODO: hariri do this
+                       image:CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",),
+        // AssetImage(index == 0
+                           //? "assets/images/img.png"
+                           //: //_images["img"][index]))),
+               )),
                child: Transform.rotate(
                  angle: 290,
                  child: Text(
-                   index == 0 ? "" : "Offer ${index * 2}%",
+                   //index == 0 ? "" :
+                   "Offer ${index * 2}%",
                    textAlign: TextAlign.center,
                    style: getMediumStyle(
                        color: ColorManager.white,
@@ -306,6 +297,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget itemsSection(index,_) {
+print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
     return Container(
       width: Sizer.getW(context) * 0.7,
       height: Sizer.getW(context) * 0.15,
@@ -319,12 +311,14 @@ class _HomeViewState extends State<HomeView> {
           image: DecorationImage(
               colorFilter: ColorFilter.mode(
                   ColorManager.black.withOpacity(.6), BlendMode.darken),
-              fit: BoxFit.cover,
-              image: AssetImage(index == 0
+              fit: BoxFit.cover,//TODO: hariri do this
+              image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}",),
+    /*AssetImage(index == 0
                   ? "assets/images/img.png"
-                  : _images["img"][index]))),
+                  : _images["img"][index])*/)),
       child: Text(
-        index == 0 ? "" : "Items ${index + 1}",
+        "${authProvider.listTrendingItems[index].name}",
+        //index == 10 ? "" : "Items ${index + 1}",
         textAlign: TextAlign.center,
         style: getMediumStyle(
             color: ColorManager.white, fontSize: Sizer.getW(context) * 0.035),
