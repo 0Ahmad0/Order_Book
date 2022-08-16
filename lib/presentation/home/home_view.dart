@@ -158,14 +158,33 @@ class _HomeViewState extends State<HomeView> {
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),
           ),
-          Expanded(
-              child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _images["img"].length,
-            itemBuilder: (_, index) {
-              return restaurantSection(index,context);
+          FutureBuilder(
+            future: authProvider.trendingRestaurant(Advance.token),
+            builder: (
+                context, snapshot,) {
+              //  print(snapshot.error);
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Expanded(child: Const.SHOWLOADINGINDECATOR());
+                //Const.CIRCLE(context);
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return const Text('Error');
+                } else if (snapshot.hasData) {
+                  return
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: authProvider.listTrendingRestaurant.length,
+                            itemBuilder: (ctx, index) => restaurantSection(index,context)));
+                } else {
+                  return const Text('Empty data');
+                }
+              } else {
+                return Text('State: ${snapshot.connectionState}');
+              }
             },
-          )),
+          ),
+
         ],
       ),
     )
@@ -340,9 +359,10 @@ print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
               colorFilter: ColorFilter.mode(
                   ColorManager.black.withOpacity(.6), BlendMode.darken),
               fit: BoxFit.cover,
-              image: AssetImage(index == 0
+              image:CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listTrendingRestaurant[index].imageLogo}",),
+              /*AssetImage(index == 0
                   ? "assets/images/img.png"
-                  : _images["img"][index]))),
+                  : _images["img"][index]),*/)),
       child: Stack(
         alignment: Alignment.topLeft,
         children: [
@@ -351,7 +371,7 @@ print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
             child: SvgPicture.asset(ImagesAssets.splashLogo),
           ),
           Text(
-            index == 0 ? "" : "Restaurant ${index + 1}",
+            "${authProvider.listTrendingRestaurant[index].name}",  // index == 0 ? "" : "Restaurant ${index + 1}",
             textAlign: TextAlign.center,
             style: getMediumStyle(
                 color: ColorManager.white,
@@ -395,7 +415,8 @@ print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "4",
+                    "${authProvider.listTrendingRestaurant[index].rate}",
+                   // "4",
                     style: getRegularStyle(
                         color: ColorManager.black,
                         fontSize: Sizer.getW(context) * 0.035),
