@@ -60,6 +60,10 @@ class AppStrings {
   static const shoppingCart= "Shopping Cart";
   static const confirmOrder= "Confirm Order";
   static const saveText= " Save ";
+  static const tableNumber= "Table Number";
+  static const personNumber= "Person Number";
+  static const dateReservations= "Date Reservations";
+  static const reviews= "Reviews";
   static const onBoardingsubTitle1 = "Hello OnBoarding SubTittle 1";
   static const onBoardingTitle2 = "Hello OnBoarding Tittle 2";
   static const onBoardingsubTitle2 = "Hello OnBoarding SubTittle 2";

@@ -172,4 +172,12 @@ class Const{
       );
     }
 
+    static SHOWLOADINGINDECATOR(){
+      return Center(
+        child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(ColorManager.lightPrimary)
+        ),
+      );
+    }
+
 }
