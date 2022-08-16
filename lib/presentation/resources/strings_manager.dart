@@ -59,6 +59,7 @@ class AppStrings {
   static const submit= "Submit";
   static const shoppingCart= "Shopping Cart";
   static const confirmOrder= "Confirm Order";
+  static const saveText= " Save ";
   static const onBoardingsubTitle1 = "Hello OnBoarding SubTittle 1";
   static const onBoardingTitle2 = "Hello OnBoarding Tittle 2";
   static const onBoardingsubTitle2 = "Hello OnBoarding SubTittle 2";

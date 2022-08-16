@@ -29,6 +29,7 @@ class _ProfileViewState extends State<ProfileView> {
   final phoneNumber = TextEditingController(text: DataLocal.user.phoneNumber/*"+963 954872922"*/);
   final name = TextEditingController(text: DataLocal.user.name.isEmpty?"Ahmad Alhariri":DataLocal.user.name);
   bool type = false;
+  bool edit = true;
   Map _images = {
     "img": [
       "assets/images/5.jpg",
@@ -169,30 +170,37 @@ class _ProfileViewState extends State<ProfileView> {
             const SizedBox(
               height: AppSize.s20,
             ),
-            CustomTextFiled(
-              controller: name,
-              textInputType: TextInputType.text,
-              textInputAction: TextInputAction.done,
-              maxLength: null,
-              validator: (val) {
-                if (val!.trim().isEmpty) {
-                  return AppStrings.fieldNotEmpty;
-                }
+            Consumer(
+              builder: (_,__,___){
+                return   IgnorePointer(
+                  ignoring: edit,
+                  child: CustomTextFiled(
+                    controller: name,
+                    textInputType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                    maxLength: null,
+                    validator: (val) {
+                      if (val!.trim().isEmpty) {
+                        return AppStrings.fieldNotEmpty;
+                      }
 
-                return null;
+                      return null;
+                    },
+                    onChange: (val) {
+                      if (val.trim().isNotEmpty) {
+                        type = true;
+                        setState(() {});
+                      } else {
+                        type = false;
+                        setState(() {});
+                      }
+                    },
+                    prefixIcon: Icons.edit,
+                    hintText: AppStrings.name,
+                    validFiled: type,
+                  ),
+                );
               },
-              onChange: (val) {
-                if (val.trim().isNotEmpty) {
-                  type = true;
-                  setState(() {});
-                } else {
-                  type = false;
-                  setState(() {});
-                }
-              },
-              prefixIcon: Icons.edit,
-              hintText: AppStrings.name,
-              validFiled: type,
             ),
             const SizedBox(
               height: AppSize.s10,
@@ -215,7 +223,7 @@ class _ProfileViewState extends State<ProfileView> {
               height: AppSize.s10,
             ),
             ButtonApp(
-                text: " Save ",
+                text: AppStrings.saveText,
                 onTap: () async {
                   Const.LOADIG(context);
                   var result =await authProvider.updateProfile(Advance.token,name.text,1);
@@ -237,63 +245,6 @@ class _ProfileViewState extends State<ProfileView> {
                     Navigator.pop(context);
                   });*/
                 }),
-            const SizedBox(
-              height: AppSize.s10,
-            ),
-            Row(
-              children: [
-                Expanded(
-                    child: GestureDetector(
-                      onTap: (){},
-                      child: Container(
-                  alignment: Alignment.center,
-                  height: Sizer.getW(context) * 0.15,
-                  decoration: BoxDecoration(
-                        color: ColorManager.lightPrimary.withOpacity(.85),
-                        borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(AppSize.s8))),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.restaurant,color: ColorManager.white,),
-                        Text(
-                          "Fovarite Restaurant",
-                          style: getRegularStyle(color: ColorManager.white,
-                          ),
-                        ),
-                      ],
-                  ),
-                ),
-                    )),
-                const SizedBox(
-                  width: AppSize.s10,
-                ),
-                Expanded(
-                    child: GestureDetector(
-                      onTap: (){},
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: Sizer.getW(context) * 0.15,
-                        decoration: BoxDecoration(
-                            color: ColorManager.lightPrimary.withOpacity(.85),
-                            borderRadius: BorderRadius.horizontal(
-                                right: Radius.circular(AppSize.s8))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(Icons.report,color: ColorManager.white,),
-                            Text(
-                              AppStrings.reports,
-                              style: getRegularStyle(color: ColorManager.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )),
-
-              ],
-            )
           ],
         ),
       ),
