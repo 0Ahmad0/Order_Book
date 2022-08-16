@@ -187,7 +187,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                 if (snapshot.hasError) {
                   return const Text('Error');
                 } else if (authProvider.recRestaurant) {
-
+                 // print("${AppUrl.baseUrlImage}${authProvider.listRestaurant[0].imageLogo}");
                   return
                     Expanded(
                       child: ListView.builder(
@@ -247,17 +247,33 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                       .withOpacity(.8),
                                                   borderRadius: BorderRadius.circular(
                                                       AppSize.s14),
-                                                  image: DecorationImage(
+                                                  /*image: DecorationImage(
                                                       fit: BoxFit.fill,
                                                       image:
-                                                      // CachedNetworkImageProvider(
-                                                      //
-                                                      //   // "http://order-book.chi-team.com/api/storage/app/public/vendorsLogos/qNmqkRmFMOaE6qA07vCTfx4oST3HdX8iPi1MRwHA.png"
-                                                      //   "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg"
-                                                      // )
+                                                       CachedNetworkImageProvider(
 
-                                                      AssetImage(ImagesAssets.tableImage)
-                                                  )
+                                                         // "http://order-book.chi-team.com/api/storage/app/public/vendorsLogos/qNmqkRmFMOaE6qA07vCTfx4oST3HdX8iPi1MRwHA.png"
+                                                       //  "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg"
+                                                             "${AppUrl.baseUrlImage}${authProvider.listRestaurant[index].imageLogo}"
+                                                       )
+
+                                                     // AssetImage(ImagesAssets.tableImage)
+                                                  )*/
+                                              ),
+                                              child: CachedNetworkImage(
+                                                imageUrl: "${AppUrl.baseUrlImage}${authProvider.listRestaurant[index].imageLogo}",
+                                                // "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg",
+                                                imageBuilder: (context, imageProvider) => Container(
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover,
+                                                    //    colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                                                        ),
+                                                  ),
+                                                ),
+                                                placeholder: (context, url) => CircularProgressIndicator(),
+                                                errorWidget: (context, url, error) => Icon(Icons.error),
                                               ),
                                             ),
                                           )),

@@ -111,18 +111,37 @@ class RestaurantViews{
 //Offers
 class Offers{
   String? id;
+  String? name;
+  String? description;
+  int? price;
   String? image;
-  Restaurant? restaurant;
-  String? text;
-  Offers({this.id,this.image,this.restaurant,this.text});
+  String? from_date;
+  RestaurantViews? restaurantViews;
+  String? to_date;
+
   factory Offers.fromJson(Map<String,dynamic> responseData){
     return Offers(
       id: responseData['id'],
-      image: responseData['image'],
-      text: responseData['text'],
+      name:responseData['name'],
+      description:responseData['description'],
+      price:responseData['price'],
+      restaurantViews:responseData['vendor'],
+      to_date:responseData['to_date'],
+      from_date:responseData['from_date'],
+
    //   restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
   }
+
+  Offers(
+      {this.id,
+      this.name,
+      this.description,
+      this.price,
+      this.image,
+      this.from_date,
+      this.restaurantViews,
+      this.to_date});
 }
 //item
 class Item{
