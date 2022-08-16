@@ -14,6 +14,7 @@ class AppStorage {
   static const phoneNumberKEY = "phoneNumber";
   static const tokenKEY = "token";
   static const idKEY = "id";
+  static const isRegisterKEY = "isRegister";
 
   static init() async {
     if (!_storage.hasData(isLoginedKEY)) {
@@ -25,6 +26,11 @@ class AppStorage {
       storageWrite(key: languageKEY, value: true);
     } else {
       Advance.language = await storageRead(key: languageKEY);
+    }
+    if (!_storage.hasData(isRegisterKEY)) {
+      storageWrite(key: isRegisterKEY, value: false);
+    } else {
+      Advance.language = await storageRead(key: isRegisterKEY);
     }
     if (!_storage.hasData(themeKEY)) {
       storageWrite(key: themeKEY, value: false);
@@ -51,6 +57,7 @@ static depose() async {
   await _storage.remove(idKEY);
   await _storage.remove(phoneNumberKEY);
   await _storage.write(isLoginedKEY, false);
+  await _storage.write(isRegisterKEY, false);
 }
 
 }

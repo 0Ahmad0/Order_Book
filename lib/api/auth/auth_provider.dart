@@ -102,6 +102,15 @@ class AuthProvider extends  HomeProvider{
           key: AppStorage.tokenKEY,
           value: userData.token
       );
+      await   AppStorage.storageWrite(
+          key: AppStorage.isRegisterKEY,
+          value: true
+      );
+      Advance.isRegisterKEY =true;
+      await AppStorage.storageWrite(
+          key: AppStorage.phoneNumberKEY,
+          value: userData.phoneNumber
+      );
       result ={
         'status':true,
         'message':"Successful Request",
@@ -134,10 +143,7 @@ class AuthProvider extends  HomeProvider{
           key: AppStorage.phoneNumberKEY,
           value: userData.phoneNumber
       );
-      await   AppStorage.storageWrite(
-          key: AppStorage.isLoginedKEY,
-          value: true
-      );
+
      /* AppStorage.storageWrite(
           key: AppStorage.avatarKEY,
           value: userData.avatarId

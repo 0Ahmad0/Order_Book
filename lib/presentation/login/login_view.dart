@@ -24,6 +24,7 @@ import '../resources/routes_manager.dart';
 import '../resources/style_manager.dart';
 import '../resources/values_manager.dart';
 import '../utils/const.dart';
+import '../utils/dataLocal.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -48,6 +49,25 @@ class _LoginViewState extends State<LoginView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+  }
+  Future<void> login(AuthProvider authProvider,) async {
+    Const.LOADIG(context);
+    var result =await authProvider.Login( phoneNumber.text.replaceFirst("0","+963" ));
+    print(result);
+    Const.TOAST(context,textToast: result["message"]);
+    Navigator.pop(context);
+    if(result["status"]){
+      await DataLocal.getData();
+      Navigator.pop(context);
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
+      /// SnackBar(content: Text("k"));
+      //print("done register");
+      // Const.TOAST(context,textToast: result["message"]);
+    }else{
+      /// SnackBar(content: Text("o"));
+
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -107,6 +127,12 @@ class _LoginViewState extends State<LoginView> {
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             Const.LOADIG(context);
+                            String phone =await AppStorage.storageRead(key: AppStorage.phoneNumberKEY);
+
+                            if(await AppStorage.storageRead(key :AppStorage.isRegisterKEY)&&phone==phoneNumber.text.replaceFirst("0","+963" )){
+                              Navigator.pop(context);
+                              login(authProvider);
+                            }
                             var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
                             Navigator.pop(context);
                             if(!result["status"]){

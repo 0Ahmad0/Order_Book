@@ -14,7 +14,7 @@ class DataLocal{
       token: await AppStorage.storageRead(key:AppStorage.tokenKEY),
       id: await AppStorage.storageRead(key:AppStorage.idKEY),
     );
-   print(user.name);
+   //print(user.name);
     Advance.theme =  await AppStorage.storageRead(key:AppStorage.themeKEY);
     Advance.language = await AppStorage.storageRead(key:AppStorage.languageKEY);
     Advance.isLogined =  await AppStorage.storageRead(key:AppStorage.isLoginedKEY);
