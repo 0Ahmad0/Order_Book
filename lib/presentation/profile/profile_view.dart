@@ -171,6 +171,11 @@ class _ProfileViewState extends State<ProfileView> {
               height: AppSize.s20,
             ),
             CustomTextFiled(
+              onSubmit: (val){
+                edit = true;
+                type = false;
+                setState((){});
+              },
               readOnly: edit,
               controller: name,
               textInputType: TextInputType.text,

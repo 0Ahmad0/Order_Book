@@ -91,7 +91,9 @@ class _HomeViewState extends State<HomeView> {
              context, snapshot,) {
           //  print(snapshot.error);
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return Expanded(
+                child: Const.SHOWLOADINGINDECATOR()
+              );
                //Const.CIRCLE(context);
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
@@ -126,7 +128,7 @@ class _HomeViewState extends State<HomeView> {
                 context, snapshot,) {
               //  print(snapshot.error);
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return Expanded(child: Const.SHOWLOADINGINDECATOR());
                 //Const.CIRCLE(context);
               } else if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {

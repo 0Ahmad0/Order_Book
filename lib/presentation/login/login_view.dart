@@ -295,6 +295,7 @@ class CustomTextFiled extends StatefulWidget {
   final int? maxLength;
   var validator;
   var onChange;
+  var onSubmit;
   final IconData prefixIcon;
   final String hintText;
   var onTap;
@@ -311,6 +312,7 @@ class CustomTextFiled extends StatefulWidget {
        this.maxLength = 0,
       required this.validator,
       required this.onChange,
+       this.onSubmit,
       required this.prefixIcon,
       required this.hintText,
         this.onTap = null,
@@ -335,6 +337,7 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
       autofocus: widget.autoFocus,
       validator: widget.validator,
       onChanged: widget.onChange,
+      onFieldSubmitted: widget.onSubmit,
       decoration: InputDecoration(
         prefixIcon: IconButton(
           icon:  Icon(widget.prefixIcon),
