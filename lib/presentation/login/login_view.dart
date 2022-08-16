@@ -297,7 +297,9 @@ class CustomTextFiled extends StatefulWidget {
   var onChange;
   final IconData prefixIcon;
   final String hintText;
+  var onTap;
   bool validFiled;
+  bool readOnly;
 
 
    CustomTextFiled(
@@ -311,7 +313,9 @@ class CustomTextFiled extends StatefulWidget {
       required this.onChange,
       required this.prefixIcon,
       required this.hintText,
-        this.validFiled = false
+        this.onTap = null,
+        this.validFiled = false,
+        this.readOnly = false
       });
 
   @override
@@ -322,6 +326,7 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: widget.readOnly,
       controller: widget.controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: widget.textInputType,
@@ -331,7 +336,10 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
       validator: widget.validator,
       onChanged: widget.onChange,
       decoration: InputDecoration(
-        prefixIcon: Icon(widget.prefixIcon),
+        prefixIcon: IconButton(
+          icon:  Icon(widget.prefixIcon),
+          onPressed: widget.onTap,
+        ),
         suffixIcon: widget.validFiled
             ? IconButton(
                 icon: Icon(Icons.close),

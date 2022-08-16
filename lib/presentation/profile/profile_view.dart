@@ -170,37 +170,34 @@ class _ProfileViewState extends State<ProfileView> {
             const SizedBox(
               height: AppSize.s20,
             ),
-            Consumer(
-              builder: (_,__,___){
-                return   IgnorePointer(
-                  ignoring: edit,
-                  child: CustomTextFiled(
-                    controller: name,
-                    textInputType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    maxLength: null,
-                    validator: (val) {
-                      if (val!.trim().isEmpty) {
-                        return AppStrings.fieldNotEmpty;
-                      }
-
-                      return null;
-                    },
-                    onChange: (val) {
-                      if (val.trim().isNotEmpty) {
-                        type = true;
-                        setState(() {});
-                      } else {
-                        type = false;
-                        setState(() {});
-                      }
-                    },
-                    prefixIcon: Icons.edit,
-                    hintText: AppStrings.name,
-                    validFiled: type,
-                  ),
-                );
+            CustomTextFiled(
+              readOnly: edit,
+              controller: name,
+              textInputType: TextInputType.text,
+              textInputAction: TextInputAction.done,
+              maxLength: null,
+              validator: (val) {
+                if (val!.trim().isEmpty) {
+                  return AppStrings.fieldNotEmpty;
+                }
+                return null;
               },
+              onChange: (val) {
+                if (val.trim().isNotEmpty) {
+                  type = true;
+                  setState(() {});
+                } else {
+                  type = false;
+                  setState(() {});
+                }
+              },
+              prefixIcon: Icons.edit,
+              onTap: (){
+                edit = false;
+                setState((){});
+              },
+              hintText: AppStrings.name,
+              validFiled: type,
             ),
             const SizedBox(
               height: AppSize.s10,
@@ -232,6 +229,7 @@ class _ProfileViewState extends State<ProfileView> {
                   Navigator.pop(context);
 
                   if(result["status"]){
+                    edit = true;
                     print(name);
                     /// SnackBar(content: Text("k"));
                     //print("done register");
