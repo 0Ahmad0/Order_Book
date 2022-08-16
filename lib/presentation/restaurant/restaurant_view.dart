@@ -189,7 +189,6 @@ class _RestaurantViewState extends State<RestaurantView> {
                       child: ListView.builder(
                         itemCount: listRestaurant.length,
                         itemBuilder: (_, index) {
-                          print(AppUrl.baseUrlImage+listRestaurant[index].imageLogo!);
 
                           return GestureDetector(
                             onTap: () {
@@ -253,7 +252,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                       //   "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg"
                                                       // )
 
-                                                      AssetImage(ImagesAssets.loginBackground)
+                                                      AssetImage(ImagesAssets.tableImage)
                                                   )
                                               ),
                                             ),
@@ -312,7 +311,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          listRestaurant[index].rate!,
+                                          "${listRestaurant[index].rate!}",
                                         //  "5",
                                           style: getLightStyle(
                                               color: ColorManager.lightPrimary),
