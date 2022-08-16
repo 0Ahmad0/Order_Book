@@ -1,6 +1,8 @@
 const String imagePath = "assets/images";
 class ImagesAssets{
   static const splashLogo = "$imagePath/splash_logo.svg";
+  static const splashLogoCup = "$imagePath/cup.svg";
+  static const splashLogoSyrcle = "$imagePath/cyrcle.svg";
   static const splashBackground = "$imagePath/backSplash.png";
   static const loginBackground = "$imagePath/backLogin.jpg";
   static const registerBottomWave = "$imagePath/bottomwave.png";

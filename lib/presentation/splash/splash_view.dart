@@ -81,18 +81,33 @@ with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.blackF2,
-      body: Center(
-        child:  RotationTransition(
-          turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-          child: ZoomIn(
-            duration: Duration(milliseconds: 1500),
-            child: SvgPicture.asset(
-              ImagesAssets.splashLogo,
-              width: Sizer.getW(context) * 0.35,
-              height: Sizer.getW(context) * 0.35,
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Center(
+            child: RotationTransition(
+              turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+              child: ZoomIn(
+                duration: Duration(milliseconds: 1500),
+                child: SvgPicture.asset(
+                  ImagesAssets.splashLogoSyrcle,
+                  width: Sizer.getW(context) * 0.35,
+                  height: Sizer.getW(context) * 0.35,
+                ),
+              ),
             ),
           ),
-        ),
+          Center(
+            child: ZoomIn(
+              duration: Duration(milliseconds: 1500),
+              child: SvgPicture.asset(
+                ImagesAssets.splashLogoCup,
+                width: Sizer.getW(context) * 0.15,
+                height: Sizer.getW(context) * 0.15,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
