@@ -48,6 +48,17 @@ class AppStrings {
   static const rate= "Rate";
   static const pobuler= "Pobuler";
   static const gbs= "GPS";
+  static const currentOrders= "Current Orders";
+  static const previousOrders= "Previous Orders";
+  static const mapTables= "Map Tables";
+  static const menuRestaurant= "Menu Restaurant";
+  static const floor= "Floor";
+  static const selectFloor= "selectFloor";
+  static const textRate= "Tell us about your experience with us";
+  static const typeRateSomeThing= "Type Some Thing";
+  static const submit= "Submit";
+  static const shoppingCart= "Shopping Cart";
+  static const confirmOrder= "Confirm Order";
   static const onBoardingsubTitle1 = "Hello OnBoarding SubTittle 1";
   static const onBoardingTitle2 = "Hello OnBoarding Tittle 2";
   static const onBoardingsubTitle2 = "Hello OnBoarding SubTittle 2";

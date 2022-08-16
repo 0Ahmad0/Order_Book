@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/location_restaurant_map/location_restaurant_map_view.dart';
 import 'package:orderbook/presentation/login/login_view.dart';
+import 'package:orderbook/presentation/menu/menu_view.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+
+import '../map_tables/map_tables_view.dart';
 
 
 class RestaurantProfileView extends StatefulWidget {
@@ -143,18 +146,18 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                   cards: widget.restaurant.imagesRestaurant!,
                 ),
                 const SizedBox(height: AppSize.s20,),
-                Expanded(
-                  child: ButtonApp(
-                    text: "Mune",
-                    onTap: (){},
-                  ),
+                ButtonApp(
+                  text: "Menu",
+                  onTap: (){
+                    Get.to(()=>MenuView());
+                  },
                 ),
                 const SizedBox(height: AppSize.s10,),
-                Expanded(
-                  child: ButtonApp(
-                    text: "Restaurant Map",
-                    onTap: (){},
-                  ),
+                ButtonApp(
+                  text: "Restaurant Map",
+                  onTap: (){
+                    Get.to(()=>MapTablesView());
+                  },
                 ),
 
               ],

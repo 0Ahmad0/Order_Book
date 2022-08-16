@@ -6,6 +6,8 @@ class ImagesAssets{
   static const registerBottomWave = "$imagePath/bottomwave.png";
   static const otpImage = "$imagePath/otpimage.png";
   static const otpBackground = "$imagePath/backgroundOTP.png";
+  static const tableImage = "$imagePath/table.jpg";
+  static const reservedImage = "$imagePath/reserved.png";
   static List avatarImages = [
     "$imagePath/avatars/0.png",
     "$imagePath/avatars/1.png",

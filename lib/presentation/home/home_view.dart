@@ -132,66 +132,73 @@ class _HomeViewState extends State<HomeView> {
                print(_images["img"][index]);
                showDialog(
                    context: _, builder: (__){
-                 return StoryPageView(
-                     onPageLimitReached: (){
-                       Navigator.pop(context);
-                     },
-                     onPageChanged: (pageIndex){
-                       //index = pageIndex;
-                       _homeViewModel.onStoryChanged(pageIndex);
-                      // setState((){});
-                     },
-                     itemBuilder: (__,pageIndex,storyIndex){
-                       return Stack(
-                         children: [
-                           Positioned.fill(
-                             child: Container(color: Colors.black),
-                           ),
-                           Positioned.fill(
-                             child: Image.asset(
-                               _images["img"][pageIndex],
-                               fit: BoxFit.cover,
-                               width: 100,
+                 return Dismissible(
+                   direction: DismissDirection.vertical,
+                   key: Key(index.toString()),
+                   onDismissed: (v){
+                     Navigator.pop(context);
+                   },
+                   child: StoryPageView(
+                       onPageLimitReached: (){
+                         Navigator.pop(context);
+                       },
+                       onPageChanged: (pageIndex){
+                         index = pageIndex;
+                         // _homeViewModel.onStoryChanged(pageIndex);
+                        setState((){});
+                       },
+                       itemBuilder: (__,pageIndex,storyIndex){
+                         return Stack(
+                           children: [
+                             Positioned.fill(
+                               child: Container(color: Colors.black),
                              ),
-                           ),
-                           Padding(
-                             padding: const EdgeInsets.only(top: 44, left: 8),
-                             child: Row(
-                               children: [
-                                 Container(
-                                   height: 32,
-                                   width: 32,
-                                   decoration: BoxDecoration(
-                                     image: DecorationImage(
-                                       image: AssetImage(_images["img"][pageIndex]),
-                                       fit: BoxFit.cover,
+                             Positioned.fill(
+                               child: Image.asset(
+                                 _images["img"][pageIndex],
+                                 fit: BoxFit.cover,
+                                 width: 100,
+                               ),
+                             ),
+                             Padding(
+                               padding: const EdgeInsets.only(top: 44, left: 8),
+                               child: Row(
+                                 children: [
+                                   Container(
+                                     height: 32,
+                                     width: 32,
+                                     decoration: BoxDecoration(
+                                       image: DecorationImage(
+                                         image: AssetImage(_images["img"][pageIndex]),
+                                         fit: BoxFit.cover,
+                                       ),
+                                       shape: BoxShape.circle,
                                      ),
-                                     shape: BoxShape.circle,
                                    ),
-                                 ),
-                                 const SizedBox(
-                                   width: 8,
-                                 ),
-                                 Text(
-                                   "RRRR${index+5}",
-                                   style: TextStyle(
-                                     fontSize: 17,
-                                     color: Colors.white,
-                                     fontWeight: FontWeight.bold,
+                                   const SizedBox(
+                                     width: 8,
                                    ),
-                                 ),
-                               ],
+                                   Text(
+                                     "RRRR${index+5}",
+                                     style: TextStyle(
+                                       fontSize: 17,
+                                       color: Colors.white,
+                                       fontWeight: FontWeight.bold,
+                                     ),
+                                   ),
+                                 ],
+                               ),
                              ),
-                           ),
-                         ],
-                       );
-                     },
+                           ],
+                         );
+                       },
 
-                     storyLength: (indexPage){
-                       print(indexPage);
-                       return 1;
-                     },
-                     pageLength: _images["img"].length
+                       storyLength: (indexPage){
+                         print(indexPage);
+                         return 1;
+                       },
+                       pageLength: _images["img"].length
+                   ),
                  );
                });
              },

@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/presentation/bottom_nav_bar/bottom_nav_bar_view.dart';
@@ -40,12 +41,14 @@ class _LoginViewState extends State<LoginView> {
   bool type = false;
   final TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  var showTextFiled = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     loginViewModel.start();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -72,21 +75,22 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       CustomTextFiled(
                         controller: phoneNumber,
-                          textInputType: TextInputType.phone,
-                          textInputAction:TextInputAction.done,
-                          maxLength: 10,
-                          validator:(val) {
-                            if(val!.trim().isEmpty){
-                              return AppStrings.fieldNotEmpty;
-                            }
-                            if(!val.toString().isPhoneNumber || val.length!=10){
-                              return AppStrings.validPhone;
-                            }
-                            if(!val.startsWith("09")){
-                              return AppStrings.phoneStart09;
-                            }
-                            return null;
-                          },
+                        textInputType: TextInputType.phone,
+                        textInputAction: TextInputAction.done,
+                        maxLength: 10,
+                        validator: (val) {
+                          if (val!.trim().isEmpty) {
+                            return AppStrings.fieldNotEmpty;
+                          }
+                          if (!val.toString().isPhoneNumber ||
+                              val.length != 10) {
+                            return AppStrings.validPhone;
+                          }
+                          if (!val.startsWith("09")) {
+                            return AppStrings.phoneStart09;
+                          }
+                          return null;
+                        },
                         onChange: (val) {
                           if (val.trim().isNotEmpty) {
                             type = true;
@@ -96,10 +100,9 @@ class _LoginViewState extends State<LoginView> {
                             setState(() {});
                           }
                         },
-                          prefixIcon: Icons.phone,
-                          hintText: AppStrings.hintPhone,
-                          validFiled: type,
-
+                        prefixIcon: Icons.phone,
+                        hintText: AppStrings.hintPhone,
+                        validFiled: type,
                       ),
                       const SizedBox(
                         height: AppSize.s20,
@@ -107,19 +110,18 @@ class _LoginViewState extends State<LoginView> {
                       ButtonApp(
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
-                        onTap: () async {
+                        onTap: () {
+                          // Const.SHOWRATEDIALOOG(context);
                           if (_formKey.currentState!.validate()) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder:
-                                    (ctx)=>OTPView(
-                                    User(
-                                        phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
-                                    ),
-                                    false
-                                ))
-                            );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) => OTPView(
+                                        User(
+                                            phoneNumber: phoneNumber.text
+                                                .replaceFirst("0", "+963")),
+                                        false)));
                           }
-
 
                           /*if (_formKey.currentState!.validate()) {
                             AppStorage.init();
@@ -184,7 +186,6 @@ class _LoginViewState extends State<LoginView> {
           ),
         ],
       ),
-
     );
   }
 
@@ -294,20 +295,18 @@ class CustomTextFiled extends StatefulWidget {
   final String hintText;
   bool validFiled;
 
-
-   CustomTextFiled(
+  CustomTextFiled(
       {super.key,
       required this.controller,
-       this.textInputType = TextInputType.text,
-       this.textInputAction = TextInputAction.next,
-       this.autoFocus = false,
-       this.maxLength = 0,
+      this.textInputType = TextInputType.text,
+      this.textInputAction = TextInputAction.next,
+      this.autoFocus = false,
+      this.maxLength = 0,
       required this.validator,
       required this.onChange,
       required this.prefixIcon,
       required this.hintText,
-        this.validFiled = false
-      });
+      this.validFiled = false});
 
   @override
   State<CustomTextFiled> createState() => _CustomTextFiledState();
