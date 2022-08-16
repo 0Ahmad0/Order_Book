@@ -61,7 +61,6 @@ class _HomeViewState extends State<HomeView> {
       "assets/images/2.jpg",
     ]
   };
-
   @override
   void initState() {
     // TODO: implement initState
@@ -70,14 +69,14 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    authProvider = Provider.of<AuthProvider>(context);
+     authProvider = Provider.of<AuthProvider>(context);
 
     return /*ChangeNotifierProvider<HomeProvider>(
      // create: AppModel.,
       builder:
       ,)*/
 
-        Padding(
+      Padding(
       padding: EdgeInsets.only(
           left: AppPadding.p14, top: AppPadding.p10, bottom: AppPadding.p10),
       child: Column(
@@ -89,36 +88,37 @@ class _HomeViewState extends State<HomeView> {
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),
           ),
-          FutureBuilder(
-            future: authProvider.trendingOffers(Advance.token),
-            builder: (
-              context,
-              snapshot,
-            ) {
-              //  print(snapshot.error);
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Expanded(child: Const.SHOWLOADINGINDECATOR());
-                //Const.CIRCLE(context);
-              } else if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return const Text('Error');
-                } else if (snapshot.hasData) {
-                  return Expanded(
+        FutureBuilder(
+          future: authProvider.trendingOffers(Advance.token),
+          builder: (
+             context, snapshot,) {
+          //  print(snapshot.error);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Expanded(
+                child: Const.SHOWLOADINGINDECATOR()
+              );
+               //Const.CIRCLE(context);
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return const Text('Error');
+              } else if (snapshot.hasData) {
+                return
+                  Expanded(
                       child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: authProvider.listOffers.length,
-                    itemBuilder: (_, index) {
-                      return offerSection(index, context);
-                    },
-                  ));
-                } else {
-                  return const Text('Empty data');
-                }
+                        scrollDirection: Axis.horizontal,
+                        itemCount: authProvider.listOffers.length,
+                        itemBuilder: (_, index) {
+                          return offerSection(index,context);
+                        },
+                      ));
               } else {
-                return Text('State: ${snapshot.connectionState}');
+                return const Text('Empty data');
               }
-            },
-          ),
+            } else {
+              return Text('State: ${snapshot.connectionState}');
+            }
+          },
+        ),
           Text(
             AppStrings.publisherItems,
             style: getRegularStyle(
@@ -128,9 +128,7 @@ class _HomeViewState extends State<HomeView> {
           FutureBuilder(
             future: authProvider.trendingItems(Advance.token),
             builder: (
-              context,
-              snapshot,
-            ) {
+                context, snapshot,) {
               //  print(snapshot.error);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Expanded(child: Const.SHOWLOADINGINDECATOR());
@@ -139,12 +137,12 @@ class _HomeViewState extends State<HomeView> {
                 if (snapshot.hasError) {
                   return const Text('Error');
                 } else if (snapshot.hasData) {
-                  return Expanded(
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: authProvider.listTrendingItems.length,
-                          itemBuilder: (ctx, index) =>
-                              itemsSection(index, context)));
+                  return
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: authProvider.listTrendingItems.length,
+                            itemBuilder: (ctx, index) => itemsSection(index,context)));
                 } else {
                   return const Text('Empty data');
                 }
@@ -153,179 +151,172 @@ class _HomeViewState extends State<HomeView> {
               }
             },
           ),
+
           Text(
             AppStrings.publisherRestaurant,
             style: getRegularStyle(
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),
           ),
-          Expanded(
-              child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _images["img"].length,
-            itemBuilder: (_, index) {
-              return restaurantSection(index, context);
+          FutureBuilder(
+            future: authProvider.trendingRestaurant(Advance.token),
+            builder: (
+                context, snapshot,) {
+              //  print(snapshot.error);
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Expanded(child: Const.SHOWLOADINGINDECATOR());
+                //Const.CIRCLE(context);
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return const Text('Error');
+                } else if (snapshot.hasData) {
+                  return
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: authProvider.listTrendingRestaurant.length,
+                            itemBuilder: (ctx, index) => restaurantSection(index,context)));
+                } else {
+                  return const Text('Empty data');
+                }
+              } else {
+                return Text('State: ${snapshot.connectionState}');
+              }
             },
-          )),
+          ),
+
         ],
       ),
-    );
+    )
+    ;
   }
 
-  Widget offerSection(index, _) {
-    return GestureDetector(
-      onTap: () {
-        print(index);
-        // print(_images["img"][index]);
-        showDialog(
-            context: _,
-            builder: (__) {
-              return Dismissible(
-                direction: DismissDirection.vertical,
-                key: Key(index.toString()),
-                onDismissed: (v) {
-                  Navigator.pop(context);
-                },
-                child: StoryPageView(
-                    onPageLimitReached: () {
-                      Navigator.pop(context);
-                    },
-                    onPageChanged: (pageIndex) {
-                      index = pageIndex;
-                      // _homeViewModel.onStoryChanged(pageIndex);
-                      setState(() {});
-                    },
-                    itemBuilder: (__, pageIndex, storyIndex) {
-                      return Stack(
-                        children: [
-                          Positioned.fill(
-                              child: Container(
-                            color: ColorManager.black,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Spacer(),
-                                Spacer(),
+  Widget offerSection(index,_) {
+    return  StreamBuilder<bool>(
+      builder: (context, snapshot) {
+         //if(snapshot.data==null){
+         //  print("Ff");
 
-                                CachedNetworkImage(
-                                  fit: BoxFit.fill,
-                                  width: double.infinity,
-                                  height: Sizer.getW(context) * 0.7,
-                                  imageUrl:
-                                      "${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",
-                                  // "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg",
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                        //    colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
-                                      ),
-                                    ),
-                                  ),
-                                  placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                ),
-                                Spacer(),
-                                Container(
-                                  padding: const EdgeInsets.all(AppPadding.p20),
-                                  child: Text(
-                                      "${authProvider.listOffers[index].description}",
-                                  textAlign: TextAlign.center,
-                                  style: getRegularStyle(color: ColorManager.white,
-                                    fontSize: Sizer.getW(context) * 0.035
-                                  ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 44, left: 8),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 32,
-                                  width: 32,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: CachedNetworkImageProvider(
-                                        "${AppUrl.baseUrlImage}${authProvider.listOffers[index].restaurantViews?.imageLogo}",
-                                      ),
-                                      //AssetImage(_images["img"][pageIndex]),
-                                      fit: BoxFit.cover,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "${authProvider.listOffers[index].name}",
-                                  //    "RRRR${index+5}",
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    storyLength: (indexPage) {
-                      print(indexPage);
-                      return 1;
-                    },
-                    pageLength: authProvider.listOffers.length),
-              );
-            });
-      },
-      child: Container(
-        width: Sizer.getW(context) * 0.27,
-        margin: const EdgeInsets.symmetric(
-            horizontal: AppMargin.m4, vertical: AppMargin.m8),
-        padding: const EdgeInsets.all(AppPadding.p14),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            // color: Colors.orange,
-            borderRadius: BorderRadius.circular(AppSize.s14),
-            image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                  ColorManager.black.withOpacity(.6), BlendMode.darken),
-              fit: BoxFit.cover,
-              //TODO: hariri do this
-              image: CachedNetworkImageProvider(
-                "${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",
-              ),
-              // AssetImage(index == 0
-              //? "assets/images/img.png"
-              //: //_images["img"][index]))),
-            )),
-        child: Transform.rotate(
-          angle: 290,
-          child: Text(
-            //index == 0 ? "" :
-            "Offer ${index * 2}%",
-            textAlign: TextAlign.center,
-            style: getMediumStyle(
-                color: ColorManager.white,
-                fontSize: Sizer.getW(context) * 0.04),
-          ),
-        ),
-      ),
-    );
+          // return SizedBox();
+
+           return GestureDetector(
+             onTap: () {
+               print(index);
+              // print(_images["img"][index]);
+               showDialog(
+                   context: _, builder: (__){
+                 return Dismissible(
+                   direction: DismissDirection.vertical,
+                   key: Key(index.toString()),
+                   onDismissed: (v){
+                     Navigator.pop(context);
+                   },
+                   child:
+                   StoryPageView(
+                       onPageLimitReached: (){
+                         Navigator.pop(context);
+                       },
+                       onPageChanged: (pageIndex){
+                         index = pageIndex;
+                         // _homeViewModel.onStoryChanged(pageIndex);
+                        setState((){});
+                       },
+                       itemBuilder: (__,pageIndex,storyIndex){
+                         return Stack(
+                           children: [
+                             Positioned.fill(
+                               child: Container(color: Colors.black),
+                             ),
+
+                             Positioned.fill(
+                               child:
+                               Image.asset(
+                                 _images["img"][pageIndex],//TODO: hariri do this
+                                 fit: BoxFit.cover,
+                                 width: 100,
+                               ),
+                             ),
+                             Padding(
+                               padding: const EdgeInsets.only(top: 44, left: 8),
+                               child: Row(
+                                 children: [
+                                   Container(
+                                     height: 32,
+                                     width: 32,
+                                     decoration: BoxDecoration(
+                                       image: DecorationImage(//TODO: hariri do this
+                                         image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listOffers[index].restaurantViews?.imageLogo}",),//AssetImage(_images["img"][pageIndex]),
+                                         fit: BoxFit.cover,
+                                       ),
+                                       shape: BoxShape.circle,
+                                     ),
+                                   ),
+                                   const SizedBox(
+                                     width: 8,
+                                   ),
+                                   Text(
+                                    "${ authProvider.listOffers[index].name}",
+                                 //    "RRRR${index+5}",
+                                     style: TextStyle(
+                                       fontSize: 17,
+                                       color: Colors.white,
+                                       fontWeight: FontWeight.bold,
+                                     ),
+                                   ),
+                                 ],
+                               ),
+                             ),
+                           ],
+                         );
+                       },
+
+                       storyLength: (indexPage){
+                         print(indexPage);
+                         return 1;
+                       },
+                       pageLength: authProvider.listOffers.length
+                   ),
+                 );
+               });
+             },
+             child: Container(
+               width: Sizer.getW(context) * 0.27,
+               margin: const EdgeInsets.symmetric(
+                   horizontal: AppMargin.m4, vertical: AppMargin.m8),
+               padding: const EdgeInsets.all(AppPadding.p14),
+               alignment: Alignment.center,
+               decoration: BoxDecoration(
+                 // color: Colors.orange,
+                   borderRadius: BorderRadius.circular(AppSize.s14),
+                   image: DecorationImage(
+                       colorFilter: ColorFilter.mode(
+                           ColorManager.black.withOpacity(.6), BlendMode.darken),
+                       fit: BoxFit.cover,
+                     //TODO: hariri do this
+                       image:CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",),
+        // AssetImage(index == 0
+                           //? "assets/images/img.png"
+                           //: //_images["img"][index]))),
+               )),
+               child: Transform.rotate(
+                 angle: 290,
+                 child: Text(
+                   //index == 0 ? "" :
+                   "Offer ${index * 2}%",
+                   textAlign: TextAlign.center,
+                   style: getMediumStyle(
+                       color: ColorManager.white,
+                       fontSize: Sizer.getW(context) * 0.04),
+                 ),
+               ),
+             ),
+           );
+
+      });
   }
 
-  Widget itemsSection(index, _) {
-    print(
-        "${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
+  Widget itemsSection(index,_) {
+print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
     return Container(
       width: Sizer.getW(context) * 0.7,
       height: Sizer.getW(context) * 0.15,
@@ -337,16 +328,13 @@ class _HomeViewState extends State<HomeView> {
           // color: Colors.orange,
           borderRadius: BorderRadius.circular(AppSize.s14),
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(
-                ColorManager.black.withOpacity(.6), BlendMode.darken),
-            fit: BoxFit.cover, //TODO: hariri do this
-            image: CachedNetworkImageProvider(
-              "${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}",
-            ),
-            /*AssetImage(index == 0
+              colorFilter: ColorFilter.mode(
+                  ColorManager.black.withOpacity(.6), BlendMode.darken),
+              fit: BoxFit.cover,//TODO: hariri do this
+              image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}",),
+    /*AssetImage(index == 0
                   ? "assets/images/img.png"
-                  : _images["img"][index])*/
-          )),
+                  : _images["img"][index])*/)),
       child: Text(
         "${authProvider.listTrendingItems[index].name}",
         //index == 10 ? "" : "Items ${index + 1}",
@@ -357,7 +345,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget restaurantSection(index, _) {
+  Widget restaurantSection(index,_) {
     return Container(
       width: Sizer.getW(context) * 0.7,
       margin: const EdgeInsets.symmetric(
@@ -371,9 +359,10 @@ class _HomeViewState extends State<HomeView> {
               colorFilter: ColorFilter.mode(
                   ColorManager.black.withOpacity(.6), BlendMode.darken),
               fit: BoxFit.cover,
-              image: AssetImage(index == 0
+              image:CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listTrendingRestaurant[index].imageLogo}",),
+              /*AssetImage(index == 0
                   ? "assets/images/img.png"
-                  : _images["img"][index]))),
+                  : _images["img"][index]),*/)),
       child: Stack(
         alignment: Alignment.topLeft,
         children: [
@@ -382,7 +371,7 @@ class _HomeViewState extends State<HomeView> {
             child: SvgPicture.asset(ImagesAssets.splashLogo),
           ),
           Text(
-            index == 0 ? "" : "Restaurant ${index + 1}",
+            "${authProvider.listTrendingRestaurant[index].name}",  // index == 0 ? "" : "Restaurant ${index + 1}",
             textAlign: TextAlign.center,
             style: getMediumStyle(
                 color: ColorManager.white,
@@ -402,11 +391,13 @@ class _HomeViewState extends State<HomeView> {
                       fontSize: Sizer.getW(context) * 0.035),
                 ),
                 GestureDetector(
-                    onTap: () {
+                    onTap: (){
                       fav = !fav;
-                      setState(() {});
+                      setState((){});
                     },
-                    child: Icon(fav ? Icons.favorite : Icons.favorite_border))
+                    child: Icon(
+                      fav?Icons.favorite:Icons.favorite_border
+                    ))
               ],
             ),
           ),
@@ -424,7 +415,8 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "4",
+                    "${authProvider.listTrendingRestaurant[index].rate}",
+                   // "4",
                     style: getRegularStyle(
                         color: ColorManager.black,
                         fontSize: Sizer.getW(context) * 0.035),
