@@ -13,6 +13,7 @@ class HomeProvider extends ChangeNotifier{
   late List<Offers> listOffers ;
   late List<Restaurant> listRestaurants;
   late List<Item> listTrendingItems;
+  late List<Restaurant> listRatingRestaurant;
   Future<Map<String,dynamic>> trendingItems(String token) async{
 //    print( Uri.parse( AppUrl.login));
 
@@ -36,6 +37,18 @@ class HomeProvider extends ChangeNotifier{
       "language":Advance.language?"en":"ar"
     }
     ).then(onValuetrendingOffers).catchError(onError1);
+  }
+  Future<Map<String,dynamic>> ratingRestaurant(String token) async{
+    print( Uri.parse( AppUrl.login));
+
+    return await get(
+        Uri.parse( AppUrl.ratingRestaurant)
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onValueRatingRestaurant).catchError(onError1);
   }
 
    onError1(error){
@@ -109,115 +122,20 @@ int i=0;
     }
     return result;
   }
-  /*
-  Future<Map<String,dynamic>> register(String fName,String lName,String name,String phoneNumber,int avatarId,String deviceId) async{
-    /*final Map<String,dynamic> bodyData={
-      'name':name,
-      'phone_number':phoneNumber,
-      'device_id':deviceId,
-      'avatar_id':avatarId.toString(),
-    };*/
-    // print( Uri.parse( AppUrl.register));
-    return await post(
-      Uri.parse( AppUrl.register)
-      ,headers: {
-      "Accept":"application/json"
-    },
-      body: {
-        'name':name,
-        'phone_number':phoneNumber,
-        'device_id':deviceId,
-        'avatar_id':avatarId.toString(),
-      },
-    ).then(onValueReg).catchError(onError);
-  }
-  Future<Map<String,dynamic>> Login(String phoneNumber) async{
-//    print( Uri.parse( AppUrl.login));
-    return await post(
-      Uri.parse( AppUrl.login)
-      ,headers: {
-      "Accept":"application/json"
-    },
-      body: {
-        'phone_number':phoneNumber,
-      },
-    ).then(onValueLog).catchError(onError);
-  }
-  static onError(error){
-    return{
-      'status':false,
-      'message':"Unsuccessful Request",
-      //  'data':error==null?"":error
-    };
-  }
-  static Future<Map<String,dynamic>> onValueReg(http.Response response)async{
+  Future<Map<String,dynamic>> onValueRatingRestaurant(http.Response response)async{
     var result;
-    final Map<String,dynamic> responseData= json.decode(response.body);
-    //print(responseData);
-    // print("status code $response.statusCode");
-    if(response.statusCode==201){
-      User userData = User.fromJson(responseData);
-      /*
-      AppStorage.storageWrite(
-        key: AppStorage.nameKEY,
-        value: userData.name
-      );
-      AppStorage.storageWrite(
-          key: AppStorage.phoneNumberKEY,
-          value: userData.phoneNumber
-      );
-      AppStorage.storageWrite(
-          key: AppStorage.avatarKEY,
-          value: userData.avatarId
-      );
-      AppStorage.storageWrite(
-          key: AppStorage.tokenKEY,
-          value: userData.token
-      );
-      */
-      result ={
-        'status':true,
-        'message':"Successful Request",
-        'data':responseData
-      };
-    }
-    else {
-      result ={
-        'status':false,
-        'message':responseData["message"],
-        'data':responseData
-      };
-    }
-    return result;
-  }
-  static Future<Map<String,dynamic>> onValueLog(http.Response response)async{
-    var result;
+    //listTrendingItems.clear();
+   // listRatingRestaurant=[];
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
     if(response.statusCode==200){
-      User userData = User.fromJson(responseData);
-      AppStorage.init();
-      AppStorage.storageWrite(
-          key: AppStorage.nameKEY,
-          value: userData.name
-      );
-      AppStorage.storageWrite(
-          key: AppStorage.phoneNumberKEY,
-          value: userData.phoneNumber
-      );
-      AppStorage.storageWrite(
-          key: AppStorage.isLoginedKEY,
-          value: true
-      );
-      /* AppStorage.storageWrite(
-          key: AppStorage.avatarKEY,
-          value: userData.avatarId
-      );*/
-      AppStorage.storageWrite(
-          key: AppStorage.tokenKEY,
-          value: userData.token
-      );
+      listRatingRestaurant=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+        Restaurant restaurant =Restaurant.fromJson(element);
+        listRatingRestaurant.add(restaurant);
+      }
       result ={
         'status':true,
         'message':"Successful Request",
@@ -231,6 +149,6 @@ int i=0;
       };
     }
     return result;
-  }*/
+  }
 
 }

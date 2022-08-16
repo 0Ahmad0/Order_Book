@@ -11,5 +11,7 @@ class AppUrl{
 
   static const String trendingItems =baseUrl+"item/trendingItems";
   static const String trendingOffers =baseUrl+"offer/availableOffers";
+  static const String ratingRestaurant =baseUrl+"getVendorsByRating";
+
 
 }

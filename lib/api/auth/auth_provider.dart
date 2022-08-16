@@ -96,6 +96,12 @@ class AuthProvider extends  HomeProvider{
    // print("status code $response.statusCode");
     if(response.statusCode==201){
       User userData = User.fromJson(responseData);
+      await AppStorage.init();
+      Advance.token=userData.token;
+      await AppStorage.storageWrite(
+          key: AppStorage.tokenKEY,
+          value: userData.token
+      );
       result ={
         'status':true,
         'message':"Successful Request",
