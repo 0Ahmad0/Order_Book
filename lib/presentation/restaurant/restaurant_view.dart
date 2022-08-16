@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:like_button/like_button.dart';
 import 'package:orderbook/api/app_url/app_url.dart';
@@ -47,6 +48,7 @@ class _RestaurantViewState extends State<RestaurantView> {
       "assets/images/2.jpg",
     ]
   };
+  GeoPoint? getPointSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -144,13 +146,27 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 1
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text(AppStrings.pobuler)),
+                        child: Text(AppStrings.populer)),
                   ),
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async{
                       currentSelect = 3;
+                       await showSimplePickerLocation(
+                        context: context,
+                        titleWidget: Center(
+                          child: Text( AppStrings.pickLocation,style: getRegularStyle(color: ColorManager.lightPrimary,
+                           fontSize: Sizer.getW(context) * 0.04
+                       ),),
+                        ),
+                        radius: AppSize.s14,
+                        textConfirmPicker: AppStrings.pick,
+                        initCurrentUserPosition: true,
+                      ).then((value) {
+                        print("latitude: ${value!.latitude}");
+                        print("longitude: ${value.longitude}");
+                      });
                       setState(() {});
                     },
                     child: Container(

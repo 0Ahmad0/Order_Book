@@ -46,7 +46,7 @@ class AppStrings {
   static const pendingReservation= "Pending Reservation";
   static const currentReservation= "Current Reservation";
   static const rate= "Rate";
-  static const pobuler= "Pobuler";
+  static const populer= "Populer";
   static const gbs= "GPS";
   static const currentOrders= "Current Orders";
   static const previousOrders= "Previous Orders";
@@ -64,6 +64,8 @@ class AppStrings {
   static const personNumber= "Person Number";
   static const dateReservations= "Date Reservations";
   static const reviews= "Reviews";
+  static const pickLocation= "Pick Location To Search It";
+  static const pick= "Pick";
   static const onBoardingsubTitle1 = "Hello OnBoarding SubTittle 1";
   static const onBoardingTitle2 = "Hello OnBoarding Tittle 2";
   static const onBoardingsubTitle2 = "Hello OnBoarding SubTittle 2";
