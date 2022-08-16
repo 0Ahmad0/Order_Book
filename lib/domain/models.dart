@@ -89,7 +89,7 @@ class Offers{
       id: responseData['id'],
       image: responseData['image'],
       text: responseData['text'],
-      restaurant: responseData!=null?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
+   //   restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
   }
 }
@@ -114,11 +114,11 @@ class Item{
     return Item(
       id: responseData['id'],
       name: responseData['name'],
-      description:  responseData['phone_number'],
-      image:  responseData['avatar_id'],
+      description:  responseData['description'],
+      image:  responseData['image'],
       price:responseData["price"],
       quantity:responseData["quantity"],
-      restaurant: responseData!=null?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
+      //restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
   }
 }

@@ -57,10 +57,16 @@ class HomeProvider extends ChangeNotifier{
     if(response.statusCode==200){
       listTrendingItems=[];
       //listTrendingItems.clear();
+int i=0;
       for(var element in responseData["data"]){
+        print(i);
+        print(element);
+
+        i++;
         Item item =Item.fromJson(element);
         listTrendingItems.add(item);
       }
+
       result ={
         'status':true,
         'message':"Successful Request",

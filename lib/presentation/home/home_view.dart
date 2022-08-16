@@ -21,8 +21,11 @@ import 'package:provider/provider.dart';
 import 'package:story/story.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
+import '../../api/auth/auth_provider.dart';
+import '../../api/home/home_provider.dart';
 import '../../data/local/change_theme.dart';
 import '../../data/local/storage.dart';
+import '../utils/const.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -32,7 +35,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  HomeViewModel _homeViewModel = HomeViewModel();
+  //HomeViewModel _homeViewModel = HomeViewModel();
+
   bool itemType = false;
   bool restaurantType = false;
   bool fav = false;
@@ -55,20 +59,21 @@ class _HomeViewState extends State<HomeView> {
       "assets/images/2.jpg",
     ]
   };
-  _bind(){
-    _homeViewModel.start();
-  }
   @override
   void initState() {
-    _bind();
     // TODO: implement initState
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return /*ChangeNotifierProvider<AppModel>(
-      create: AppModel.,
-      builder: ,)*/Padding(
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    return /*ChangeNotifierProvider<HomeProvider>(
+     // create: AppModel.,
+      builder:
+      ,)*/
+
+      Padding(
       padding: EdgeInsets.only(
           left: AppPadding.p14, top: AppPadding.p10, bottom: AppPadding.p10),
       child: Column(
@@ -80,25 +85,68 @@ class _HomeViewState extends State<HomeView> {
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),
           ),
-          Expanded(
-              child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _images["img"].length,
-            itemBuilder: (_, index) {
-              return offerSection(index,context);
-            },
-          )),
+        FutureBuilder(
+          future: authProvider.trendingOffers(Advance.token),
+          builder: (
+             context, snapshot,) {
+          //  print(snapshot.error);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+               //Const.CIRCLE(context);
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return const Text('Error');
+              } else if (snapshot.hasData) {
+                return
+                  Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: authProvider.listOffers.length,
+                        itemBuilder: (_, index) {
+                          return offerSection(index,context);
+                        },
+                      ));
+              } else {
+                return const Text('Empty data');
+              }
+            } else {
+              return Text('State: ${snapshot.connectionState}');
+            }
+          },
+        ),
           Text(
             AppStrings.publisherItems,
             style: getRegularStyle(
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),
           ),
-          Expanded(
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _images["img"].length,
-                  itemBuilder: (ctx, index) => itemsSection(index))),
+          FutureBuilder(
+            future: authProvider.trendingOffers(Advance.token),
+            builder: (
+                context, snapshot,) {
+              //  print(snapshot.error);
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+                //Const.CIRCLE(context);
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return const Text('Error');
+                } else if (snapshot.hasData) {
+                  return
+                    Expanded(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _images["img"].length,
+                            itemBuilder: (ctx, index) => itemsSection(index,context)));
+                } else {
+                  return const Text('Empty data');
+                }
+              } else {
+                return Text('State: ${snapshot.connectionState}');
+              }
+            },
+          ),
+
           Text(
             AppStrings.publisherRestaurant,
             style: getRegularStyle(
@@ -110,12 +158,13 @@ class _HomeViewState extends State<HomeView> {
             scrollDirection: Axis.horizontal,
             itemCount: _images["img"].length,
             itemBuilder: (_, index) {
-              return restaurantSection(index);
+              return restaurantSection(index,context);
             },
           )),
         ],
       ),
-    );
+    )
+    ;
   }
 
   Widget offerSection(index,_) {
@@ -234,7 +283,7 @@ class _HomeViewState extends State<HomeView> {
       });
   }
 
-  Widget itemsSection(index) {
+  Widget itemsSection(index,_) {
     return Container(
       width: Sizer.getW(context) * 0.7,
       height: Sizer.getW(context) * 0.15,
@@ -261,7 +310,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget restaurantSection(index) {
+  Widget restaurantSection(index,_) {
     return Container(
       width: Sizer.getW(context) * 0.7,
       margin: const EdgeInsets.symmetric(
