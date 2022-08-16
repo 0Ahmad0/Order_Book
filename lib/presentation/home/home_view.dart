@@ -348,25 +348,72 @@ print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
       height: Sizer.getW(context) * 0.15,
       margin: const EdgeInsets.symmetric(
           horizontal: AppMargin.m4, vertical: AppMargin.m8),
-      padding: const EdgeInsets.all(AppPadding.p14),
+      padding: const EdgeInsets.all(AppPadding.p8),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           // color: Colors.orange,
           borderRadius: BorderRadius.circular(AppSize.s14),
           image: DecorationImage(
               colorFilter: ColorFilter.mode(
-                  ColorManager.black.withOpacity(.6), BlendMode.darken),
+                  ColorManager.black.withOpacity(.8), BlendMode.darken),
               fit: BoxFit.cover,//TODO: hariri do this
               image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}",),
     /*AssetImage(index == 0
                   ? "assets/images/img.png"
                   : _images["img"][index])*/)),
-      child: Text(
-        "${authProvider.listTrendingItems[index].name}",
-        //index == 10 ? "" : "Items ${index + 1}",
-        textAlign: TextAlign.center,
-        style: getMediumStyle(
-            color: ColorManager.white, fontSize: Sizer.getW(context) * 0.035),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: Sizer.getW(context) * 0.125,
+                  height: Sizer.getW(context) * 0.125,
+                  decoration:BoxDecoration(
+                    shape: BoxShape.circle,
+                      image: DecorationImage(
+                        colorFilter: ColorFilter.mode(
+                            ColorManager.black.withOpacity(.65), BlendMode.darken),
+                        fit: BoxFit.cover,//TODO: hariri do this
+                        image: CachedNetworkImageProvider("${
+                            AppUrl.baseUrlImage}${
+                            authProvider.listTrendingItems[index].image
+                        }",),
+                        /*AssetImage(index == 0
+                    ? "assets/images/img.png"
+                    : _images["img"][index])*/)),
+                ),
+                const SizedBox(width: AppSize.s10,),
+                Text(
+                  "Restaurant Name",
+                  // "${authProvider.listTrendingItems[index].restaurant}",
+                  //index == 10 ? "" : "Items ${index + 1}",
+                  textAlign: TextAlign.center,
+                  style: getLightStyle(
+                      color: ColorManager.white, fontSize: Sizer.getW(context) * 0.035),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${authProvider.listTrendingItems[index].name}",
+                  //index == 10 ? "" : "Items ${index + 1}",
+                  textAlign: TextAlign.center,
+                  style: getMediumStyle(
+                      color: ColorManager.white, fontSize: Sizer.getW(context) * 0.035),
+                ),
+
+              ],
+            ),
+          ),
+
+        ],
       ),
     );
   }

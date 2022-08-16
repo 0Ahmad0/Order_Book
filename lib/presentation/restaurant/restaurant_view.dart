@@ -146,18 +146,19 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 1
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text(AppStrings.populer)),
+                        child: Text(AppStrings.popular)),
                   ),
                 ),
                 Expanded(
                   child: GestureDetector(
                     onTap: () async{
                       currentSelect = 3;
-                       await showSimplePickerLocation(
+                      setState(() {});
+                      await showSimplePickerLocation(
                         context: context,
                         titleWidget: Center(
                           child: Text( AppStrings.pickLocation,style: getRegularStyle(color: ColorManager.lightPrimary,
-                           fontSize: Sizer.getW(context) * 0.04
+                           fontSize: Sizer.getW(context) * 0.04,
                        ),),
                         ),
                         radius: AppSize.s14,
@@ -167,7 +168,6 @@ class _RestaurantViewState extends State<RestaurantView> {
                         print("latitude: ${value!.latitude}");
                         print("longitude: ${value.longitude}");
                       });
-                      setState(() {});
                     },
                     child: Container(
                         alignment: Alignment.center,

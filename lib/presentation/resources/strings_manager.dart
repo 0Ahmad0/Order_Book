@@ -46,7 +46,7 @@ class AppStrings {
   static const pendingReservation= "Pending Reservation";
   static const currentReservation= "Current Reservation";
   static const rate= "Rate";
-  static const populer= "Populer";
+  static const popular= "Popular";
   static const gbs= "GPS";
   static const currentOrders= "Current Orders";
   static const previousOrders= "Previous Orders";
