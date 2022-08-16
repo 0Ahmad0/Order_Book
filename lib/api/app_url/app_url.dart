@@ -2,6 +2,7 @@
 
 class AppUrl{
   static const String baseUrl ="http://order-book.chi-team.com/api/";
+  static const String baseUrlImage ="http://order-book.chi-team.com";
   static const String baseUrl1 ="http://order-book.chi-team.com/api";
   static const String register =baseUrl+"user/register";
   static const String login =baseUrl+"user/login";

@@ -15,6 +15,7 @@ import '../../api/resturant/resturants_provider.dart';
 import '../../domain/models.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
+import '../utils/const.dart';
 
 class RestaurantView extends StatefulWidget {
   const RestaurantView({Key? key}) : super(key: key);
@@ -149,7 +150,6 @@ class _RestaurantViewState extends State<RestaurantView> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-
                       currentSelect = 3;
                       setState(() {});
                     },
@@ -177,7 +177,11 @@ class _RestaurantViewState extends State<RestaurantView> {
 
               //  print(snapshot.error);
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return Expanded(
+                  child: Center(
+                    child: Const.SHOWLOADINGINDECATOR(),
+                  ),
+                );
                 //Const.CIRCLE(context);
               } else if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
@@ -189,6 +193,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                       child: ListView.builder(
                         itemCount: authProvider.listRestaurant.length,
                         itemBuilder: (_, index) {
+
                           return GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -217,8 +222,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                       borderRadius: BorderRadius.circular(AppSize.s14),
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image:(AssetImage("assets/images/img.png"))
-                                        ,
+                                        image: AssetImage("assets/images/img.png"),
                                         colorFilter: ColorFilter.mode(
                                           ColorManager.black.withOpacity(.7),
                                           BlendMode.darken,
@@ -245,10 +249,14 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                       AppSize.s14),
                                                   image: DecorationImage(
                                                       fit: BoxFit.fill,
-                                                      image:CachedNetworkImageProvider(
-                                                          authProvider. listRestaurant[index].imageLogo==null?ImagesAssets.loginBackground:
-                                                        AppUrl.baseUrl1+authProvider.listRestaurant[index].imageLogo!
-                                                      ) //AssetImage(ImagesAssets.loginBackground)
+                                                      image:
+                                                      // CachedNetworkImageProvider(
+                                                      //
+                                                      //   // "http://order-book.chi-team.com/api/storage/app/public/vendorsLogos/qNmqkRmFMOaE6qA07vCTfx4oST3HdX8iPi1MRwHA.png"
+                                                      //   "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg"
+                                                      // )
+
+                                                      AssetImage(ImagesAssets.tableImage)
                                                   )
                                               ),
                                             ),
@@ -307,7 +315,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          authProvider.listRestaurant[index].rate!,
+                                          "${authProvider.listRestaurant[index].rate!}",
                                         //  "5",
                                           style: getLightStyle(
                                               color: ColorManager.lightPrimary),

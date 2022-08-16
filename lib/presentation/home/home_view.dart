@@ -18,7 +18,6 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:story/story.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
@@ -65,8 +64,7 @@ class _HomeViewState extends State<HomeView> {
     // TODO: implement initState
     super.initState();
   }
-  RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -76,35 +74,63 @@ class _HomeViewState extends State<HomeView> {
       builder:
       ,)*/
 
-      SmartRefresher(
-        controller: _refreshController,
-       onRefresh: ()async{
-         await Future.delayed(Duration(milliseconds: 1000));
-         // if failed,use refreshFailed()
-         _refreshController.refreshCompleted();
-       },
-        child: Padding(
-        padding: EdgeInsets.only(
-            left: AppPadding.p14, top: AppPadding.p10, bottom: AppPadding.p10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              AppStrings.offers,
-              style: getRegularStyle(
-                  color: ColorManager.lightSecondary,
-                  fontSize: Sizer.getW(context) * 0.035),
-            ),
+      Padding(
+      padding: EdgeInsets.only(
+          left: AppPadding.p14, top: AppPadding.p10, bottom: AppPadding.p10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AppStrings.offers,
+            style: getRegularStyle(
+                color: ColorManager.lightSecondary,
+                fontSize: Sizer.getW(context) * 0.035),
+          ),
+        FutureBuilder(
+          future: authProvider.trendingOffers(Advance.token),
+          builder: (
+             context, snapshot,) {
+          //  print(snapshot.error);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Expanded(
+                child: Const.SHOWLOADINGINDECATOR()
+              );
+               //Const.CIRCLE(context);
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return const Text('Error');
+              } else if (snapshot.hasData) {
+                return
+                  Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: authProvider.listOffers.length,
+                        itemBuilder: (_, index) {
+                          return offerSection(index,context);
+                        },
+                      ));
+              } else {
+                return const Text('Empty data');
+              }
+            } else {
+              return Text('State: ${snapshot.connectionState}');
+            }
+          },
+        ),
+          Text(
+            AppStrings.publisherItems,
+            style: getRegularStyle(
+                color: ColorManager.lightSecondary,
+                fontSize: Sizer.getW(context) * 0.035),
+          ),
           FutureBuilder(
-            future: authProvider.trendingOffers(Advance.token),
+            future: authProvider.trendingItems(Advance.token),
             builder: (
-               context, snapshot,) {
-            //  print(snapshot.error);
+                context, snapshot,) {
+              //  print(snapshot.error);
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Expanded(
-                  child: Const.SHOWLOADINGINDECATOR()
-                );
-                 //Const.CIRCLE(context);
+                return Expanded(child: Const.SHOWLOADINGINDECATOR());
+                //Const.CIRCLE(context);
               } else if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
                   return const Text('Error');
@@ -112,12 +138,9 @@ class _HomeViewState extends State<HomeView> {
                   return
                     Expanded(
                         child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: authProvider.listOffers.length,
-                          itemBuilder: (_, index) {
-                            return offerSection(index,context);
-                          },
-                        ));
+                            scrollDirection: Axis.horizontal,
+                            itemCount: authProvider.listTrendingItems.length,
+                            itemBuilder: (ctx, index) => itemsSection(index,context)));
                 } else {
                   return const Text('Empty data');
                 }
@@ -126,57 +149,24 @@ class _HomeViewState extends State<HomeView> {
               }
             },
           ),
-            Text(
-              AppStrings.publisherItems,
-              style: getRegularStyle(
-                  color: ColorManager.lightSecondary,
-                  fontSize: Sizer.getW(context) * 0.035),
-            ),
-            FutureBuilder(
-              future: authProvider.trendingItems(Advance.token),
-              builder: (
-                  context, snapshot,) {
-                //  print(snapshot.error);
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Expanded(child: Const.SHOWLOADINGINDECATOR());
-                  //Const.CIRCLE(context);
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return const Text('Error');
-                  } else if (snapshot.hasData) {
-                    return
-                      Expanded(
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: authProvider.listTrendingItems.length,
-                              itemBuilder: (ctx, index) => itemsSection(index,context)));
-                  } else {
-                    return const Text('Empty data');
-                  }
-                } else {
-                  return Text('State: ${snapshot.connectionState}');
-                }
-              },
-            ),
 
-            Text(
-              AppStrings.publisherRestaurant,
-              style: getRegularStyle(
-                  color: ColorManager.lightSecondary,
-                  fontSize: Sizer.getW(context) * 0.035),
-            ),
-            Expanded(
-                child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _images["img"].length,
-              itemBuilder: (_, index) {
-                return restaurantSection(index,context);
-              },
-            )),
-          ],
-        ),
-    ),
-      )
+          Text(
+            AppStrings.publisherRestaurant,
+            style: getRegularStyle(
+                color: ColorManager.lightSecondary,
+                fontSize: Sizer.getW(context) * 0.035),
+          ),
+          Expanded(
+              child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: _images["img"].length,
+            itemBuilder: (_, index) {
+              return restaurantSection(index,context);
+            },
+          )),
+        ],
+      ),
+    )
     ;
   }
 
