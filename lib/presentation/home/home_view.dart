@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animate_icons/animate_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -21,6 +22,7 @@ import 'package:provider/provider.dart';
 import 'package:story/story.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
+import '../../api/app_url/app_url.dart';
 import '../../api/auth/auth_provider.dart';
 import '../../api/home/home_provider.dart';
 import '../../data/local/change_theme.dart';
@@ -36,7 +38,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   //HomeViewModel _homeViewModel = HomeViewModel();
-
+  late AuthProvider authProvider;
   bool itemType = false;
   bool restaurantType = false;
   bool fav = false;
@@ -67,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+     authProvider = Provider.of<AuthProvider>(context);
 
     return /*ChangeNotifierProvider<HomeProvider>(
      // create: AppModel.,
@@ -181,7 +183,7 @@ class _HomeViewState extends State<HomeView> {
            return GestureDetector(
              onTap: () {
                print(index);
-               print(_images["img"][index]);
+              // print(_images["img"][index]);
                showDialog(
                    context: _, builder: (__){
                  return Dismissible(
@@ -190,7 +192,8 @@ class _HomeViewState extends State<HomeView> {
                    onDismissed: (v){
                      Navigator.pop(context);
                    },
-                   child: StoryPageView(
+                   child:
+                   StoryPageView(
                        onPageLimitReached: (){
                          Navigator.pop(context);
                        },
@@ -205,12 +208,27 @@ class _HomeViewState extends State<HomeView> {
                              Positioned.fill(
                                child: Container(color: Colors.black),
                              ),
+
                              Positioned.fill(
-                               child: Image.asset(
+                               child:   CachedNetworkImage(
+                                 imageUrl: "${AppUrl.baseUrlImage}${authProvider.listOffers[index].image}",
+                                 imageBuilder: (context, imageProvider) => Container(
+                                   decoration: BoxDecoration(
+                                     image: DecorationImage(
+                                         image: imageProvider,
+                                         fit: BoxFit.cover,
+                                         colorFilter:
+                                         ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+                                   ),
+                                 ),
+                                 placeholder: (context, url) => CircularProgressIndicator(),
+                                 errorWidget: (context, url, error) => Icon(Icons.error),
+                               ),
+                               /*Image.asset(
                                  _images["img"][pageIndex],
                                  fit: BoxFit.cover,
                                  width: 100,
-                               ),
+                               ),*/
                              ),
                              Padding(
                                padding: const EdgeInsets.only(top: 44, left: 8),
@@ -231,7 +249,8 @@ class _HomeViewState extends State<HomeView> {
                                      width: 8,
                                    ),
                                    Text(
-                                     "RRRR${index+5}",
+                                    "${ authProvider.listOffers[index].name}",
+                                 //    "RRRR${index+5}",
                                      style: TextStyle(
                                        fontSize: 17,
                                        color: Colors.white,
@@ -249,7 +268,7 @@ class _HomeViewState extends State<HomeView> {
                          print(indexPage);
                          return 1;
                        },
-                       pageLength: _images["img"].length
+                       pageLength: authProvider.listOffers.length
                    ),
                  );
                });

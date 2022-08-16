@@ -21,7 +21,7 @@ class HomeProvider extends ChangeNotifier{
 
   Future<Map<String,dynamic>> trendingItems(String token) async{
 //    print( Uri.parse( AppUrl.login));
-
+    recRestaurant=false;
   return await get(
       Uri.parse( AppUrl.trendingItems)
       ,headers: {
@@ -33,7 +33,7 @@ class HomeProvider extends ChangeNotifier{
   }
   Future<Map<String,dynamic>> trendingOffers(String token) async{
 //    print( Uri.parse( AppUrl.login));
-
+    recRestaurant=false;
     return await get(
         Uri.parse( AppUrl.trendingOffers)
         ,headers: {
@@ -110,8 +110,7 @@ class HomeProvider extends ChangeNotifier{
       //listTrendingItems.clear();
 int i=0;
       for(var element in responseData["data"]){
-        print(i);
-        print(element);
+       // print(element);
 
         i++;
         Item item =Item.fromJson(element);

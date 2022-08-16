@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 //User
 class User{
   //String firstName;
@@ -110,7 +111,7 @@ class RestaurantViews{
 }
 //Offers
 class Offers{
-  String? id;
+  int? id;
   String? name;
   String? description;
   int? price;
@@ -125,7 +126,7 @@ class Offers{
       name:responseData['name'],
       description:responseData['description'],
       price:responseData['price'],
-      restaurantViews:responseData['vendor'],
+      restaurantViews:RestaurantViews.fromJson(responseData['vendor']),
       to_date:responseData['to_date'],
       from_date:responseData['from_date'],
 
