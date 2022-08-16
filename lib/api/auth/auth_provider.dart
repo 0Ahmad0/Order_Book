@@ -213,7 +213,7 @@ class AuthProvider extends  HomeProvider{
   }
   static Future<Map<String,dynamic>> onValueCheckNum(http.Response response)async{
     var result;
-
+    print(result);
     Map<String,dynamic> responseData= {};
     if(!response.body.isEmpty){
       responseData = json.decode(response.body);

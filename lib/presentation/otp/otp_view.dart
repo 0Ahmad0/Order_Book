@@ -34,7 +34,7 @@ class _OTPViewState extends State<OTPView> {
   Future<void> register(AuthProvider authProvider) async {
     Const.LOADIG(context);
     //  var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "ii");
-    var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "ioi");
+    var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "iooi");
     // var result =await authProvider.register("", "","temp", "+963970807997", 1, "igjui70iikii");
     print(result["message"]);
     Const.TOAST(context,textToast: result["message"]);
@@ -64,7 +64,7 @@ class _OTPViewState extends State<OTPView> {
           MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
       /// SnackBar(content: Text("k"));
       //print("done register");
-     // Const.TOAST(context,textToast: result["message"]);
+      // Const.TOAST(context,textToast: result["message"]);
     }else{
       /// SnackBar(content: Text("o"));
 
@@ -82,8 +82,8 @@ class _OTPViewState extends State<OTPView> {
             Text(
               AppStrings.verificationCode,
               style: getBoldStyle(
-                color: ColorManager.lightPrimary,
-                fontSize: Sizer.getW(context) * 0.045
+                  color: ColorManager.lightPrimary,
+                  fontSize: Sizer.getW(context) * 0.045
               ),
             ),
             Image.asset(ImagesAssets.otpImage),
@@ -91,7 +91,7 @@ class _OTPViewState extends State<OTPView> {
               AppStrings.enterOTP,
               style: getMediumStyle(
                   color: ColorManager.redOTP,
-                fontSize: Sizer.getW(context) * 0.04
+                  fontSize: Sizer.getW(context) * 0.04
               ),
             ),
             SizedBox(height: AppSize.s14,),
@@ -106,25 +106,25 @@ class _OTPViewState extends State<OTPView> {
             Expanded(child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(ImagesAssets.otpBackground)
+                    fit: BoxFit.fill,
+                    image: AssetImage(ImagesAssets.otpBackground)
                 ),
 
               ),
               child: Padding(
                 padding:  EdgeInsets.symmetric(
-                  vertical: Sizer.getW(context) * 0.2,
-                  horizontal: AppPadding.p24
+                    vertical: Sizer.getW(context) * 0.2,
+                    horizontal: AppPadding.p24
 
                 ),
                 child: Column(
                   children: [
                     PinFieldAutoFill(
-                  controller: otpController,
-                  decoration: UnderlineDecoration(
+                        controller: otpController,
+                        decoration: UnderlineDecoration(
 
                           textStyle: getRegularStyle(color: ColorManager.white,
-                            fontSize: Sizer.getW(context) * 0.04
+                              fontSize: Sizer.getW(context) * 0.04
                           ),
                           colorBuilder: PinListenColorBuilder(
                               ColorManager.success,
@@ -136,21 +136,21 @@ class _OTPViewState extends State<OTPView> {
                         onCodeSubmitted: (val) {
                           print("Done");
                           Get.dialog(
-                            Center(
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: Sizer.getW(context) * 0.2,
-                                height: Sizer.getW(context) * 0.2,
-                                decoration: BoxDecoration(
-                                  color: ColorManager.white,
-                                  borderRadius: BorderRadius.circular(AppSize.s8)
+                              Center(
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    width: Sizer.getW(context) * 0.2,
+                                    height: Sizer.getW(context) * 0.2,
+                                    decoration: BoxDecoration(
+                                        color: ColorManager.white,
+                                        borderRadius: BorderRadius.circular(AppSize.s8)
+                                    ),
+                                    child: LoadingAnimationWidget.inkDrop(
+                                        color: ColorManager.lightPrimary,
+                                        size:Sizer.getW(context) * 0.1
+                                    )
                                 ),
-                                child: LoadingAnimationWidget.inkDrop(
-                                    color: ColorManager.lightPrimary,
-                                    size:Sizer.getW(context) * 0.1
-                                )
-                              ),
-                            )
+                              )
                           );
                           Timer(Duration(seconds: 4),(){
                             Navigator.pushReplacement(context,
@@ -158,24 +158,24 @@ class _OTPViewState extends State<OTPView> {
                           });
                         },
                         onCodeChanged: (val) async {
-                    if(val!=null&&val.length>5){
-                        await (widget.register)?register(authProvider):login(authProvider);
+                          if(val!=null&&val.length>5){
+                            await (widget.register)?register(authProvider):login(authProvider);
 
 
-                    /*  Timer(Duration(seconds: 3), (){
+                            /*  Timer(Duration(seconds: 3), (){
                         Navigator.pop(context);
 
                       });*/
 
 
-                    }
+                          }
                         },
                         codeLength: 6),
                     const SizedBox(height: AppSize.s10,),
                     TextButton(onPressed: (){}, child: Text(
-                        AppStrings.otpNotReceive,
+                      AppStrings.otpNotReceive,
                       style: getRegularStyle(color: ColorManager.white,
-                      fontSize: Sizer.getW(context) * 0.033
+                          fontSize: Sizer.getW(context) * 0.033
                       ),
                     ))
                   ],

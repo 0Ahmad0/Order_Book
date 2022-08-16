@@ -47,194 +47,194 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         backgroundColor: ColorManager.lightPrimary,
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-          Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 buildTopContainerRegisterView(context),
                 Expanded(
                     child: FadeInUpBig(
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: AppPadding.p40,
-                        horizontal: AppPadding.p20,
-                      ),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).secondaryHeaderColor,
-                          borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(AppSize.s40))),
-                      child: Form(
-                        key: _formKey,
-                        child: SingleChildScrollView(
-                            child: Column(
-                          children: [
-                            CustomTextFiled(
-                              controller: firstName,
-                              textInputType: TextInputType.text,
-                              textInputAction: TextInputAction.next,
-                              maxLength: null,
-                              validator: (val) {
-                                if (val!.trim().isEmpty) {
-                                  return AppStrings.fieldNotEmpty;
-                                }
-                                //TODO start with number and [~!@#$%^&*]
-                                // if(!val.toString().isPhoneNumber){
-                                //   return AppStrings.phoneStart09;
-                                // }
-                                return null;
-                              },
-                              onChange: (val) {
-                                if (val.trim().isNotEmpty) {
-                                  checkValidate["firstName"] = true;
-                                  setState(() {});
-                                } else {
-                                  checkValidate["firstName"] = false;
-                                  setState(() {});
-                                }
-                              },
-                              prefixIcon: Icons.person,
-                              hintText: AppStrings.firstName,
-                              validFiled: checkValidate["firstName"],
-                            ),
-                            const SizedBox(
-                              height: AppSize.s20,
-                            ),
-                            CustomTextFiled(
-                              controller: lastName,
-                              textInputType: TextInputType.text,
-                              textInputAction: TextInputAction.next,
-                              autoFocus: false,
-                              maxLength: null,
-                              validator: (val) {
-                                if (val!.trim().isEmpty) {
-                                  return AppStrings.fieldNotEmpty;
-                                }
-                                //TODO start with number and [~!@#$%^&*]
-                                // if(!val.toString().isPhoneNumber){
-                                //   return AppStrings.phoneStart09;
-                                // }
-                                return null;
-                              },
-                              onChange: (val) {
-                                if (val.trim().isNotEmpty) {
-                                  checkValidate["lastName"] = true;
-                                  setState(() {});
-                                } else {
-                                  checkValidate["lastName"] = false;
-                                  setState(() {});
-                                }
-                              },
-                              prefixIcon: Icons.person,
-                              hintText: AppStrings.lastName,
-                              validFiled: checkValidate["lastName"],
-                            ),
-                            const SizedBox(
-                              height: AppSize.s20,
-                            ),
-                            CustomTextFiled(
-                              controller: phoneNumber,
-                              textInputType: TextInputType.phone,
-                              textInputAction: TextInputAction.done,
-                              autoFocus: false,
-                              maxLength: 10,
-                              validator: (val) {
-                                if (val!.trim().isEmpty) {
-                                  return AppStrings.fieldNotEmpty;
-                                }
-                                if (!val.toString().isPhoneNumber ||
-                                    val.length != 10) {
-                                  return AppStrings.validPhone;
-                                }
-                                if (!val.startsWith("09")) {
-                                  return AppStrings.phoneStart09;
-                                }
-                                return null;
-                              },
-                              onChange: (val) {
-                                if (val.trim().isNotEmpty) {
-                                  checkValidate["phoneNumber"] = true;
-                                  setState(() {});
-                                } else {
-                                  checkValidate["phoneNumber"] = false;
-                                  setState(() {});
-                                }
-                              },
-                              prefixIcon: Icons.phone,
-                              hintText: AppStrings.hintPhone,
-                              validFiled: checkValidate["phoneNumber"],
-                            ),
-                            const SizedBox(
-                              height: AppSize.s20,
-                            ),
-                            ButtonApp(
-                                text: AppStrings.signupText,
-                                onTap: () async {
-                                  Const.LOADIG(context);
-                                  var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
-                                //  print(result);
-                                  Const.TOAST(context,textToast: result["message"]);
-                                  Navigator.pop(context);
-                                  if(result["status"]){
-                                    if (_formKey.currentState!.validate()) {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder:
-                                              (ctx)=>OTPView(
-                                              User(
-                                                  name: firstName.text+" "+lastName.text,
-                                                  phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
-                                              ),
-                                              true
-                                          ))
-                                      );
-                                    }
-                                  }else{
-                                    /// SnackBar(content: Text("o"));
-
-                                  }
-
-                                }),
-                            const SizedBox(
-                              height: AppSize.s4,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  AppStrings.alreadyHaveAccount,
-                                  style:
-                                      getRegularStyle(color: ColorManager.black),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (ctx) => LoginView()));
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(AppPadding.p8),
-                                    child: Text(
-                                      AppStrings.loginText,
-                                      style: getLightStyle(
-                                          color: ColorManager.lightSecondary,
-                                          fontSize: Sizer.getW(context) * 0.038),
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppPadding.p40,
+                            horizontal: AppPadding.p20,
+                          ),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).secondaryHeaderColor,
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(AppSize.s40))),
+                          child: Form(
+                            key: _formKey,
+                            child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    CustomTextFiled(
+                                      controller: firstName,
+                                      textInputType: TextInputType.text,
+                                      textInputAction: TextInputAction.next,
+                                      maxLength: null,
+                                      validator: (val) {
+                                        if (val!.trim().isEmpty) {
+                                          return AppStrings.fieldNotEmpty;
+                                        }
+                                        //TODO start with number and [~!@#$%^&*]
+                                        // if(!val.toString().isPhoneNumber){
+                                        //   return AppStrings.phoneStart09;
+                                        // }
+                                        return null;
+                                      },
+                                      onChange: (val) {
+                                        if (val.trim().isNotEmpty) {
+                                          checkValidate["firstName"] = true;
+                                          setState(() {});
+                                        } else {
+                                          checkValidate["firstName"] = false;
+                                          setState(() {});
+                                        }
+                                      },
+                                      prefixIcon: Icons.person,
+                                      hintText: AppStrings.firstName,
+                                      validFiled: checkValidate["firstName"],
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        )),
-                      )),
-                )),
+                                    const SizedBox(
+                                      height: AppSize.s20,
+                                    ),
+                                    CustomTextFiled(
+                                      controller: lastName,
+                                      textInputType: TextInputType.text,
+                                      textInputAction: TextInputAction.next,
+                                      autoFocus: false,
+                                      maxLength: null,
+                                      validator: (val) {
+                                        if (val!.trim().isEmpty) {
+                                          return AppStrings.fieldNotEmpty;
+                                        }
+                                        //TODO start with number and [~!@#$%^&*]
+                                        // if(!val.toString().isPhoneNumber){
+                                        //   return AppStrings.phoneStart09;
+                                        // }
+                                        return null;
+                                      },
+                                      onChange: (val) {
+                                        if (val.trim().isNotEmpty) {
+                                          checkValidate["lastName"] = true;
+                                          setState(() {});
+                                        } else {
+                                          checkValidate["lastName"] = false;
+                                          setState(() {});
+                                        }
+                                      },
+                                      prefixIcon: Icons.person,
+                                      hintText: AppStrings.lastName,
+                                      validFiled: checkValidate["lastName"],
+                                    ),
+                                    const SizedBox(
+                                      height: AppSize.s20,
+                                    ),
+                                    CustomTextFiled(
+                                      controller: phoneNumber,
+                                      textInputType: TextInputType.phone,
+                                      textInputAction: TextInputAction.done,
+                                      autoFocus: false,
+                                      maxLength: 10,
+                                      validator: (val) {
+                                        if (val!.trim().isEmpty) {
+                                          return AppStrings.fieldNotEmpty;
+                                        }
+                                        if (!val.toString().isPhoneNumber ||
+                                            val.length != 10) {
+                                          return AppStrings.validPhone;
+                                        }
+                                        if (!val.startsWith("09")) {
+                                          return AppStrings.phoneStart09;
+                                        }
+                                        return null;
+                                      },
+                                      onChange: (val) {
+                                        if (val.trim().isNotEmpty) {
+                                          checkValidate["phoneNumber"] = true;
+                                          setState(() {});
+                                        } else {
+                                          checkValidate["phoneNumber"] = false;
+                                          setState(() {});
+                                        }
+                                      },
+                                      prefixIcon: Icons.phone,
+                                      hintText: AppStrings.hintPhone,
+                                      validFiled: checkValidate["phoneNumber"],
+                                    ),
+                                    const SizedBox(
+                                      height: AppSize.s20,
+                                    ),
+                                    ButtonApp(
+                                        text: AppStrings.signupText,
+                                        onTap: () async {
+                                          Const.LOADIG(context);
+                                          var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
+
+                                          Const.TOAST(context,textToast: result["message"]);
+                                          Navigator.pop(context);
+                                          if(result["status"]){
+                                            if (_formKey.currentState!.validate()) {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder:
+                                                      (ctx)=>OTPView(
+                                                      User(
+                                                          name: firstName.text+" "+lastName.text,
+                                                          phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
+                                                      ),
+                                                      true
+                                                  ))
+                                              );
+                                            }
+                                          }else{
+                                            /// SnackBar(content: Text("o"));
+
+                                          }
+
+                                        }),
+                                    const SizedBox(
+                                      height: AppSize.s4,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          AppStrings.alreadyHaveAccount,
+                                          style:
+                                          getRegularStyle(color: ColorManager.black),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (ctx) => LoginView()));
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(AppPadding.p8),
+                                            child: Text(
+                                              AppStrings.loginText,
+                                              style: getLightStyle(
+                                                  color: ColorManager.lightSecondary,
+                                                  fontSize: Sizer.getW(context) * 0.038),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                          )),
+                    )),
               ],
             ),
-          Image.asset(ImagesAssets.registerBottomWave),
+            Image.asset(ImagesAssets.registerBottomWave),
 
           ],
         ));

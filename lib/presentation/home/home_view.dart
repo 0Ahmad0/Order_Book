@@ -121,7 +121,7 @@ class _HomeViewState extends State<HomeView> {
                 fontSize: Sizer.getW(context) * 0.035),
           ),
           FutureBuilder(
-            future: authProvider.trendingOffers(Advance.token),
+            future: authProvider.trendingItems(Advance.token),
             builder: (
                 context, snapshot,) {
               //  print(snapshot.error);
@@ -136,7 +136,7 @@ class _HomeViewState extends State<HomeView> {
                     Expanded(
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: _images["img"].length,
+                            itemCount: authProvider.listTrendingItems.length,
                             itemBuilder: (ctx, index) => itemsSection(index,context)));
                 } else {
                   return const Text('Empty data');

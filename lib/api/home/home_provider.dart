@@ -84,6 +84,7 @@ int i=0;
   Future<Map<String,dynamic>> onValuetrendingOffers(http.Response response)async{
     var result;
     //listTrendingItems.clear();
+    listOffers=[];
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
