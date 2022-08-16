@@ -127,12 +127,16 @@ class _LoginViewState extends State<LoginView> {
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             Const.LOADIG(context);
-                            String phone =await AppStorage.storageRead(key: AppStorage.phoneNumberKEY);
-
-                            if(await AppStorage.storageRead(key :AppStorage.isRegisterKEY)&&phone==phoneNumber.text.replaceFirst("0","+963" )){
-                              Navigator.pop(context);
-                             await login(authProvider);
+                            var a =await AppStorage.storageRead(key:AppStorage.phoneNumberKEY);
+                            var q =await AppStorage.storageRead(key:AppStorage.isRegisterKEY);
+                            if(await a!=null&&await q!=null){
+                              String phone =await AppStorage.storageRead(key: AppStorage.phoneNumberKEY);
+                              if(await AppStorage.storageRead(key :AppStorage.isRegisterKEY)&&phone==phoneNumber.text.replaceFirst("0","+963" )){
+                                Navigator.pop(context);
+                                await login(authProvider);
+                              }
                             }
+
                             var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
                             Navigator.pop(context);
                             if(!result["status"]){
