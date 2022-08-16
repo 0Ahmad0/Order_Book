@@ -271,6 +271,7 @@ class HomeProvider extends ChangeNotifier{
     var result;
     //listTrendingItems.clear();
     // listRatingRestaurant=[];
+    listTrendingRestaurant=[];
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
