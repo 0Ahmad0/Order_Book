@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -10,13 +11,15 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:intl/intl.dart';
 
+import '../../api/app_url/app_url.dart';
 import '../login/login_view.dart';
 import '../resources/strings_manager.dart';
-
+import 'package:orderbook/domain/models.dart' as models;
 
 class AddReservationsView extends StatefulWidget {
-  const AddReservationsView({Key? key}) : super(key: key);
-
+  //const AddReservationsView({Key? key}) : super(key: key);
+  final models.Table table;
+  AddReservationsView({required this.table});
   @override
   State<AddReservationsView> createState() => _AddReservationsViewState();
 }
@@ -47,7 +50,8 @@ class _AddReservationsViewState extends State<AddReservationsView> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage(ImagesAssets.tableImage)),
+                      image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${widget.table.table_image}",),//AssetImage(ImagesAssets.tableImage)
+                  ),
                   borderRadius: BorderRadius.circular(AppSize.s14),
                   boxShadow: [
                     BoxShadow(
@@ -81,7 +85,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                           trailing: SizedBox(
                             height:Sizer.getW(context) * 0.1 ,
                             width: Sizer.getW(context) * 0.25,
-                              child: TextFormField(
+                              child: TextFormField(initialValue: "${widget.table.table_number}",
                                 controller: tableNumber,
                                 cursorColor: ColorManager.lightPrimary,
                                 style: getRegularStyle(

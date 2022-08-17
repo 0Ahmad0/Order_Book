@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orderbook/api/app_url/app_url.dart';
 import 'package:orderbook/presentation/add_reservations/add_reservations_view.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
@@ -10,7 +12,7 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/const.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:provider/provider.dart';
-
+import 'package:orderbook/domain/models.dart' as models;
 import '../../api/auth/auth_provider.dart';
 import '../../domain/models.dart';
 import '../resources/style_manager.dart';
@@ -36,6 +38,7 @@ class _MapTablesViewState extends State<MapTablesView> {
     ]
   };
   bool refresh = true;
+
 
   @override
   Future<void> getTable() async {
@@ -91,7 +94,9 @@ class _MapTablesViewState extends State<MapTablesView> {
               itemBuilder: (_,index){
                 return GestureDetector(
                   onTap: () {
-                    Get.to(()=>AddReservationsView());
+                     models.Table table=widget.authProvider.listTables[widget.indx].tables![index];
+                   // widget.authProvider.listTables[widget.indx].tables[index]
+                    Get.to(()=>AddReservationsView(table: table,));
                   },
                   child: Stack(
                     children: [
@@ -116,7 +121,7 @@ class _MapTablesViewState extends State<MapTablesView> {
                                           AppSize.s14),
                                       image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: AssetImage(ImagesAssets.tableImage),
+                                        image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${widget.authProvider.listTables[widget.indx].tables![index].table_image}",),//AssetImage(ImagesAssets.tableImage),
                                       )
                                   ),
                                 )),
@@ -131,7 +136,7 @@ class _MapTablesViewState extends State<MapTablesView> {
                                         .start,
                                     children: [
                                       Text(
-                                        "Number Table : ${ widget.authProvider.listTables[widget.indx].tables![widget.indx].id}",
+                                        "Number Table : ${ widget.authProvider.listTables[widget.indx].tables![index].id}",
                                         //"Number Table : ${14}",
                                         style: getBoldStyle(
                                             color: ColorManager.lightPrimary,
@@ -142,7 +147,7 @@ class _MapTablesViewState extends State<MapTablesView> {
                                         height: AppSize.s10,
                                       ),
                                       Text(
-                                        "Number Person : ${widget.authProvider.listTables[widget.indx].tables![widget.indx].min} - ${ widget.authProvider.listTables[widget.indx].tables![widget.indx].max}",
+                                        "Number Person : ${widget.authProvider.listTables[widget.indx].tables![index].min} - ${ widget.authProvider.listTables[widget.indx].tables![widget.indx].max}",
                                         style: getRegularStyle(
                                             color: ColorManager.black,
                                             fontSize:

@@ -130,6 +130,7 @@ class RestaurantsProvider extends ChangeNotifier{
       for(var element in responseData["data"]){
 
         Tables table =Tables.fromJson(element);
+
         listTables.add(table);
         categories.add(table.name!);
 

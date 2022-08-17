@@ -25,6 +25,7 @@ class AuthProvider extends  HomeProvider{
         'phone_number':phoneNumber,
         'device_id':deviceId,
         'avatar_id':"1",//avatarId.toString(),
+        'language':"en"
       },
     ).then(onValueReg).catchError(onError);
   }

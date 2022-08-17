@@ -187,9 +187,10 @@ class Table{
   String? top;
   int? id;
   String? table_image;
-  String? max;
-  String? min;
+  int? max;
+  int? min;
   String? qrCode;
+  int? table_number;
 
   factory Table.fromJson(Map<String,dynamic> responseData){
     return Table(
@@ -200,11 +201,12 @@ class Table{
       max:responseData["max"],
       min:responseData["min"],
       qrCode: responseData['qrCode'],
+      table_number:responseData['table_number'],
     );
   }
 
   Table({this.left, this.top, this.id, this.table_image, this.max, this.min,
-      this.qrCode});
+      this.qrCode,this.table_number});
 }
 //table
 class Tables{
@@ -217,9 +219,9 @@ class Tables{
     List<Table> temp=[];
 
     for(var table in responseData['tables']){
+
       temp.add(Table.fromJson(table));
     }
-
     return Tables(
       name: responseData['name'],
       image: responseData['image'],
