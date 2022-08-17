@@ -22,6 +22,11 @@ class RestaurantsProvider extends ChangeNotifier{
   List<Reservations> listAcceptedReservations= [];
   List<Reservations> listCancelledReservations= [];
 
+  List<Orders> listPendingOrders= [];
+  List<Orders> listRejectedOrders= [];
+  List<Orders> listServedOrders= [];
+  List<Orders> listCancelledOrders= [];
+
 
   Future<Map<String,dynamic>> addFav(String token,int idVendor) async{
    print( Uri.parse( "${AppUrl.addFavourite}${idVendor}"));
@@ -178,6 +183,63 @@ class RestaurantsProvider extends ChangeNotifier{
     return res;
   }
 
+  Future<Map<String,dynamic>> myPendingOrders(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myPendingOrders}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onPendingOrders).catchError(onError2);
+  }
+  Future<Map<String,dynamic>> myRejectedOrders(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myRejectedOrders}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onRejectedOrders).catchError(onError2);
+  }
+  Future<Map<String,dynamic>> myServedOrders(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myServedOrders}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onServedOrders).catchError(onError2);
+  }
+  Future<Map<String,dynamic>> myCancelledOrders(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myPendingOrders}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onCancelledOrders).catchError(onError2);
+  }
+
+  Future<Map<String,dynamic>> myOrders(String token) async{
+    var res;
+    res= await myPendingOrders(token);
+    res=await myRejectedOrders(token);
+    res=await myServedOrders(token);
+    res=await myCancelledOrders(token);
+    return res;
+  }
 
   static onError2(error){
 
@@ -462,6 +524,147 @@ class RestaurantsProvider extends ChangeNotifier{
         Reservations reservations =Reservations.fromJson(element);
 
         listPendingReservations.add(reservations);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+
+  Future<Map<String,dynamic>> onCancelledOrders(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listCancelledOrders=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Orders orders =Orders.fromJson(element);
+
+        listCancelledOrders.add(orders);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onPendingOrders(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listPendingOrders=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Orders orders =Orders.fromJson(element);
+
+        listPendingOrders.add(orders);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onRejectedOrders(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listRejectedOrders=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Orders orders =Orders.fromJson(element);
+
+        listRejectedOrders.add(orders);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onServedOrders(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listServedOrders=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Orders orders =Orders.fromJson(element);
+
+        listServedOrders.add(orders);
 
         // idCategories.add(table.id!);
       }

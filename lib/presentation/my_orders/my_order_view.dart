@@ -7,11 +7,14 @@ import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/restaurant_map_scroll/restaurant_map_scroll_view.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
+
+import '../../api/auth/auth_provider.dart';
 
 
 class MyOrdersView extends StatefulWidget {
-  const MyOrdersView({Key? key}) : super(key: key);
-
+ // const MyOrdersView({Key? key}) : super(key: key);
+  late AuthProvider authProvider;
   @override
   State<MyOrdersView> createState() => _MyOrdersViewState();
 }
@@ -21,6 +24,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
 
   @override
   Widget build(BuildContext context) {
+    widget.authProvider = Provider.of<AuthProvider>(context);
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppPadding.p20,
