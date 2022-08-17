@@ -223,7 +223,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                               Navigator.push(
                                   context, MaterialPageRoute(
                                   builder: (ctx) =>RestaurantProfileView(
-                                    authProvider: authProvider,
+                                    authProvidere: authProvider,
                                       restaurant: Restaurant(
                                         id: authProvider.listRestaurant[index].id,
                                         imageLogo: authProvider.listRestaurant[index].imageLogo,//ImagesAssets.loginBackground,

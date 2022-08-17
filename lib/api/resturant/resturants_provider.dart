@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:orderbook/api/app_url/app_url.dart';
@@ -13,6 +14,8 @@ class RestaurantsProvider extends ChangeNotifier{
   bool recRestaurant=false;
   List<RestaurantViews> listRestaurant= [];
   List<Tables> listTables= [];
+  List<String> categories= [];
+  List<int>idCategories= [];
 
 
   Future<Map<String,dynamic>> addFav(String token,int idVendor) async{
@@ -39,7 +42,7 @@ class RestaurantsProvider extends ChangeNotifier{
     },
     ).then(onDeleteValueFav).catchError(onError2);
   }
-  Future<Map<String,dynamic>> trendingOffers(String token,String id) async{
+  Future<Map<String,dynamic>> table(String token,int id) async{
 //    print( Uri.parse( AppUrl.login));
     recRestaurant=false;
     return await get(
@@ -114,21 +117,30 @@ class RestaurantsProvider extends ChangeNotifier{
     var result;
     //listTrendingItems.clear();
     listTables=[];
+    categories=[];
+    idCategories=[];
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
+
     if(response.statusCode==200){
-      listTables=[];
+
+      //listTables=[];
       //listTrendingItems.clear();
       for(var element in responseData["data"]){
+
         Tables table =Tables.fromJson(element);
         listTables.add(table);
+        categories.add(table.name!);
+
+        idCategories.add(table.id!);
       }
       result ={
         'status':true,
         'message':"Successful Request",
         'data':responseData
       };
+
     }else {
       result ={
         'status':false,

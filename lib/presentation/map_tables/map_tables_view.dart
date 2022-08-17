@@ -12,11 +12,15 @@ import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/auth/auth_provider.dart';
+import '../../domain/models.dart';
 import '../resources/style_manager.dart';
 
 class MapTablesView extends StatefulWidget {
-  const MapTablesView({Key? key}) : super(key: key);
-
+  final int id;
+  final AuthProvider authProvider;
+  int indx=-1;
+  //const MapTablesView({Key? key, required this.id}) : super(key: key);
+  MapTablesView({required this.id, required this.authProvider});
   @override
   State<MapTablesView> createState() => _MapTablesViewState();
 }
@@ -32,9 +36,21 @@ class _MapTablesViewState extends State<MapTablesView> {
     ]
   };
   bool refresh = true;
+
   @override
+  Future<void> getTable() async {
+    await  widget.authProvider.table(Advance.token,widget.id);
+   // print(widget.authProvider.categories.length);
+  }
+  void initState() {
+    // TODO: implement initState
+    getTable();
+    super.initState();
+  }
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    //print(widget.authProvider.listTables.length);
+   // AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.mapTables),
@@ -43,31 +59,35 @@ class _MapTablesViewState extends State<MapTablesView> {
       body: Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: AppPadding.p20, vertical: AppPadding.p10),
-        child: Column(
+        child:Column(
           children: [
             DropdownButtonFormField<String>(
                 hint: Text(AppStrings.selectFloor),
                 items: List.generate(
-                    floors["floors"].length,
-                    (index) => DropdownMenuItem<String>(
-                          child: Text("${floors["floors"][index]}"),
-                          value: floors["floors"][index],
-                        )),
+                    widget.authProvider.categories.length,
+                    // floors["floors"].length,
+                        (index) => DropdownMenuItem<String>(
+                      child: Text("${widget.authProvider.categories[index]}"),
+                      //Text("${floors["floors"][index]}"),
+                      value: widget.authProvider.categories[index],//floors["floors"][index],
+                    )),
                 onChanged: (val) {
+                  widget.indx=widget.authProvider.categories.indexOf(val!);
+                  print(widget.indx);
                   Timer(
-                    Duration(seconds: 1),
-                      (){
-                      refresh = true;
-                      setState((){});
-                      }
-                  );
-                  refresh = false;
-                  setState((){});
+                                Duration(seconds: 1),
+                                    (){
+                                  refresh = true;
+                                  setState((){});
+                                }
+                            );
+                            refresh = false;
+                            setState((){});
 
                 }),
             const SizedBox(height: AppSize.s20,),
-           refresh? Expanded(child: ListView.builder(
-              itemCount: 15,
+            refresh? Expanded(child: ListView.builder(
+              itemCount: widget.indx<0?0:widget.authProvider.listTables[widget.indx].tables!.length,
               itemBuilder: (_,index){
                 return GestureDetector(
                   onTap: () {
@@ -81,8 +101,8 @@ class _MapTablesViewState extends State<MapTablesView> {
                         const EdgeInsets.symmetric(vertical: AppMargin.m8),
                         decoration: BoxDecoration(
                           color: ColorManager.lightGray.withOpacity(.2),
-                            borderRadius: BorderRadius.circular(AppSize.s14),
-                           ),
+                          borderRadius: BorderRadius.circular(AppSize.s14),
+                        ),
                         child: Row(
                           children: [
                             Expanded(
@@ -95,8 +115,8 @@ class _MapTablesViewState extends State<MapTablesView> {
                                       borderRadius: BorderRadius.circular(
                                           AppSize.s14),
                                       image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: AssetImage(ImagesAssets.tableImage),
+                                        fit: BoxFit.fill,
+                                        image: AssetImage(ImagesAssets.tableImage),
                                       )
                                   ),
                                 )),
@@ -111,7 +131,8 @@ class _MapTablesViewState extends State<MapTablesView> {
                                         .start,
                                     children: [
                                       Text(
-                                        "Number Table : ${14}",
+                                        "Number Table : ${ widget.authProvider.listTables[widget.indx].tables![widget.indx].id}",
+                                        //"Number Table : ${14}",
                                         style: getBoldStyle(
                                             color: ColorManager.lightPrimary,
                                             fontSize:
@@ -121,7 +142,7 @@ class _MapTablesViewState extends State<MapTablesView> {
                                         height: AppSize.s10,
                                       ),
                                       Text(
-                                        "Number Person : ${16}",
+                                        "Number Person : ${widget.authProvider.listTables[widget.indx].tables![widget.indx].min} - ${ widget.authProvider.listTables[widget.indx].tables![widget.indx].max}",
                                         style: getRegularStyle(
                                             color: ColorManager.black,
                                             fontSize:
@@ -130,20 +151,20 @@ class _MapTablesViewState extends State<MapTablesView> {
                                       const SizedBox(
                                         height: AppSize.s10,
                                       ),
-                                      Text(
+                                      /*Text(
                                         "Location : {WOOO}",
                                         style: getLightStyle(
                                             color: ColorManager.blackF2,
                                             fontSize: Sizer.getW(context) *
                                                 0.03),
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ))
                           ],
                         ),
-                      ),
-                   index.isEven?   Positioned(
+                      ),/*
+                      index.isEven?   Positioned(
                         top: 0,
                         right: 0,
                         child: Image.asset(
@@ -152,12 +173,13 @@ class _MapTablesViewState extends State<MapTablesView> {
                           height: Sizer.getW(context) * 0.25,
                         ),
                       ):SizedBox(),
+                      */
                     ],
                   ),
                 );
               },
             ))
-               :SizedBox()
+                :SizedBox()
           ],
         ),
       ),

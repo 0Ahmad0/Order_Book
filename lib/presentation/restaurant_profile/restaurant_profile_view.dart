@@ -23,8 +23,8 @@ import '../utils/const.dart';
 
 class RestaurantProfileView extends StatefulWidget {
   final Restaurant restaurant;
-  final AuthProvider authProvider;
-  const RestaurantProfileView({super.key, required this.restaurant,required this.authProvider});
+  final AuthProvider authProvidere;
+  const RestaurantProfileView({super.key, required this.restaurant,required this.authProvidere});
 
   @override
   State<RestaurantProfileView> createState() => _RestaurantProfileViewState();
@@ -35,6 +35,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
   AppinioSwiperController _appinioSwiperController = AppinioSwiperController();
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider= Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -62,7 +63,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 ],
               ),
             ),
-            FavoriteSection(isFavorite: widget.restaurant.isFavorite!,id: widget.restaurant.id!,authProvider: widget.authProvider,),
+            FavoriteSection(isFavorite: widget.restaurant.isFavorite!,id: widget.restaurant.id!,authProvider: authProvider,),
             Column(
               children: <Widget>[
                 Hero(
@@ -195,8 +196,10 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 const SizedBox(height: AppSize.s10,),
                 ButtonApp(
                   text: "Restaurant Map",
-                  onTap: (){
-                    Get.to(()=>MapTablesView());
+                  onTap: () async {
+                    //  await  authProvider.table(Advance.token,widget.restaurant.id!);
+                      // print(widget.authProvider.categories.length);
+                    Get.to(()=>MapTablesView(id: widget.restaurant.id!,authProvider: authProvider,));
                   },
                 ),
 

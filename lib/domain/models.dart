@@ -188,7 +188,7 @@ class Table{
   int? id;
   String? table_image;
   String? max;
-  bool? min;
+  String? min;
   String? qrCode;
 
   factory Table.fromJson(Map<String,dynamic> responseData){
@@ -211,14 +211,20 @@ class Tables{
   String? name;
   String? image;
   int? id;
-  List<dynamic>? tables=[];
+  List<Table>? tables=[];
 
   factory Tables.fromJson(Map<String,dynamic> responseData){
+    List<Table> temp=[];
+
+    for(var table in responseData['tables']){
+      temp.add(Table.fromJson(table));
+    }
+
     return Tables(
       name: responseData['name'],
       image: responseData['image'],
       id:  responseData['id'],
-      tables:  responseData['tables'],
+      tables:  temp ,
     );
   }
 
