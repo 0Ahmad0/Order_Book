@@ -9,6 +9,7 @@ import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
+import 'package:orderbook/presentation/restaurant_map_scroll/restaurant_map_scroll_view.dart';
 import 'package:orderbook/presentation/utils/const.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +57,18 @@ class _MapTablesViewState extends State<MapTablesView> {
    // AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: (){
+            if(widget.indx >=0){
+              Get.to(()=>RestaurantMapScrollView(
+                  widget.authProvider.listTables[widget.indx]
+              ),);
+
+            }else{
+              Const.TOAST(context,textToast: AppStrings.selectFloorFirst);
+            }
+          }, icon: Icon(Icons.map)),
+        ],
         title: Text(AppStrings.mapTables),
         elevation: 0.0,
       ),

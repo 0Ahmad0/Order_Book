@@ -362,7 +362,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                 Positioned(
                                   top: AppSize.s14,
                                   right: Advance.language?AppSize.s8:null,
-                                  left: Advance.language?0:AppSize.s8,
+                                  left: Advance.language?null:AppSize.s8,
                                   child: Container(
                                     padding: const EdgeInsets.all(AppPadding.p8),
                                     decoration: BoxDecoration(
@@ -386,7 +386,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                 Positioned(
                                   bottom: AppSize.s16,
                                   right: Advance.language?AppSize.s8:null,
-                                  left: Advance.language?0:AppSize.s8,
+                                  left: Advance.language?null:AppSize.s8,
                                   child: CircleAvatar(
                                       backgroundColor: ColorManager.lightPrimary,
                                       child: LikeButton(

@@ -18,6 +18,7 @@ import '../../api/app_url/app_url.dart';
 import '../../api/auth/auth_provider.dart';
 import '../../api/resturant/resturants_provider.dart';
 import '../map_tables/map_tables_view.dart';
+import '../restaurant_map_scroll/restaurant_map_scroll_view.dart';
 import '../utils/const.dart';
 
 
@@ -38,6 +39,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
     AuthProvider authProvider= Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
+
         elevation: 0.0,
         title: Text(AppStrings.restaurantProfile),
       ),

@@ -28,9 +28,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
       ),
       child: ListView(
         children: [
-          IconButton(onPressed: (){
-            Get.to(()=>RestaurantMapScrollView());
-          }, icon: Icon(Icons.map)),
+
           Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppSize.s14),

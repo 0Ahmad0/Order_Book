@@ -80,4 +80,5 @@ class AppStrings {
   static String info = tr(LocaleKeys.info);
   static String location = tr(LocaleKeys.location);
   static String scancode = tr(LocaleKeys.scancode);
+  static String selectFloorFirst = "selectFloorFirst";
 }

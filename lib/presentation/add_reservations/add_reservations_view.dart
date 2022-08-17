@@ -64,7 +64,9 @@ class _AddReservationsViewState extends State<AddReservationsView> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${widget.table.table_image}",),//AssetImage(ImagesAssets.tableImage)
+                      image: CachedNetworkImageProvider(
+                        "${AppUrl.baseUrlImage}${widget.table.table_image}"
+                        ,),//AssetImage(ImagesAssets.tableImage)
                   ),
                   borderRadius: BorderRadius.circular(AppSize.s14),
                   boxShadow: [
