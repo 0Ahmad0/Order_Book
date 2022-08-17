@@ -131,7 +131,7 @@ class RestaurantsProvider extends ChangeNotifier{
       "Authorization": "Bearer $token",
       "language":Advance.language?"en":"ar"
     }
-    ).then(onMenuVendor).catchError(onError2);
+    ).then(onPendingReservations).catchError(onError2);
   }
   Future<Map<String,dynamic>> rejectedReservations(String token) async{
 //    print( Uri.parse( AppUrl.login));
@@ -169,8 +169,13 @@ class RestaurantsProvider extends ChangeNotifier{
     }
     ).then(onCancelledReservations).catchError(onError2);
   }
-  Future<void> myReservations(String token) async{
-
+  Future<Map<String,dynamic>> myReservations(String token) async{
+    var res;
+    res= await pendingReservations(token);
+    res=await rejectedReservations(token);
+    res=await acceptedReservations(token);
+    res=await cancelledReservations(token);
+    return res;
   }
 
 
@@ -337,6 +342,8 @@ class RestaurantsProvider extends ChangeNotifier{
     var result;
     //listTrendingItems.clear();
     listPendingReservations=[];
+    print(await response);
+    print("await response");
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
