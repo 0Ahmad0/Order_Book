@@ -1,13 +1,17 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/data/local/change_theme.dart';
 import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
+import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
+import 'package:orderbook/presentation/utils/const.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
@@ -31,21 +35,52 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   AppModel appModel = new AppModel();
+
   @override
   void initState() {
     super.initState();
-   // _initAppTheme();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification!;
+      AndroidNotification android = message.notification!.android!;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              color: ColorManager.lightPrimary,
+              playSound: true,
+              icon: '@mipmap/ic_launcher',
+            )
+          )
+
+        );
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("A new onMessageApp opend");
+      RemoteNotification notification = message.notification!;
+      AndroidNotification android = message.notification!.android!;
+      if(notification!=null && android!=null){
+        Const.SHOWRATEDIALOOG(context);
+      }
+    });
+    // _initAppTheme();
   }
- /* void _initAppTheme() async {
+
+  /* void _initAppTheme() async {
     appModel.darkTheme = await AppStorage.storageRead(key: AppStorage.themeKEY);
   }*/
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers:[
-          ChangeNotifierProvider(create: (_)=>AuthProvider()),
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
 
-        ],
+      ],
       child: ChangeNotifierProvider<AppModel>.value(
         value: appModel,
         child: Consumer<AppModel>(
@@ -59,7 +94,7 @@ class _MyAppState extends State<MyApp> {
               );
             }
         ),
-      ), );
+      ),);
     /*ChangeNotifierProvider<AppModel>.value(
       value: appModel,
       child: Consumer<AppModel>(

@@ -164,6 +164,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                         radius: AppSize.s14,
                         textConfirmPicker: AppStrings.pick,
                         initCurrentUserPosition: true,
+                        initZoom: 14
                       ).then((value) {
                         print("latitude: ${value!.latitude}");
                         print("longitude: ${value.longitude}");

@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core:
   firebase_auth:
+  firebase_messaging:
+  flutter_local_notifications:
   flutter_svg:
   get_storage:
   animate_do:
@@ -59,6 +61,7 @@ dependencies:
   flutter_osm_plugin: ^0.39.0
   flutter_rating_bar: ^4.0.1
   cached_network_image: ^3.2.1
+  zoom_widget: ^0.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

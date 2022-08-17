@@ -4,8 +4,10 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/api/auth/auth_provider.dart';
+import 'package:orderbook/main.dart';
 import 'package:orderbook/presentation/bottom_nav_bar/bottom_nav_bar_view.dart';
 import 'package:orderbook/presentation/home/home_view.dart';
 import 'package:orderbook/presentation/login/login_view_model.dart';
@@ -39,36 +41,42 @@ class _LoginViewState extends State<LoginView> {
   bool type = false;
   final TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-   // loginViewModel.start();
+    // loginViewModel.start();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
   }
+
   Future<void> login(AuthProvider authProvider,) async {
     Const.LOADIG(context);
-    var result =await authProvider.Login( phoneNumber.text.replaceFirst("0","+963" ));
+    var result = await authProvider.Login(
+        phoneNumber.text.replaceFirst("0", "+963"));
     print(result);
-    Const.TOAST(context,textToast: result["message"]);
+    Const.TOAST(context, textToast: result["message"]);
     Navigator.pop(context);
-    if(result["status"]){
+    if (result["status"]) {
       await DataLocal.getData();
       Navigator.pop(context);
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (ctx)=>BottomNavBarView()));
+          MaterialPageRoute(builder: (ctx) => BottomNavBarView()));
+
       /// SnackBar(content: Text("k"));
       //print("done register");
       // Const.TOAST(context,textToast: result["message"]);
-    }else{
+    } else {
       /// SnackBar(content: Text("o"));
 
     }
   }
+
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -89,23 +97,27 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       CustomTextFiled(
                         controller: phoneNumber,
-                          textInputType: TextInputType.phone,
-                          textInputAction:TextInputAction.done,
-                          maxLength: 10,
-                          validator:(val) {
-                            if(val!.trim().isEmpty){
-                              return AppStrings.fieldNotEmpty;
-                            }
-                            if(!val.toString().isPhoneNumber || val.length!=10){
-                              return AppStrings.validPhone;
-                            }
-                            if(!val.startsWith("09")){
-                              return AppStrings.phoneStart09;
-                            }
-                            return null;
-                          },
+                        textInputType: TextInputType.phone,
+                        textInputAction: TextInputAction.done,
+                        maxLength: 10,
+                        validator: (val) {
+                          if (val!.trim().isEmpty) {
+                            return AppStrings.fieldNotEmpty;
+                          }
+                          if (!val
+                              .toString()
+                              .isPhoneNumber || val.length != 10) {
+                            return AppStrings.validPhone;
+                          }
+                          if (!val.startsWith("09")) {
+                            return AppStrings.phoneStart09;
+                          }
+                          return null;
+                        },
                         onChange: (val) {
-                          if (val.trim().isNotEmpty) {
+                          if (val
+                              .trim()
+                              .isNotEmpty) {
                             type = true;
                             setState(() {});
                           } else {
@@ -113,9 +125,9 @@ class _LoginViewState extends State<LoginView> {
                             setState(() {});
                           }
                         },
-                          prefixIcon: Icons.phone,
-                          hintText: AppStrings.hintPhone,
-                          validFiled: type,
+                        prefixIcon: Icons.phone,
+                        hintText: AppStrings.hintPhone,
+                        validFiled: type,
 
                       ),
                       const SizedBox(
@@ -125,34 +137,56 @@ class _LoginViewState extends State<LoginView> {
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
                         onTap: () async {
+                          flutterLocalNotificationsPlugin.show(
+                              0,
+                              "Testing: @Hariri",
+                              "How Heaitham do?",
+                              NotificationDetails(
+                                android: AndroidNotificationDetails(
+                                  channel.id,
+                                  channel.name,
+                                  importance: Importance.high,
+                                  color: ColorManager.lightPrimary,
+                                  playSound: true,
+                                  icon: "@mipmap/ic_launcher"
+                                )
+                              ));
                           if (_formKey.currentState!.validate()) {
                             Const.LOADIG(context);
-                            var a =await AppStorage.storageRead(key:AppStorage.phoneNumberKEY);
-                            var q =await AppStorage.storageRead(key:AppStorage.isRegisterKEY);
-                            if(await a!=null&&await q!=null){
-                              String phone =await AppStorage.storageRead(key: AppStorage.phoneNumberKEY);
-                              if(await AppStorage.storageRead(key :AppStorage.isRegisterKEY)&&phone==phoneNumber.text.replaceFirst("0","+963" )){
+                            var a = await AppStorage.storageRead(
+                                key: AppStorage.phoneNumberKEY);
+                            var q = await AppStorage.storageRead(
+                                key: AppStorage.isRegisterKEY);
+                            if (await a != null && await q != null) {
+                              String phone = await AppStorage.storageRead(
+                                  key: AppStorage.phoneNumberKEY);
+                              if (await AppStorage.storageRead(
+                                  key: AppStorage.isRegisterKEY) && phone ==
+                                  phoneNumber.text.replaceFirst("0", "+963")) {
                                 Navigator.pop(context);
                                 await login(authProvider);
                               }
                             }
 
-                            var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
+                            var result = await authProvider.checkNumber(
+                                phoneNumber.text.replaceFirst("0", "+963"));
                             Navigator.pop(context);
-                            if(!result["status"]){
+                            if (!result["status"]) {
                               Navigator.push(context,
                                   MaterialPageRoute(builder:
-                                      (ctx)=>OTPView(
-                                      User(
-                                          phoneNumber: phoneNumber.text.replaceFirst("0","+963" )
-                                      ),
-                                      false
-                                  ))
+                                      (ctx) =>
+                                      OTPView(
+                                          User(
+                                              phoneNumber: phoneNumber.text
+                                                  .replaceFirst("0", "+963")
+                                          ),
+                                          false
+                                      ))
                               );
-                            }else{
-                              Const.TOAST(context,textToast: "The phone number not has found");
+                            } else {
+                              Const.TOAST(context,
+                                  textToast: "The phone number not has found");
                             }
-
                           }
 
 
@@ -250,7 +284,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+                  const EdgeInsets.symmetric(horizontal: AppPadding.p20),
                   child: Text(
                     AppStrings.loginWelcomeText,
                     textAlign: TextAlign.center,
@@ -275,13 +309,12 @@ class ButtonApp extends StatelessWidget {
   final Color colorButtonText;
   final double fontSize;
 
-  ButtonApp(
-      {super.key,
-      required this.text,
-      required this.onTap,
-      this.colorButton = ColorManager.lightPrimary,
-      this.colorButtonText = ColorManager.white,
-      this.fontSize = 16.0});
+  ButtonApp({super.key,
+    required this.text,
+    required this.onTap,
+    this.colorButton = ColorManager.lightPrimary,
+    this.colorButtonText = ColorManager.white,
+    this.fontSize = 16.0});
 
   @override
   Widget build(BuildContext context) {
@@ -333,22 +366,21 @@ class CustomTextFiled extends StatefulWidget {
   bool readOnly;
 
 
-   CustomTextFiled(
-      {super.key,
-      required this.controller,
-       this.textInputType = TextInputType.text,
-       this.textInputAction = TextInputAction.next,
-       this.autoFocus = false,
-       this.maxLength = 0,
-      required this.validator,
-      required this.onChange,
-       this.onSubmit,
-      required this.prefixIcon,
-      required this.hintText,
-        this.onTap = null,
-        this.validFiled = false,
-        this.readOnly = false
-      });
+  CustomTextFiled({super.key,
+    required this.controller,
+    this.textInputType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
+    this.autoFocus = false,
+    this.maxLength = 0,
+    required this.validator,
+    required this.onChange,
+    this.onSubmit,
+    required this.prefixIcon,
+    required this.hintText,
+    this.onTap = null,
+    this.validFiled = false,
+    this.readOnly = false
+  });
 
   @override
   State<CustomTextFiled> createState() => _CustomTextFiledState();
@@ -370,18 +402,18 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
       onFieldSubmitted: widget.onSubmit,
       decoration: InputDecoration(
         prefixIcon: IconButton(
-          icon:  Icon(widget.prefixIcon),
+          icon: Icon(widget.prefixIcon),
           onPressed: widget.onTap,
         ),
         suffixIcon: widget.validFiled
             ? IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  widget.controller.clear();
-                  widget.validFiled = false;
-                  setState(() {});
-                },
-              )
+          icon: Icon(Icons.close),
+          onPressed: () {
+            widget.controller.clear();
+            widget.validFiled = false;
+            setState(() {});
+          },
+        )
             : null,
         hintText: widget.hintText,
       ),

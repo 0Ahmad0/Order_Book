@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
+import 'package:orderbook/presentation/restaurant_map_scroll/restaurant_map_scroll_view.dart';
 
 class MyOrdersView extends StatefulWidget {
   const MyOrdersView({Key? key}) : super(key: key);
@@ -24,6 +26,9 @@ class _MyOrdersViewState extends State<MyOrdersView> {
       ),
       child: ListView(
         children: [
+          IconButton(onPressed: (){
+            Get.to(()=>RestaurantMapScrollView());
+          }, icon: Icon(Icons.map)),
           Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(AppSize.s14),
