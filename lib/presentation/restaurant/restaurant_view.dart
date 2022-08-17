@@ -213,18 +213,19 @@ class _RestaurantViewState extends State<RestaurantView> {
 
                           return GestureDetector(
                             onTap: () {
+                              print(authProvider.listRestaurant[index].images);
                               Navigator.push(
                                   context, MaterialPageRoute(
                                   builder: (ctx) =>RestaurantProfileView(
                                       restaurant: Restaurant(
-                                        imageLogo: ImagesAssets.loginBackground,
-                                        name: "Restaurant Kallawa",
-                                        isFavorite: true,
-                                        rate: index,
+                                        imageLogo: authProvider.listRestaurant[index].imageLogo,//ImagesAssets.loginBackground,
+                                        name: authProvider.listRestaurant[index].name,//"Restaurant Kallawa",
+                                        isFavorite:authProvider.listRestaurant[index].isFavorite,// true,
+                                        rate: authProvider.listRestaurant[index].rate,//index,
                                         address: "Damascus-Mazza",
                                         details: "Mriwed Ahmad Hariri Mohanad Hitham Heba Amer Thlaj Almasri",
                                         phoneNumber: "+963 95487296352",
-                                        imagesRestaurant: _images["img"],
+                                        imagesRestaurant: authProvider.listRestaurant[index].images==null?[]:authProvider.listRestaurant[index].images,
                                       )
                                   )
                               ));
@@ -367,6 +368,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                   child: CircleAvatar(
                                       backgroundColor: ColorManager.lightPrimary,
                                       child: LikeButton(
+
                                       )
                                   ),
                                 ),
