@@ -18,5 +18,7 @@ class AppUrl{
   static const String searchRestaurant =baseUrl+"vendor/searchByName/";// /a
   static const String trendingRestaurant =baseUrl+"vendor/getTrendingVendors";
   static const String addFavourite =baseUrl+"vendor/favourite/";
+  static const String deleteFavourite =baseUrl+"vendor/favourite/";
+  static const String tables =baseUrl+"vendor/map/";
 
 }

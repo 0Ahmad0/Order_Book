@@ -231,20 +231,20 @@ class _FavoriteSectionState extends State<FavoriteSection> {
           icon: Icon( widget.isFavorite?Icons.favorite:Icons.favorite_border),
           onPressed: () async {
             Const.LOADIG(context);
-            var result =await widget.authProvider.addFav(Advance.token, widget.id);
+            Map<String, dynamic> result ={"message":"","status":""};
+            print(widget.isFavorite);
+            if( widget.isFavorite){
+
+                result =await widget.authProvider.deleteFav(Advance.token, widget.id);
+            }else{
+                result =await widget.authProvider.addFav(Advance.token, widget.id);
+                }
             print(result);
             Const.TOAST(context,textToast: result["message"]);
             Navigator.pop(context);
             if(result["status"]){
-              widget.isFavorite = !widget.isFavorite;
-              /// SnackBar(content: Text("k"));
-              //print("done register");
-              // Const.TOAST(context,textToast: result["message"]);
-            }else{
-              /// SnackBar(content: Text("o"));
-
+            widget.isFavorite = !widget.isFavorite;
             }
-
             setState((){});
           },
         ),

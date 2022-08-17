@@ -110,7 +110,7 @@ class RestaurantViews{
       longitude:  responseData['longitude'],
       latitude:  responseData['latitude'],
       id:responseData["id"],
-      isFavorite:responseData["isFavorite"]!=null?responseData["isFavorite"]:false,
+      isFavorite:responseData["favourite"]!=null?responseData["favourite"]:false,
       rate: responseData['rate']!=null?responseData['rate'].toString().substring(0,2):"3",
       images: responseData['images'],
     );

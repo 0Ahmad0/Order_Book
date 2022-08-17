@@ -169,9 +169,9 @@ class _RestaurantViewState extends State<RestaurantView> {
                         initZoom: 14
                       ).then((value) {
                         latitude =value!.latitude;
-                        longitude =value!.longitude;
-                        print("latitude: ${value!.latitude}");
-                        print("longitude: ${value!.longitude}");
+                        longitude =value.longitude;
+                        print("latitude: ${value.latitude}");
+                        print("longitude: ${value.longitude}");
                         setState(() {
                         });
                       });

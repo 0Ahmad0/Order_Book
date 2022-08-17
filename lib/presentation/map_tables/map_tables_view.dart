@@ -9,7 +9,9 @@ import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/const.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:provider/provider.dart';
 
+import '../../api/auth/auth_provider.dart';
 import '../resources/style_manager.dart';
 
 class MapTablesView extends StatefulWidget {
@@ -32,6 +34,7 @@ class _MapTablesViewState extends State<MapTablesView> {
   bool refresh = true;
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.mapTables),
