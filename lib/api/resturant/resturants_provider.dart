@@ -169,6 +169,9 @@ class RestaurantsProvider extends ChangeNotifier{
     }
     ).then(onCancelledReservations).catchError(onError2);
   }
+  Future<void> myReservations(String token) async{
+
+  }
 
 
   static onError2(error){
