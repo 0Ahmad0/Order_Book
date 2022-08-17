@@ -20,5 +20,7 @@ class AppUrl{
   static const String addFavourite =baseUrl+"vendor/favourite/";
   static const String deleteFavourite =baseUrl+"vendor/favourite/";
   static const String tables =baseUrl+"vendor/map/";
+  static const String addReservations =baseUrl+"reservation/import";
+  static const String menuVendor =baseUrl+"vendor/menu/getByVendorId/";
 
 }

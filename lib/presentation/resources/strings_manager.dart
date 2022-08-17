@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../translations/local_keys.g.dart';
+import '../../translations/locale_keys.g.dart';
+
 
 class AppStrings {
   static String noRouteFound =tr(LocaleKeys.noRouteFound);
