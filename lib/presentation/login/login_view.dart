@@ -27,6 +27,7 @@ import '../resources/style_manager.dart';
 import '../resources/values_manager.dart';
 import '../utils/const.dart';
 import '../utils/dataLocal.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -137,6 +138,7 @@ class _LoginViewState extends State<LoginView> {
                         text: AppStrings.loginText,
                         fontSize: Sizer.getW(context) * 0.05,
                         onTap: () async {
+                          print(Advance.language);
                           flutterLocalNotificationsPlugin.show(
                               0,
                               "Testing: @Hariri",

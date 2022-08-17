@@ -62,6 +62,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   cached_network_image: ^3.2.1
   zoom_widget: ^0.2.1
+  easy_localization: ^3.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -88,6 +89,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/avatars/
+    - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -112,6 +114,18 @@ flutter:
         - asset: assets/fonts/Montserrat-Regular.ttf
           weight: 400
         - asset: assets/fonts/Montserrat-Light.ttf
+          weight: 300
+    - family: Changa
+      fonts:
+        - asset: assets/fonts/Changa-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Changa-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Changa-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Changa-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Changa-Light.ttf
           weight: 300
 
   # For details regarding fonts from package dependencies,

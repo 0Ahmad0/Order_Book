@@ -1,5 +1,7 @@
 import 'package:animate_icons/animate_icons.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
@@ -71,12 +73,16 @@ class _SettingViewState extends State<SettingView> {
                   children: [
                     ListTile(
                       onTap: ()async{
+                        final _newLocale = Locale('en');
+                        await context.setLocale(_newLocale); // change `easy_localization` locale
+                        Get.updateLocale(_newLocale);
+                        print(context.locale);
+                        setState((){});
                         Advance.language = true;
                         await AppStorage.storageWrite(
                           key: AppStorage.languageKEY,
                           value: true
                         );
-                        setState((){});
                       },
                       title: Text(AppStrings.englishText,style: getRegularStyle(color: ColorManager.lightPrimary,
                       fontSize: Sizer.getW(context) * 0.035,
@@ -85,6 +91,10 @@ class _SettingViewState extends State<SettingView> {
                       trailing: Switch(
                         value: Advance.language,
                         onChanged: (val)async{
+                          final _newLocale = Locale('en');
+                          await context.setLocale(_newLocale); // change `easy_localization` locale
+                          Get.updateLocale(_newLocale);
+                          setState((){});
                           Advance.language = true;
                           await AppStorage.storageWrite(
                               key: AppStorage.languageKEY,
@@ -95,12 +105,16 @@ class _SettingViewState extends State<SettingView> {
                     ),
                     ListTile(
                       onTap: ()async{
+                        final _newLocale = Locale('ar');
+                        await context.setLocale(_newLocale); // change `easy_localization` locale
+                        Get.updateLocale(_newLocale);
+                        print(context.locale);
+                        setState((){});
                         Advance.language = false;
                         await AppStorage.storageWrite(
                             key: AppStorage.languageKEY,
                             value: false
                         );
-                        setState((){});
                       },
                       title: Text(AppStrings.arabicText,style: getRegularStyle(color: ColorManager.lightPrimary,
                         fontSize: Sizer.getW(context) * 0.035,
@@ -109,6 +123,10 @@ class _SettingViewState extends State<SettingView> {
                       trailing: Switch(
                         value: !Advance.language,
                         onChanged: (val)async{
+                          final _newLocale = Locale('ar');
+                          await context.setLocale(_newLocale); // change `easy_localization` locale
+                          Get.updateLocale(_newLocale);
+                          setState((){});
                           Advance.language = false;
                           await AppStorage.storageWrite(
                               key: AppStorage.languageKEY,
@@ -167,6 +185,8 @@ class _SettingViewState extends State<SettingView> {
               ),
 
             ),
+
+
 
           ],
         ),

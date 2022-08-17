@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:orderbook/domain/models.dart';
 
 ///Font Family Calss Name
 class FontConstance {
-  static const String fontFamily = "Montserrat";
+  static  String? fontFamily;
 }
 
 //**** Font Weghit Every Font ****//
@@ -13,6 +14,7 @@ static const semiBold = FontWeight.w600;
 static const medium = FontWeight.w500;
 static const regular = FontWeight.w400;
 static const light = FontWeight.w300;
+
  }
 
 

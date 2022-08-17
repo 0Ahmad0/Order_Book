@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -84,11 +85,13 @@ class _MyAppState extends State<MyApp> {
       child: ChangeNotifierProvider<AppModel>.value(
         value: appModel,
         child: Consumer<AppModel>(
-            builder: (context, value, child) {
+            builder: (c, value, child) {
               return GetMaterialApp(
+                supportedLocales: context.supportedLocales,
+                localizationsDelegates: context.localizationDelegates,
+                locale: context.locale,
                 debugShowCheckedModeBanner: false,
                 onGenerateRoute: RoutesGenerator.getRoute,
-
                 initialRoute: Routes.splashRoot,
                 theme: getApplicationTheme(isDark: appModel.darkTheme),
               );

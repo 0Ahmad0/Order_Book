@@ -6,6 +6,8 @@ import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/restaurant_map_scroll/restaurant_map_scroll_view.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 class MyOrdersView extends StatefulWidget {
   const MyOrdersView({Key? key}) : super(key: key);

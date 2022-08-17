@@ -15,6 +15,7 @@ import 'package:orderbook/presentation/login/login_view.dart';
 import 'package:orderbook/presentation/register/register_view.dart';
 import 'package:orderbook/presentation/utils/dataLocal.dart';
 import '../animation/animation_page.dart';
+import '../resources/font_manager.dart';
 import '../resources/theme_manager.dart';
 import '../utils/sizer.dart';
 import '/presentation/resources/assets_manager.dart';
@@ -47,6 +48,7 @@ with SingleTickerProviderStateMixin{
     bool isLoginedKEY =await AppStorage.storageRead(key: AppStorage.isLoginedKEY);
     print("isLoginedKEY > ${isLoginedKEY}" );
     if(await AppStorage.storageRead(key: AppStorage.isLoginedKEY)||Advance.isLogined){
+      FontConstance.fontFamily = Advance.language?"Montserrat":"Changa";
       await DataLocal.getData();
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>
           BottomNavBarView()

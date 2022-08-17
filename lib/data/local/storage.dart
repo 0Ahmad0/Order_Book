@@ -28,7 +28,7 @@ class AppStorage {
       Advance.language = await storageRead(key: languageKEY);
     }
     if (!_storage.hasData(isRegisterKEY)) {
-      storageWrite(key: isRegisterKEY, value: false);
+      storageWrite(key: isRegisterKEY, value: true);
     } else {
       Advance.language = await storageRead(key: isRegisterKEY);
     }
