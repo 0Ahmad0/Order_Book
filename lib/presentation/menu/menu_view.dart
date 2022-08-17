@@ -247,6 +247,7 @@ class _MenuViewState extends State<MenuView> {
                   },
                 ),
               ),
+
             if(menuItems["categorys"][currentIndex]["sub_category"].isNotEmpty)
               SingleChildScrollView(
                 child: Column(
