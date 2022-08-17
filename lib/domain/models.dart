@@ -53,10 +53,12 @@ class Restaurant{
   String? phoneNumber;
   bool? isFavorite;
   String? rate;
+  int? id;
   List<dynamic>? imagesRestaurant;
 
   Restaurant(
       {
+        this.id,
       required this.imageLogo,
       required this.name,
       required this.address,
@@ -68,6 +70,7 @@ class Restaurant{
       });
   factory Restaurant.fromJson(Map<String,dynamic> responseData){
     return Restaurant(
+      id: responseData['id'],
       imageLogo: responseData['imageLogo'],
       name: responseData['name'],
       address:  responseData['address'],
@@ -177,6 +180,49 @@ class Item{
       //restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
   }
+}
+//table
+class Table{
+  String? left;
+  String? top;
+  int? id;
+  String? table_image;
+  String? max;
+  bool? min;
+  String? qrCode;
+
+  factory Table.fromJson(Map<String,dynamic> responseData){
+    return Table(
+      left: responseData['left'],
+      top: responseData['top'],
+      id:  responseData['id'],
+      table_image:  responseData['table_image'],
+      max:responseData["max"],
+      min:responseData["min"],
+      qrCode: responseData['qrCode'],
+    );
+  }
+
+  Table({this.left, this.top, this.id, this.table_image, this.max, this.min,
+      this.qrCode});
+}
+//table
+class Tables{
+  String? name;
+  String? image;
+  int? id;
+  List<dynamic>? tables=[];
+
+  factory Tables.fromJson(Map<String,dynamic> responseData){
+    return Tables(
+      name: responseData['name'],
+      image: responseData['image'],
+      id:  responseData['id'],
+      tables:  responseData['tables'],
+    );
+  }
+
+  Tables({this.name, this.image, this.id, this.tables});
 }
 //StoryObject
 class StoryObject{

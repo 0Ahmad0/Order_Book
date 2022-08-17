@@ -10,24 +10,24 @@ import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/utils/dataLocal.dart';
 class RestaurantsProvider extends ChangeNotifier{
+  bool recRestaurant=false;
+  List<RestaurantViews> listRestaurant= [];
 
-  Future<Map<String,dynamic>> register(String fName,String lName,String name,String phoneNumber,int avatarId,String deviceId) async{
-    //print( Uri.parse( AppUrl.register));
+
+  Future<Map<String,dynamic>> addFav(String token,int idVendor) async{
+   print( Uri.parse( "${AppUrl.addFavourite}${idVendor}"));
+   print( token);
     return await post(
-      Uri.parse( AppUrl.register)
+      Uri.parse( "${AppUrl.addFavourite}${idVendor}")
       ,headers: {
-      "Accept":"application/json"
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
     },
-      body: {
-        'name':name,
-        'phone_number':phoneNumber,
-        'device_id':deviceId,
-        'avatar_id':"1",//avatarId.toString(),
-      },
-    ).then(onValueReg).catchError(onError);
+    ).then(onValueAddFav).catchError(onError2);
   }
 
-  static onError(error){
+  static onError2(error){
 
     return{
       'status':false,
@@ -35,15 +35,15 @@ class RestaurantsProvider extends ChangeNotifier{
       //  'data':error==null?"":error
     };
   }
-  static Future<Map<String,dynamic>> onValueReg(http.Response response)async{
+  static Future<Map<String,dynamic>> onValueAddFav(http.Response response)async{
     var result;
     // print(response);
     final Map<String,dynamic> responseData= json.decode(response.body);
     //print(responseData);
     print(responseData);
-    // print("status code $response.statusCode");
+    print("status code ${await response.statusCode}");
     if(response.statusCode==201){
-      User userData = User.fromJson(responseData);
+     // User userData = User.fromJson(responseData);
       result ={
         'status':true,
         'message':"Successful Request",

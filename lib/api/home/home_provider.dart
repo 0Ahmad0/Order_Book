@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:orderbook/api/resturant/resturants_provider.dart';
 
 import '../../domain/models.dart';
 import '../app_url/app_url.dart';
 
-class HomeProvider extends ChangeNotifier{
+class HomeProvider extends RestaurantsProvider{
   User user = User();
   late List<Offers> listOffers ;
   late List<Restaurant> listRestaurants;
@@ -17,8 +18,8 @@ class HomeProvider extends ChangeNotifier{
   late List<RestaurantViews> listLocationRestaurant;
   late List<RestaurantViews> listSearchRestaurant;
   late List<RestaurantViews> listTrendingRestaurant;
-  List<RestaurantViews> listRestaurant= [];
-  bool recRestaurant=false;
+
+
 
   Future<Map<String,dynamic>> trendingItems(String token) async{
 //    print( Uri.parse( AppUrl.login));

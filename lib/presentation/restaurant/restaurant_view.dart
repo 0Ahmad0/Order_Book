@@ -28,6 +28,8 @@ class RestaurantView extends StatefulWidget {
 class _RestaurantViewState extends State<RestaurantView> {
   final search = TextEditingController();
   final List<String> places = ['1', '2', '3', '4'];
+  double latitude=0;
+  double longitude=0;
   int currentSelect = 0;
   Map _images = {
     "img": [
@@ -166,8 +168,12 @@ class _RestaurantViewState extends State<RestaurantView> {
                         initCurrentUserPosition: true,
                         initZoom: 14
                       ).then((value) {
+                        latitude =value!.latitude;
+                        longitude =value!.longitude;
                         print("latitude: ${value!.latitude}");
-                        print("longitude: ${value.longitude}");
+                        print("longitude: ${value!.longitude}");
+                        setState(() {
+                        });
                       });
                     },
                     child: Container(
@@ -188,7 +194,7 @@ class _RestaurantViewState extends State<RestaurantView> {
             height: AppSize.s4,
           ),
           FutureBuilder(
-            future: authProvider.recList(Advance.token,search.text,"/33.6/36.7",currentSelect),
+            future: authProvider.recList(Advance.token,search.text,"/${longitude}/${latitude}",currentSelect),
             builder: (
                 context, snapshot,) {
 
@@ -217,7 +223,9 @@ class _RestaurantViewState extends State<RestaurantView> {
                               Navigator.push(
                                   context, MaterialPageRoute(
                                   builder: (ctx) =>RestaurantProfileView(
+                                    authProvider: authProvider,
                                       restaurant: Restaurant(
+                                        id: authProvider.listRestaurant[index].id,
                                         imageLogo: authProvider.listRestaurant[index].imageLogo,//ImagesAssets.loginBackground,
                                         name: authProvider.listRestaurant[index].name,//"Restaurant Kallawa",
                                         isFavorite:authProvider.listRestaurant[index].isFavorite,// true,

@@ -12,21 +12,26 @@ import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:provider/provider.dart';
 
 import '../../api/app_url/app_url.dart';
+import '../../api/auth/auth_provider.dart';
+import '../../api/resturant/resturants_provider.dart';
 import '../map_tables/map_tables_view.dart';
+import '../utils/const.dart';
 
 
 class RestaurantProfileView extends StatefulWidget {
   final Restaurant restaurant;
-
-  const RestaurantProfileView({super.key, required this.restaurant});
+  final AuthProvider authProvider;
+  const RestaurantProfileView({super.key, required this.restaurant,required this.authProvider});
 
   @override
   State<RestaurantProfileView> createState() => _RestaurantProfileViewState();
 }
 
 class _RestaurantProfileViewState extends State<RestaurantProfileView> {
+
   AppinioSwiperController _appinioSwiperController = AppinioSwiperController();
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 ],
               ),
             ),
-            FavoriteSection(isFavorite: widget.restaurant.isFavorite!,),
+            FavoriteSection(isFavorite: widget.restaurant.isFavorite!,id: widget.restaurant.id!,authProvider: widget.authProvider,),
             Column(
               children: <Widget>[
                 Hero(
@@ -205,8 +210,9 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
 }
 class FavoriteSection extends StatefulWidget {
    bool isFavorite;
-
-   FavoriteSection({super.key, required this.isFavorite});
+   int id;
+   AuthProvider authProvider;
+   FavoriteSection({super.key, required this.isFavorite,required this.id,required this.authProvider});
   @override
   State<FavoriteSection> createState() => _FavoriteSectionState();
 }
@@ -223,8 +229,22 @@ class _FavoriteSectionState extends State<FavoriteSection> {
         ),
         child: IconButton(
           icon: Icon( widget.isFavorite?Icons.favorite:Icons.favorite_border),
-          onPressed: (){
-            widget.isFavorite = !widget.isFavorite;
+          onPressed: () async {
+            Const.LOADIG(context);
+            var result =await widget.authProvider.addFav(Advance.token, widget.id);
+            print(result);
+            Const.TOAST(context,textToast: result["message"]);
+            Navigator.pop(context);
+            if(result["status"]){
+              widget.isFavorite = !widget.isFavorite;
+              /// SnackBar(content: Text("k"));
+              //print("done register");
+              // Const.TOAST(context,textToast: result["message"]);
+            }else{
+              /// SnackBar(content: Text("o"));
+
+            }
+
             setState((){});
           },
         ),
@@ -235,6 +255,7 @@ class _FavoriteSectionState extends State<FavoriteSection> {
 }
 
 class SwipedCardSection extends StatefulWidget {
+
   final List cards;
   const SwipedCardSection({super.key, required this.cards,});
   @override
