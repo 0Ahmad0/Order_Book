@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,45 +89,76 @@ class _RestaurantMapScrollViewState extends State<RestaurantMapScrollView> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.tables);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.mapTables),
       ),
       body: Zoom(
-        maxZoomHeight: Sizer.getH(context),
-        maxZoomWidth: Sizer.getW(context) + 100,
-        child: Container(
-          decoration: BoxDecoration(
-            color: ColorManager.blackF2.withOpacity(.2),
-            image: DecorationImage(
+        maxZoomHeight: 1200 ,
+        maxZoomWidth: 1200,
+        child: Stack(
+          children: [
+            CachedNetworkImage(
               fit: BoxFit.fill,
-              image: CachedNetworkImageProvider(
-                  "${AppUrl.baseUrlImage}${widget.tables.image}"
-              )
+              width: double.infinity,
+              height: Sizer.getW(context) * 0.7,
+              imageUrl:
+              "${AppUrl.baseUrlImage}${widget.tables.image}",
+              // "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg",
+              imageBuilder: (context, imageProvider) =>
+                  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                        //    colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                      ),
+                    ),
+                  ),
+              placeholder: (context, url) =>
+                  CircularProgressIndicator(),
+              errorWidget: (context, url, error) =>
+                  Icon(Icons.error),
             ),
-          ),
-          child: Stack(
-            children: List.generate(
-              widget.tables.tables!.length,
-              (index) => Positioned(
-                top: double.parse(widget.tables.tables![index].top!) ,
-                left: double.parse(widget.tables.tables![index].left!),
-                child: GestureDetector(
-                  onTap: () {
-                    var table = widget.tables.tables![index];
-                    Get.to(() => AddReservationsView(
-                          table: table,
-                        ));
-                  },
-                  child: Icon(
-                    Icons.table_restaurant,
-                    size: Sizer.getW(context) * 0.25,
+            Container(
+              decoration: BoxDecoration(
+                color: ColorManager.blackF2.withOpacity(.2),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: CachedNetworkImageProvider(
+                      "${AppUrl.baseUrlImage}${widget.tables.image}"
+                  )
+                ),
+              ),
+              child: Stack(
+                children: List.generate(
+                  widget.tables.tables!.length,
+                  (index) => Positioned(
+                    top: double.parse(widget.tables.tables![index].top!)
+                    *(index==0?(index+1):index)* widget.tables.tables!.length/3
+
+                    /** (index+1)*5*/,
+                    left: double.parse(widget.tables.tables![index].left!)
+                        *(index==0?(index+1):index)* widget.tables.tables!.length / 3
+                    /** (index+1) * 2.5*/,
+                    child: GestureDetector(
+                      onTap: () {
+                        var table = widget.tables.tables![index];
+                        Get.to(() => AddReservationsView(
+                              table: table,
+                            ));
+                      },
+                      child: Icon(
+                        Icons.table_restaurant,
+                        size: 100,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
