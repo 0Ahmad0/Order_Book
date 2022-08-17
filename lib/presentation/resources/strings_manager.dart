@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../translations/locale_keys.g.dart';
-
+import '../../translations/local_keys.g.dart';
 
 class AppStrings {
   static String noRouteFound =tr(LocaleKeys.noRouteFound);
@@ -70,4 +69,15 @@ class AppStrings {
   static String reviews= tr(LocaleKeys.reviews);
   static String pickLocation= tr(LocaleKeys.pickLocation);
   static String pick= tr(LocaleKeys.pick);
+  static String darkMode= tr(LocaleKeys.darkMode);
+  static String lightMode= tr(LocaleKeys.lightMode);
+  static String version = tr(LocaleKeys.version);
+  static String Changelog = tr(LocaleKeys.Changelog);
+  static String License = tr(LocaleKeys.License);
+  static String Author = tr(LocaleKeys.Author);
+  static String Syria = tr(LocaleKeys.Syria);
+  static String download = tr(LocaleKeys.download);
+  static String info = tr(LocaleKeys.info);
+  static String location = tr(LocaleKeys.location);
+  static String scancode = tr(LocaleKeys.scancode);
 }

@@ -64,5 +64,16 @@
   "dateReservations": "Date Reservations",
   "reviews": "Reviews",
   "pickLocation": "Pick Location To Search It",
-  "pick": "Pick"
+  "pick": "Pick",
+  "darkMode": "darkMode",
+  "lightMode": "lightMode",
+  "version": "V1.0.0",
+  "Changelog":    "Changelog",
+  "License" : "License",
+  "Author": "Author",
+  "Syria" : "Syria",
+  "download": "Download From Cloud",
+  "info" : "ITE-Info",
+  "location": "Location",
+  "scancode": "Scan Code",
 }

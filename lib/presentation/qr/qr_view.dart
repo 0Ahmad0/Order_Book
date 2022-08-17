@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -56,7 +57,7 @@ class _QrViewState extends State<QrView> {
                       borderRadius: BorderRadius.circular(AppSize.s8)
                     ),
                     child: Text(
-                        'Scan a code',
+                        AppStrings.scancode,
                         style: getLightStyle(color: ColorManager.white),
                       ),
                   ),

@@ -188,14 +188,14 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 ),
                 const SizedBox(height: AppSize.s20,),
                 ButtonApp(
-                  text: "Menu",
+                  text: AppStrings.menuRestaurant,
                   onTap: (){
                     Get.to(()=>MenuView(id: widget.restaurant.id!,authProvider: widget.authProvidere,));
                   },
                 ),
                 const SizedBox(height: AppSize.s10,),
                 ButtonApp(
-                  text: "Restaurant Map",
+                  text: AppStrings.mapTables,
                   onTap: () async {
                     //  await  authProvider.table(Advance.token,widget.restaurant.id!);
                       // print(widget.authProvider.categories.length);
@@ -224,7 +224,8 @@ class _FavoriteSectionState extends State<FavoriteSection> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: 0,
+      right: Advance.language?0:null,
+      left: Advance.language?null:0,
       child: Container(
         decoration: BoxDecoration(
             color: ColorManager.lightGray.withOpacity(.2),
@@ -281,6 +282,12 @@ class _SwipedCardSectionState extends State<SwipedCardSection> {
         => Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppSize.s14),
+              boxShadow: [
+                BoxShadow(
+                  color: ColorManager.blackF2.withOpacity(.15),
+                  blurRadius: AppSize.s10
+                )
+              ],
               image: DecorationImage(
                   fit: BoxFit.fill,
                   image: CachedNetworkImageProvider("${AppUrl.baseUrlImage}${e['image']}",),//AssetImage(e)

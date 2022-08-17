@@ -1,10 +1,11 @@
 //Function To Get Text Style 
 
 import 'package:flutter/cupertino.dart';
+import 'package:orderbook/domain/models.dart';
 import '/presentation/resources/font_manager.dart';
 
 TextStyle _getTetxStyle({double? fontSize, FontWeight? fontWeight , Color? color}){
-return TextStyle(fontFamily: FontConstance.fontFamily , fontSize: fontSize,fontWeight: fontWeight , color: color);
+return TextStyle(fontFamily: Advance.language?FontConstance.fontFamilyEN:FontConstance.fontFamilyAR , fontSize: fontSize,fontWeight: fontWeight , color: color);
 }
 
 ///Regular Style 

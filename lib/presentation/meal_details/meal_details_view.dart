@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
@@ -110,7 +111,8 @@ class _MealDetailsViewState extends State<MealDetailsView> {
                   ),
                   Positioned(
                     top: AppSize.s4,
-                    left: AppSize.s10,
+                    left: Advance.language?AppSize.s10:null,
+                    right: Advance.language?null:AppSize.s10,
                     child: SafeArea(
                       child: Container(
                         decoration: BoxDecoration(

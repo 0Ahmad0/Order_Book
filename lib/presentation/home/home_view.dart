@@ -78,7 +78,11 @@ class _HomeViewState extends State<HomeView> {
 
       Padding(
       padding: EdgeInsets.only(
-          left: AppPadding.p14, top: AppPadding.p10, bottom: AppPadding.p10),
+          left: Advance.language?AppPadding.p14:0,
+          right: Advance.language?0:AppPadding.p14,
+          top: AppPadding.p10,
+          bottom: AppPadding.p10
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -267,6 +271,10 @@ class _HomeViewState extends State<HomeView> {
                             child: Row(
                               children: [
                                 Container(
+                                  margin:EdgeInsets.only(
+                      right: Advance.language?0:AppSize.s14
+                      ),
+                      
                                   height: 32,
                                   width: 32,
                                   decoration: BoxDecoration(
@@ -454,7 +462,6 @@ print("${AppUrl.baseUrlImage}${authProvider.listTrendingItems[index].image}");
             top: 0,
             right: 0,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

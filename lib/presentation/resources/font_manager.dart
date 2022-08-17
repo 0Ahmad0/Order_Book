@@ -3,7 +3,8 @@ import 'package:orderbook/domain/models.dart';
 
 ///Font Family Calss Name
 class FontConstance {
-  static  String? fontFamily;
+  static  const  fontFamilyEN = "Montserrat";
+  static  const  fontFamilyAR = "Changa";
 }
 
 //**** Font Weghit Every Font ****//

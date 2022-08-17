@@ -26,111 +26,115 @@ class _AboutViewState extends State<AboutView> {
         },
         child: Icon(Icons.share),
       ),
-      backgroundColor: ColorManager.lightGray,
       appBar: AppBar(
         title: Text(AppStrings.about),
       ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(
-          vertical: AppPadding.p10,
-          horizontal: AppPadding.p20,
-        ),
-        children: [
-          Container(
-            margin: EdgeInsets.only(bottom: AppSize.s10),
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
-            decoration: BoxDecoration(
-              color: ColorManager.white,
-              borderRadius: BorderRadius.circular(AppSize.s6),
-            ),
-            child: Column(
-              children: [
-                ListTile(
-                  leading: SvgPicture.asset(
-                    ImagesAssets.splashLogo,
-                    width: Sizer.getW(context) * 0.1,
-                    height: Sizer.getW(context) * 0.1,
+      body: Container(
+        color: ColorManager.lightGray.withOpacity(.2),
+        child: ListView(
+          padding: EdgeInsets.symmetric(
+            vertical: AppPadding.p10,
+            horizontal: AppPadding.p20,
+          ),
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: AppSize.s10),
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppSize.s6),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImagesAssets.splashLogo,
+                      width: Sizer.getW(context) * 0.1,
+                      height: Sizer.getW(context) * 0.1,
+                    ),
+                    title: Text(AppStrings.appName),
                   ),
-                  title: Text(AppStrings.appName),
-                ),
 
-                buildListTile(
-                  onTap: () {},
-                  icon: Icons.info,
-                  title: "V1.0.0",
-                ),
-                Divider(
-                  height: 0.0,
-                ),
-                buildListTile(
-                    onTap: () {}, icon: Icons.cached, title: "Changelog"),
-                Divider(
-                  height: 0.0,
-                ),
-                buildListTile(
-                    onTap: () {}, icon: Icons.download_done, title: "License"),
-              ],
+                  buildListTile(
+                    onTap: () {},
+                    icon: Icons.info,
+                    title: AppStrings.version,
+                  ),
+                  Divider(
+                    height: 0.0,
+                  ),
+                  buildListTile(
+                      onTap: () {}, icon: Icons.cached, title:
+                  AppStrings.Changelog),
+                  Divider(
+                    height: 0.0,
+                  ),
+                  buildListTile(
+                      onTap: () {}, icon: Icons.download_done, title:
+                  AppStrings.License),
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: AppSize.s10),
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
+            Container(
+              margin: EdgeInsets.only(bottom: AppSize.s10),
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
 
-            decoration: BoxDecoration(
-              color: ColorManager.white,
-              borderRadius: BorderRadius.circular(AppSize.s6),
-            ),
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text("Author"),
-                ),
-                buildListTile(
-                  onTap: () {},
-                  icon: Icons.person,
-                  title: "OrderBook",
-                  subtitle: "Syria",
-                ),
-                Divider(
-                  height: 0.0,
-                ),
-                buildListTile(
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppSize.s6),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(AppStrings.Author),
+                  ),
+                  buildListTile(
                     onTap: () {},
-                    icon: Icons.download,
-                    title: "Download From Cloud"),
-              ],
+                    icon: Icons.person,
+                    title: AppStrings.appName,
+                    subtitle: AppStrings.Syria,
+                  ),
+                  Divider(
+                    height: 0.0,
+                  ),
+                  buildListTile(
+                      onTap: () {},
+                      icon: Icons.download,
+                      title: AppStrings.download),
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: AppSize.s10),
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
+            Container(
+              margin: EdgeInsets.only(bottom: AppSize.s10),
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p20),
 
-            decoration: BoxDecoration(
-              color: ColorManager.white,
-              borderRadius: BorderRadius.circular(AppSize.s6),
+              decoration: BoxDecoration(
+                color: ColorManager.white,
+                borderRadius: BorderRadius.circular(AppSize.s6),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(AppStrings.appName),
+                  ),
+                  buildListTile(
+                      onTap: () {},
+                      icon: Icons.work,
+                      title: AppStrings.info,
+                      subtitle: AppStrings.Syria),
+                  Divider(
+                    height: 0.0,
+                  ),
+                  buildListTile(
+                      onTap: () {},
+                      icon: Icons.location_pin,
+                      title: AppStrings.location,
+                      subtitle: AppStrings.Syria),
+                ],
+              ),
             ),
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text("Company"),
-                ),
-                buildListTile(
-                    onTap: () {},
-                    icon: Icons.work,
-                    title: "ITE-Info",
-                    subtitle: "Syria"),
-                Divider(
-                  height: 0.0,
-                ),
-                buildListTile(
-                    onTap: () {},
-                    icon: Icons.location_pin,
-                    title: "Location",
-                    subtitle: "Syria-Damascus"),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -52,6 +52,10 @@ class _SettingViewState extends State<SettingView> {
                     color: ColorManager.lightGray.withOpacity(.2)
                 ),
                 child: ExpansionTile(
+                  tilePadding: EdgeInsets.only(
+                    right: Advance.language?AppSize.s16:0,
+                    left: Advance.language?0:AppSize.s16,
+                  ),
                   title: ListTile(
                     title: Text(
                       AppStrings.language,
@@ -74,15 +78,16 @@ class _SettingViewState extends State<SettingView> {
                     ListTile(
                       onTap: ()async{
                         final _newLocale = Locale('en');
-                        await context.setLocale(_newLocale); // change `easy_localization` locale
+                        await context.setLocale(_newLocale);
                         Get.updateLocale(_newLocale);
-                        print(context.locale);
-                        setState((){});
+                        // setState((){});
+                        // print(context.locale);
                         Advance.language = true;
                         await AppStorage.storageWrite(
                           key: AppStorage.languageKEY,
                           value: true
                         );
+                        setState((){});
                       },
                       title: Text(AppStrings.englishText,style: getRegularStyle(color: ColorManager.lightPrimary,
                       fontSize: Sizer.getW(context) * 0.035,
@@ -91,30 +96,33 @@ class _SettingViewState extends State<SettingView> {
                       trailing: Switch(
                         value: Advance.language,
                         onChanged: (val)async{
+
+                          //
                           final _newLocale = Locale('en');
-                          await context.setLocale(_newLocale); // change `easy_localization` locale
+                          await context.setLocale(_newLocale);
                           Get.updateLocale(_newLocale);
-                          setState((){});
                           Advance.language = true;
                           await AppStorage.storageWrite(
                               key: AppStorage.languageKEY,
                               value: true
                           );
-                          setState((){});                        },
+                          setState((){});
+                          },
                       ),
+
                     ),
                     ListTile(
                       onTap: ()async{
                         final _newLocale = Locale('ar');
-                        await context.setLocale(_newLocale); // change `easy_localization` locale
+                        await context.setLocale(_newLocale);
                         Get.updateLocale(_newLocale);
-                        print(context.locale);
-                        setState((){});
+                        // print(context.locale);
                         Advance.language = false;
                         await AppStorage.storageWrite(
                             key: AppStorage.languageKEY,
                             value: false
                         );
+                        setState((){});
                       },
                       title: Text(AppStrings.arabicText,style: getRegularStyle(color: ColorManager.lightPrimary,
                         fontSize: Sizer.getW(context) * 0.035,
@@ -124,14 +132,15 @@ class _SettingViewState extends State<SettingView> {
                         value: !Advance.language,
                         onChanged: (val)async{
                           final _newLocale = Locale('ar');
-                          await context.setLocale(_newLocale); // change `easy_localization` locale
+                          await context.setLocale(_newLocale);
                           Get.updateLocale(_newLocale);
-                          setState((){});
+                          // //
                           Advance.language = false;
                           await AppStorage.storageWrite(
                               key: AppStorage.languageKEY,
                               value: false
                           );
+
                           setState((){});
                         },
                       ),
@@ -159,8 +168,8 @@ class _SettingViewState extends State<SettingView> {
                 ),
                   subtitle: Text(
                   appModel.darkTheme
-                      ? "dark Theme"
-                      :"Light Theme"
+                      ? AppStrings.darkMode
+                      :AppStrings.lightMode
                   ,style: getLightStyle(
                       color: ColorManager.darkPrimary
                   ),),
