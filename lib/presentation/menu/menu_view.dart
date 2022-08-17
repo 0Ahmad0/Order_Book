@@ -73,7 +73,10 @@ class _MenuViewState extends State<MenuView> {
   int currentIndex = 0;
   @override
   Future<void> getTable() async {
-    await  widget.authProvider.menuVendor(Advance.token,widget.id);
+    //Const.LOADIG(context);
+    var result =await  widget.authProvider.menuVendor(Advance.token,widget.id);
+    //Navigator.pop(context);
+    //Const.TOAST(context,textToast: result["message"]);
     // print(widget.authProvider.categories.length);
   }
   void initState() {

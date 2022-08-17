@@ -47,7 +47,7 @@ with SingleTickerProviderStateMixin{
     // Navigator.pushReplacementNamed(context, Routes.registerRoot);
     bool isLoginedKEY =await AppStorage.storageRead(key: AppStorage.isLoginedKEY);
     print("isLoginedKEY > ${isLoginedKEY}" );
-    print("isLoginedKEY > ${await AppStorage.storageRead(key: AppStorage.languageKEY)}" );
+   // print("isLoginedKEY > ${await AppStorage.storageRead(key: AppStorage.languageKEY)}" );
     if(await AppStorage.storageRead(key: AppStorage.isLoginedKEY)||Advance.isLogined){
       await DataLocal.getData();
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) =>

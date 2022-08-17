@@ -17,6 +17,10 @@ class RestaurantsProvider extends ChangeNotifier{
   List<Categories> listCategories= [];
   List<String> categories= [];
   List<int>idCategories= [];
+  List<Reservations> listPendingReservations= [];
+  List<Reservations> listRejectedReservations= [];
+  List<Reservations> listAcceptedReservations= [];
+  List<Reservations> listCancelledReservations= [];
 
 
   Future<Map<String,dynamic>> addFav(String token,int idVendor) async{
@@ -117,6 +121,58 @@ class RestaurantsProvider extends ChangeNotifier{
     }
     ).then(onMenuVendor).catchError(onError2);
   }
+  Future<Map<String,dynamic>> pendingReservations(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myPendingReservations}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onMenuVendor).catchError(onError2);
+  }
+  Future<Map<String,dynamic>> rejectedReservations(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myRejectedReservations}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onRejectedReservations).catchError(onError2);
+  }
+  Future<Map<String,dynamic>> acceptedReservations(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.acceptedReservations}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onAcceptedReservations).catchError(onError2);
+  }
+  Future<Map<String,dynamic>> cancelledReservations(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myCancelledReservations}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onCancelledReservations).catchError(onError2);
+  }
+  Future<void> myReservations(String token) async{
+
+  }
+
 
   static onError2(error){
 
@@ -261,6 +317,146 @@ class RestaurantsProvider extends ChangeNotifier{
         categories.add(categorie.name!);
 
        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onPendingReservations(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listPendingReservations=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Reservations reservations =Reservations.fromJson(element);
+
+        listPendingReservations.add(reservations);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onRejectedReservations(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listPendingReservations=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Reservations reservations =Reservations.fromJson(element);
+
+        listPendingReservations.add(reservations);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onAcceptedReservations(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listPendingReservations=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Reservations reservations =Reservations.fromJson(element);
+
+        listPendingReservations.add(reservations);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onCancelledReservations(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listPendingReservations=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Reservations reservations =Reservations.fromJson(element);
+
+        listPendingReservations.add(reservations);
+
+        // idCategories.add(table.id!);
       }
       result ={
         'status':true,

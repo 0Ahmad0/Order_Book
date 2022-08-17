@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orderbook/presentation/add_reservations/add_reservations_view.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
+import 'package:provider/provider.dart';
 
+import '../../api/auth/auth_provider.dart';
+import '../../domain/models.dart';
 import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
+import '../utils/const.dart';
 
 class MyReservationsView extends StatefulWidget {
   const MyReservationsView({Key? key}) : super(key: key);
@@ -16,14 +20,16 @@ class MyReservationsView extends StatefulWidget {
 }
 
 class _MyReservationsViewState extends State<MyReservationsView> {
-
+  late AuthProvider authProvider;
   @override
   Widget build(BuildContext context) {
+    authProvider = Provider.of<AuthProvider>(context);
     return Container(
         padding: EdgeInsets.symmetric(
             vertical: AppPadding.p10, horizontal: AppPadding.p20),
         child: ListView(
           children: [
+
             Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppSize.s14),
@@ -38,40 +44,40 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                     initiallyExpanded: true,
                     title: Text(AppStrings.currentReservation),
                     children: List.generate(
-                        1,
-                        (index) => Card(
-                              margin: const EdgeInsets.all(AppMargin.m8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildListTile(
-                                      text:
-                                          "Table Number : ${index * 8 + 2 * 5}",
-                                      icon: Icons.table_restaurant),
-                                  Divider(
-                                    height: 0,
-                                  ),
-                                  buildListTile(
-                                      text: "Persons Number : ${index + 5 * 2}",
-                                      icon: Icons.groups),
-                                  Divider(
-                                    height: 0,
-                                  ),
-
-                                  buildListTile(
-                                      text:
-                                          "Restaurant Name : R${index + 5 * 2}",
-                                      icon: Icons.restaurant_menu),
-                                  Divider(
-                                    height: 0,
-                                  ),
-                                  buildListTile(
-                                      text:
-                                          "Date Of Reservation : ${DateFormat.yMd().add_jms().format(DateTime.now())}",
-                                      icon: Icons.date_range),
-                                ],
+                        authProvider.listAcceptedReservations.length,
+                            (index) => Card(
+                          margin: const EdgeInsets.all(AppMargin.m8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildListTile(
+                                  text:
+                                  "Table Number : ${authProvider.listAcceptedReservations[index].id}",
+                                  icon: Icons.table_restaurant),
+                              Divider(
+                                height: 0,
                               ),
-                            )),
+                              buildListTile(
+                                  text: "Persons Number : ${authProvider.listAcceptedReservations[index].number_of_people}",
+                                  icon: Icons.groups),
+                              Divider(
+                                height: 0,
+                              ),
+
+                              buildListTile(
+                                  text:
+                                  "Restaurant Name : ${authProvider.listAcceptedReservations[index].name}",
+                                  icon: Icons.restaurant_menu),
+                              Divider(
+                                height: 0,
+                              ),
+                              buildListTile(
+                                  text:
+                                  "Date Of Reservation : ${authProvider.listAcceptedReservations[index].date}",
+                                  icon: Icons.date_range),
+                            ],
+                          ),
+                        )),
                   ),
                 )),
             SizedBox(
@@ -86,42 +92,43 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                     dividerColor: Colors.transparent,
                   ),
                   child: ExpansionTile(
-                    title: Text(AppStrings.pendingReservation),
+                    childrenPadding: EdgeInsets.zero,
+                    title: Text(AppStrings.currentReservation),
                     children: List.generate(
-                        3,
+                        authProvider.listAcceptedReservations.length,
                             (index) => Card(
-                              margin: const EdgeInsets.all(AppMargin.m8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildListTile(
-                                      text:
-                                      "Table Number : ${index * 8 + 2 * 5}",
-                                      icon: Icons.table_restaurant),
-                                  Divider(
-                                    height: 0,
-                                  ),
-                                  buildListTile(
-                                      text: "Persons Number : ${index + 5 * 2}",
-                                      icon: Icons.groups),
-                                  Divider(
-                                    height: 0,
-                                  ),
-
-                                  buildListTile(
-                                      text:
-                                      "Restaurant Name : R${index + 5 * 2}",
-                                      icon: Icons.restaurant_menu),
-                                  Divider(
-                                    height: 0,
-                                  ),
-                                  buildListTile(
-                                      text:
-                                      "Date Of Reservation : ${DateFormat.yMd().add_jms().format(DateTime.now())}",
-                                      icon: Icons.date_range),
-                                ],
+                          margin: const EdgeInsets.all(AppMargin.m8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildListTile(
+                                  text:
+                                  "Table Number : ${authProvider.listAcceptedReservations[index].id}",
+                                  icon: Icons.table_restaurant),
+                              Divider(
+                                height: 0,
                               ),
-                            )),
+                              buildListTile(
+                                  text: "Persons Number : ${authProvider.listAcceptedReservations[index].number_of_people}",
+                                  icon: Icons.groups),
+                              Divider(
+                                height: 0,
+                              ),
+
+                              buildListTile(
+                                  text:
+                                  "Restaurant Name : ${authProvider.listAcceptedReservations[index].name}",
+                                  icon: Icons.restaurant_menu),
+                              Divider(
+                                height: 0,
+                              ),
+                              buildListTile(
+                                  text:
+                                  "Date Of Reservation : ${authProvider.listAcceptedReservations[index].date}",
+                                  icon: Icons.date_range),
+                            ],
+                          ),
+                        )),
                   ),
                 )),
             SizedBox(
@@ -136,42 +143,94 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                     dividerColor: Colors.transparent,
                   ),
                   child: ExpansionTile(
-                    title: Text(AppStrings.expiredReservation),
+                    childrenPadding: EdgeInsets.zero,
+                    title: Text(AppStrings.currentReservation),
                     children: List.generate(
-                        8,
+                        authProvider.listAcceptedReservations.length,
                             (index) => Card(
-                              margin: const EdgeInsets.all(AppMargin.m8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  buildListTile(
-                                      text:
-                                      "Table Number : ${index * 8 + 2 * 5}",
-                                      icon: Icons.table_restaurant),
-                                  Divider(
-                                    height: 0,
-                                  ),
-                                  buildListTile(
-                                      text: "Persons Number : ${index + 5 * 2}",
-                                      icon: Icons.groups),
-                                  Divider(
-                                    height: 0,
-                                  ),
-
-                                  buildListTile(
-                                      text:
-                                      "Restaurant Name : R${index + 5 * 2}",
-                                      icon: Icons.restaurant_menu),
-                                  Divider(
-                                    height: 0,
-                                  ),
-                                  buildListTile(
-                                      text:
-                                      "Date Of Reservation : ${DateFormat.yMd().add_jms().format(DateTime.now())}",
-                                      icon: Icons.date_range),
-                                ],
+                          margin: const EdgeInsets.all(AppMargin.m8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildListTile(
+                                  text:
+                                  "Table Number : ${authProvider.listAcceptedReservations[index].id}",
+                                  icon: Icons.table_restaurant),
+                              Divider(
+                                height: 0,
                               ),
-                            ))
+                              buildListTile(
+                                  text: "Persons Number : ${authProvider.listAcceptedReservations[index].number_of_people}",
+                                  icon: Icons.groups),
+                              Divider(
+                                height: 0,
+                              ),
+
+                              buildListTile(
+                                  text:
+                                  "Restaurant Name : ${authProvider.listAcceptedReservations[index].name}",
+                                  icon: Icons.restaurant_menu),
+                              Divider(
+                                height: 0,
+                              ),
+                              buildListTile(
+                                  text:
+                                  "Date Of Reservation : ${authProvider.listAcceptedReservations[index].date}",
+                                  icon: Icons.date_range),
+                            ],
+                          ),
+                        )),
+                  ),
+                )),
+            SizedBox(
+              height: AppSize.s20,
+            ),
+            Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(AppSize.s14),
+                    color: ColorManager.lightGray.withOpacity(.2)),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    dividerColor: Colors.transparent,
+                  ),
+                  child: ExpansionTile(
+                    childrenPadding: EdgeInsets.zero,
+                    title: Text(AppStrings.currentReservation),
+                    children: List.generate(
+                        authProvider.listAcceptedReservations.length,
+                            (index) => Card(
+                          margin: const EdgeInsets.all(AppMargin.m8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildListTile(
+                                  text:
+                                  "Table Number : ${authProvider.listAcceptedReservations[index].id}",
+                                  icon: Icons.table_restaurant),
+                              Divider(
+                                height: 0,
+                              ),
+                              buildListTile(
+                                  text: "Persons Number : ${authProvider.listAcceptedReservations[index].number_of_people}",
+                                  icon: Icons.groups),
+                              Divider(
+                                height: 0,
+                              ),
+
+                              buildListTile(
+                                  text:
+                                  "Restaurant Name : ${authProvider.listAcceptedReservations[index].name}",
+                                  icon: Icons.restaurant_menu),
+                              Divider(
+                                height: 0,
+                              ),
+                              buildListTile(
+                                  text:
+                                  "Date Of Reservation : ${authProvider.listAcceptedReservations[index].date}",
+                                  icon: Icons.date_range),
+                            ],
+                          ),
+                        )),
                   ),
                 )),
           ],

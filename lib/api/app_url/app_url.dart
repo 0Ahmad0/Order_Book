@@ -22,5 +22,9 @@ class AppUrl{
   static const String tables =baseUrl+"vendor/map/";
   static const String addReservations =baseUrl+"reservation/import";
   static const String menuVendor =baseUrl+"vendor/menu/getByVendorId/";
+  static const String myPendingReservations =baseUrl+"reservation/getMyPendingReservations";
+  static const String myCancelledReservations =baseUrl+"reservation/getMyCancelledReservations";
+  static const String acceptedReservations =baseUrl+"reservation/getMyAcceptedReservations";
+  static const String myRejectedReservations =baseUrl+"reservation/getMyRejectedReservations";
 
 }
