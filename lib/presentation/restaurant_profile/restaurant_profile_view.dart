@@ -190,7 +190,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 ButtonApp(
                   text: "Menu",
                   onTap: (){
-                    Get.to(()=>MenuView());
+                    Get.to(()=>MenuView(id: widget.restaurant.id!,authProvider: widget.authProvidere,));
                   },
                 ),
                 const SizedBox(height: AppSize.s10,),

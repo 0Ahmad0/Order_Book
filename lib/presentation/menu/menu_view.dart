@@ -3,14 +3,20 @@ import 'package:get/get.dart';
 import 'package:orderbook/presentation/meal_details/meal_details_view.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:provider/provider.dart';
 
+import '../../api/auth/auth_provider.dart';
+import '../../domain/models.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/style_manager.dart';
 import '../resources/values_manager.dart';
 
 class MenuView extends StatefulWidget {
-  const MenuView({Key? key}) : super(key: key);
+ // const MenuView({Key? key}) : super(key: key);
+  final int id;
+  final AuthProvider authProvider;
+  MenuView({required this.id,required this.authProvider});
 
   @override
   State<MenuView> createState() => _MenuViewState();
@@ -27,9 +33,19 @@ class _MenuViewState extends State<MenuView> {
     "Fish",
   ];
   int currentIndex = 0;
-
+  @override
+  Future<void> getTable() async {
+    await  widget.authProvider.menuVendor(Advance.token,widget.id);
+    // print(widget.authProvider.categories.length);
+  }
+  void initState() {
+    // TODO: implement initState
+    getTable();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.menuRestaurant),

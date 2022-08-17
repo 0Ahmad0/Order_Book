@@ -176,7 +176,7 @@ class Item{
       description:  responseData['description'],
       image:  responseData['image'],
       price:responseData["price"],
-      quantity:responseData["quantity"],
+      quantity:responseData["quantity"]!=null?responseData["quantity"]:"",
       //restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
   }
@@ -231,6 +231,61 @@ class Tables{
   }
 
   Tables({this.name, this.image, this.id, this.tables});
+}
+//subCategories
+class SubCategories{
+  String? name;
+  String? image;
+  int? id;
+  List<Item>? items=[];
+
+  factory SubCategories.fromJson(Map<String,dynamic> responseData){
+    List<Item> temp=[];
+
+    for(var item in responseData['items']){
+
+      temp.add(Item.fromJson(item));
+    }
+    return SubCategories(
+      name: responseData['name'],
+      image: responseData['image'],
+      id:  responseData['id'],
+      items:  temp ,
+    );
+  }
+
+  SubCategories({this.name, this.image, this.id, this.items});
+}
+//subCategories
+class Categories{
+  String? name;
+  String? image;
+  int? id;
+  List<SubCategories>? subCategories=[];
+  List<Item>? items=[];
+
+  factory Categories.fromJson(Map<String,dynamic> responseData){
+    List<SubCategories> temp=[];
+    List<Item> temp1=[];
+
+    for(var item in responseData['subCategories']){
+
+      temp.add(SubCategories.fromJson(item));
+    }
+    for(var item in responseData['items']){
+
+      temp1.add(Item.fromJson(item));
+    }
+    return Categories(
+      name: responseData['name'],
+      image: responseData['image'],
+      id:  responseData['id'],
+      subCategories:  temp ,
+      items: temp1
+    );
+  }
+
+  Categories({this.name, this.image, this.id, this.subCategories,this.items});
 }
 //StoryObject
 class StoryObject{

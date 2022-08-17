@@ -14,6 +14,7 @@ class RestaurantsProvider extends ChangeNotifier{
   bool recRestaurant=false;
   List<RestaurantViews> listRestaurant= [];
   List<Tables> listTables= [];
+  List<Categories> listCategories= [];
   List<String> categories= [];
   List<int>idCategories= [];
 
@@ -108,13 +109,13 @@ class RestaurantsProvider extends ChangeNotifier{
 //    print( Uri.parse( AppUrl.login));
     recRestaurant=false;
     return await get(
-        Uri.parse( "${AppUrl.tables}${id}")
+        Uri.parse( "${AppUrl.menuVendor}${id}")
         ,headers: {
       "Accept":"application/json",
       "Authorization": "Bearer $token",
       "language":Advance.language?"en":"ar"
     }
-    ).then(onValueTable).catchError(onError2);
+    ).then(onMenuVendor).catchError(onError2);
   }
 
   static onError2(error){
@@ -222,6 +223,44 @@ class RestaurantsProvider extends ChangeNotifier{
         categories.add(table.name!);
 
         idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onMenuVendor(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listCategories=[];
+    categories=[];
+    idCategories=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Categories categorie =Categories.fromJson(element);
+
+        listCategories.add(categorie);
+        categories.add(categorie.name!);
+
+       // idCategories.add(table.id!);
       }
       result ={
         'status':true,
