@@ -43,7 +43,9 @@ class _MapTablesViewState extends State<MapTablesView> {
 
   @override
   Future<void> getTable() async {
+    widget.authProvider.categories=[];
     await  widget.authProvider.table(Advance.token,widget.id);
+
    // print(widget.authProvider.categories.length);
   }
   void initState() {
@@ -80,7 +82,7 @@ class _MapTablesViewState extends State<MapTablesView> {
             DropdownButtonFormField<String>(
                 hint: Text(AppStrings.selectFloor),
                 items: List.generate(
-                    widget.authProvider.categories.length,
+                    widget.authProvider.categories.length>0?widget.authProvider.categories.length:0,
                     // floors["floors"].length,
                         (index) => DropdownMenuItem<String>(
                       child: Text("${widget.authProvider.categories[index]}"),
@@ -103,7 +105,7 @@ class _MapTablesViewState extends State<MapTablesView> {
                 }),
             const SizedBox(height: AppSize.s20,),
             refresh? Expanded(child: ListView.builder(
-              itemCount: widget.indx<0?0:widget.authProvider.listTables[widget.indx].tables!.length,
+              itemCount: widget.indx<0?0:(widget.authProvider.listTables[widget.indx].tables!.length>0?widget.authProvider.listTables[widget.indx].tables!.length:0),
               itemBuilder: (_,index){
                 return GestureDetector(
                   onTap: () {

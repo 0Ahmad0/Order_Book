@@ -287,6 +287,38 @@ class Categories{
 
   Categories({this.name, this.image, this.id, this.subCategories,this.items});
 }
+//re
+class Reservations{
+  String? name;
+  String? date;
+  int? id;
+  String? status;
+  int? table_id;
+  int? number_of_people;
+  String? notes;
+
+  factory Reservations.fromJson(Map<String,dynamic> responseData){
+    return Reservations(
+      name: responseData['name'],
+      date: responseData['date'],
+      id:  responseData['id'],
+      status:  responseData['status'],
+      table_id:responseData["table_id"],
+      number_of_people:responseData["number_of_people"],
+      notes: responseData['notes'],
+    );
+  }
+
+  Reservations({
+    this.name,
+  this.date,
+  this.id,
+  this.status,
+  this.table_id,
+  this.number_of_people,
+  this.notes,});
+}
+//table
 //StoryObject
 class StoryObject{
   Offers? offers;

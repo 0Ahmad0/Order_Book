@@ -191,7 +191,11 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 const SizedBox(height: AppSize.s20,),
                 ButtonApp(
                   text: AppStrings.menuRestaurant,
-                  onTap: (){
+                  onTap: () async {
+                    //Const.LOADIG(context);
+                    //var result =await  widget.authProvidere.menuVendor(Advance.token,widget.restaurant.id!);
+                    //Navigator.pop(context);
+                    //Const.TOAST(context,textToast: result["message"]);
                     Get.to(()=>MenuView(id: widget.restaurant.id!,authProvider: widget.authProvidere,));
                   },
                 ),

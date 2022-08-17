@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orderbook/presentation/add_reservations/add_reservations_view.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
+import 'package:provider/provider.dart';
 
+import '../../api/auth/auth_provider.dart';
 import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
@@ -16,9 +18,10 @@ class MyReservationsView extends StatefulWidget {
 }
 
 class _MyReservationsViewState extends State<MyReservationsView> {
-
+  late AuthProvider authProvider;
   @override
   Widget build(BuildContext context) {
+    authProvider = Provider.of<AuthProvider>(context);
     return Container(
         padding: EdgeInsets.symmetric(
             vertical: AppPadding.p10, horizontal: AppPadding.p20),
