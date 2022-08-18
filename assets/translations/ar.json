@@ -82,6 +82,7 @@
   "restaurantName": "اسم المطعم",
   "acceptreservation": "الحجوزات المقبولة",
   "cancelreservation" : "الحجوزات الملغية",
+  "servedOrders" : "الطلبات المقدمة",
   "priceOrder": "سعر الصنف",
   "numberOrder": "رقم الطلب",
   "numberOrders": "عدد الطلبات",

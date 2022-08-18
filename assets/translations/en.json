@@ -84,6 +84,7 @@
   "cancelreservation": "Cancel Reservation",
   "priceOrder": "Price Order",
   "numberOrder": "Order Number",
+  "servedOrders" : "ServedOrders",
   "numberOrders": "Numbers Orders",
   "send_report": "Send report"
 }

@@ -15,6 +15,8 @@ import '../../api/auth/auth_provider.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
 
 import '../../api/app_url/app_url.dart';
+import '../../domain/models.dart';
+import '../utils/const.dart';
 import '../utils/sizer.dart';
 
 class MyOrdersView extends StatefulWidget {
@@ -60,7 +62,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
-                            title: Text("Pending Orders"/*AppStrings.currentOrders*/),
+                            title: Text(tr(LocaleKeys.pendingReservation)/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listPendingOrders.length,
                                     (index) => Card(
@@ -70,13 +72,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                     children: [
                                       buildListTile(
                                           text:
-                                          "Order Number : ${widget.authProvider.listPendingOrders[index].id}",
+                                          "${tr(LocaleKeys.numberOrder)} : ${widget.authProvider.listPendingOrders[index].id}",
                                           icon: Icons.food_bank_rounded),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listPendingOrders[index].offers!.length+
+                                          text: "${tr(LocaleKeys.numberOrders)} : ${(widget.authProvider.listPendingOrders[index].offers!.length+
                                               widget.authProvider.listPendingOrders[index].item!.length)}",
                                           icon: Icons.numbers_rounded),
                                       Divider(
@@ -84,13 +86,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                       ),
                                       buildListTile(
                                           text:
-                                          "Restaurant Name : ${widget.authProvider.listPendingOrders[index].name}",
+                                          "${tr(LocaleKeys.restaurantName)} : ${widget.authProvider.listPendingOrders[index].name}",
                                           icon: Icons.restaurant_menu),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
+                                          text: "${tr(LocaleKeys.priceOrder)} : ${widget.authProvider.getPrice(index)}",
                                           icon: Icons.monetization_on),
                                       Divider(
                                         height: 0,
@@ -115,7 +117,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
-                            title: Text("ServedOrders"/*AppStrings.currentOrders*/),
+                            title: Text(tr(LocaleKeys.servedOrders)/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listServedOrders.length,
                                     (index) => Card(
@@ -125,13 +127,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                     children: [
                                       buildListTile(
                                           text:
-                                          "Order Number : ${widget.authProvider.listServedOrders[index].id}",
+                                          "${tr(LocaleKeys.numberOrder)} : ${widget.authProvider.listServedOrders[index].id}",
                                           icon: Icons.food_bank_rounded),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listServedOrders[index].offers!.length+
+                                          text: "${tr(LocaleKeys.numberOrders)} : ${(widget.authProvider.listServedOrders[index].offers!.length+
                                               widget.authProvider.listServedOrders[index].item!.length)}",
                                           icon: Icons.numbers_rounded),
                                       Divider(
@@ -139,13 +141,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                       ),
                                       buildListTile(
                                           text:
-                                          "Restaurant Name : ${widget.authProvider.listServedOrders[index].name}",
+                                          "${tr(LocaleKeys.restaurantName)} : ${widget.authProvider.listServedOrders[index].name}",
                                           icon: Icons.restaurant_menu),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
+                                          text: "${tr(LocaleKeys.priceOrder)} : ${widget.authProvider.getPrice(index)}",
                                           icon: Icons.monetization_on),
                                       Divider(
                                         height: 0,
@@ -170,7 +172,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
-                            title: Text("Rejected Orders"/*AppStrings.currentOrders*/),
+                            title: Text(tr(LocaleKeys.rejected)/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listRejectedOrders.length,
                                     (index) => Card(
@@ -180,13 +182,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                     children: [
                                       buildListTile(
                                           text:
-                                          "Order Number : ${widget.authProvider.listRejectedOrders[index].id}",
+                                          "${tr(LocaleKeys.numberOrder)} : ${widget.authProvider.listRejectedOrders[index].id}",
                                           icon: Icons.food_bank_rounded),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listRejectedOrders[index].offers!.length+
+                                          text: "${tr(LocaleKeys.numberOrders)} : ${(widget.authProvider.listRejectedOrders[index].offers!.length+
                                               widget.authProvider.listRejectedOrders[index].item!.length)}",
                                           icon: Icons.numbers_rounded),
                                       Divider(
@@ -194,13 +196,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                       ),
                                       buildListTile(
                                           text:
-                                          "Restaurant Name : ${widget.authProvider.listRejectedOrders[index].name}",
+                                          "${tr(LocaleKeys.restaurantName)} : ${widget.authProvider.listRejectedOrders[index].name}",
                                           icon: Icons.restaurant_menu),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
+                                          text: "${tr(LocaleKeys.priceOrder)} : ${widget.authProvider.getPrice(index)}",
                                           icon: Icons.monetization_on),
                                       Divider(
                                         height: 0,
@@ -225,7 +227,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
-                            title: Text("Cancelled Orders"/*AppStrings.currentOrders*/),
+                            title: Text(tr(LocaleKeys.cancelOrder)/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listCancelledOrders.length,
                                     (index) => Card(
@@ -235,13 +237,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                     children: [
                                       buildListTile(
                                           text:
-                                          "Order Number : ${widget.authProvider.listCancelledOrders[index].id}",
+                                          "${tr(LocaleKeys.numberOrder)} : ${widget.authProvider.listCancelledOrders[index].id}",
                                           icon: Icons.food_bank_rounded),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listCancelledOrders[index].offers!.length+
+                                          text: "${tr(LocaleKeys.numberOrders)} : ${(widget.authProvider.listCancelledOrders[index].offers!.length+
                                               widget.authProvider.listCancelledOrders[index].item!.length)}",
                                           icon: Icons.numbers_rounded),
                                       Divider(
@@ -249,13 +251,13 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                       ),
                                       buildListTile(
                                           text:
-                                          "Restaurant Name : ${widget.authProvider.listCancelledOrders[index].name}",
+                                          "${tr(LocaleKeys.restaurantName)} : ${widget.authProvider.listCancelledOrders[index].name}",
                                           icon: Icons.restaurant_menu),
                                       Divider(
                                         height: 0,
                                       ),
                                       buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
+                                          text: "${tr(LocaleKeys.priceOrder)} : ${widget.authProvider.getPrice(index)}",
                                           icon: Icons.monetization_on),
                                       Divider(
                                         height: 0,
