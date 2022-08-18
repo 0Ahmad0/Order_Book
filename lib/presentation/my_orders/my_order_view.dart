@@ -9,6 +9,7 @@ import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/restaurant_map_scroll/restaurant_map_scroll_view.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 
 import '../../api/app_url/app_url.dart';
 import '../utils/sizer.dart';
@@ -41,7 +42,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                 child: ExpansionTile(
                   childrenPadding: EdgeInsets.zero,
                   initiallyExpanded: true,
-                  title: Text(AppStrings.currentOrders),
+                  title: Text(tr(LocaleKeys.currentOrders)),
                   children: List.generate(
                       1,
                       (index) => Card(
@@ -51,26 +52,26 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           children: [
                             buildListTile(
                                 text:
-                                    "Order Number : ${index * 8 + 2 * 5}",
+                                    "${tr(LocaleKeys.numberOrder)} : ${index * 8 + 2 * 5}",
                                 icon: Icons.food_bank_rounded),
                             Divider(
                               height: 0,
                             ),
                             buildListTile(
-                                text: "Num Orders : ${index + 5 * 2}",
+                                text: "${tr(LocaleKeys.numberOrders)} : ${index + 5 * 2}",
                                 icon: Icons.numbers_rounded),
                             Divider(
                               height: 0,
                             ),
                             buildListTile(
                                 text:
-                                    "Restaurant Name : R${index + 5 * 2}",
+                                    "${tr(LocaleKeys.restaurantName)} : R${index + 5 * 2}",
                                 icon: Icons.restaurant_menu),
                             Divider(
                               height: 0,
                             ),
                             buildListTile(
-                                text: "Price Order : ${30500}",
+                                text: "${tr(LocaleKeys.priceOrder)} : ${30500}",
                                 icon: Icons.monetization_on),
                             Divider(
                               height: 0,
@@ -94,7 +95,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                 ),
                 child: ExpansionTile(
                   childrenPadding: EdgeInsets.zero,
-                  title: Text(AppStrings.previousOrders),
+                  title: Text(tr(LocaleKeys.previousOrders)),
                   children: List.generate(
                       5,
                       (index) => Card(
@@ -103,25 +104,25 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 buildListTile(
-                                    text: "Order Number : ${index * 8 + 2 * 5}",
+                                    text: "${tr(LocaleKeys.numberOrder)} : ${index * 8 + 2 * 5}",
                                     icon: Icons.food_bank_rounded),
                                 Divider(
                                   height: 0,
                                 ),
                                 buildListTile(
-                                    text: "Num Orders : ${index + 5 * 2}",
+                                    text: "${tr(LocaleKeys.numberOrders)} : ${index + 5 * 2}",
                                     icon: Icons.numbers_rounded),
                                 Divider(
                                   height: 0,
                                 ),
                                 buildListTile(
-                                    text: "Restaurant Name : R${index + 5 * 2}",
+                                    text: "${tr(LocaleKeys.restaurantName)} : R${index + 5 * 2}",
                                     icon: Icons.restaurant_menu),
                                 Divider(
                                   height: 0,
                                 ),
                                 buildListTile(
-                                    text: "Price Order : ${30500}",
+                                    text: "${tr(LocaleKeys.priceOrder)} : ${30500}",
                                     icon: Icons.monetization_on),
                                 Divider(
                                   height: 0,

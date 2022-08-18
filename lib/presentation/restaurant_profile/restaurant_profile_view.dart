@@ -1,5 +1,6 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ import 'package:provider/provider.dart';
 import '../../api/app_url/app_url.dart';
 import '../../api/auth/auth_provider.dart';
 import '../../api/resturant/resturants_provider.dart';
+import '../../translations/local_keys.g.dart';
 import '../map_tables/map_tables_view.dart';
 import '../restaurant_map_scroll/restaurant_map_scroll_view.dart';
 import '../utils/const.dart';
@@ -41,7 +43,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
       appBar: AppBar(
 
         elevation: 0.0,
-        title: Text(AppStrings.restaurantProfile),
+        title: Text(tr(LocaleKeys.restaurantProfile)),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -190,7 +192,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 ),
                 const SizedBox(height: AppSize.s20,),
                 ButtonApp(
-                  text: AppStrings.menuRestaurant,
+                  text: tr(LocaleKeys.menuRestaurant),
                   onTap: () async {
                     //Const.LOADIG(context);
                     //var result =await  widget.authProvidere.menuVendor(Advance.token,widget.restaurant.id!);
@@ -201,7 +203,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                 ),
                 const SizedBox(height: AppSize.s10,),
                 ButtonApp(
-                  text: AppStrings.mapTables,
+                  text: tr(LocaleKeys.mapTables),
                   onTap: () async {
                     //  await  authProvider.table(Advance.token,widget.restaurant.id!);
                       // print(widget.authProvider.categories.length);

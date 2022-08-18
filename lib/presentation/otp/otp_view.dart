@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../api/auth/auth_provider.dart';
+import '../../translations/local_keys.g.dart';
 import '../resources/style_manager.dart';
 import '../utils/dataLocal.dart';
 
@@ -80,7 +82,7 @@ class _OTPViewState extends State<OTPView> {
           children: [
             SizedBox(height: AppSize.s14,),
             Text(
-              AppStrings.verificationCode,
+              tr(LocaleKeys.verificationCode),
               style: getBoldStyle(
                   color: ColorManager.lightPrimary,
                   fontSize: Sizer.getW(context) * 0.045
@@ -88,7 +90,7 @@ class _OTPViewState extends State<OTPView> {
             ),
             Image.asset(ImagesAssets.otpImage),
             Text(
-              AppStrings.enterOTP,
+              tr(LocaleKeys.enterOTP),
               style: getMediumStyle(
                   color: ColorManager.redOTP,
                   fontSize: Sizer.getW(context) * 0.04
@@ -96,7 +98,7 @@ class _OTPViewState extends State<OTPView> {
             ),
             SizedBox(height: AppSize.s14,),
             Text(
-              AppStrings.otpText,
+              tr(LocaleKeys.otpText),
               style: getRegularStyle(
                   color: ColorManager.lightPrimary,
                   fontSize: Sizer.getW(context) * 0.035
@@ -173,7 +175,7 @@ class _OTPViewState extends State<OTPView> {
                         codeLength: 6),
                     const SizedBox(height: AppSize.s10,),
                     TextButton(onPressed: (){}, child: Text(
-                      AppStrings.otpNotReceive,
+                      tr(LocaleKeys.otpNotReceive),
                       style: getRegularStyle(color: ColorManager.white,
                           fontSize: Sizer.getW(context) * 0.033
                       ),

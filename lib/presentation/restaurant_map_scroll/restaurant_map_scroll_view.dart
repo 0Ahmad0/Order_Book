@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/api/app_url/app_url.dart';
@@ -9,6 +10,7 @@ import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
+import '../../translations/local_keys.g.dart';
 import '../add_reservations/add_reservations_view.dart';
 import '../resources/strings_manager.dart';
 import '../utils/sizer.dart';
@@ -92,7 +94,7 @@ class _RestaurantMapScrollViewState extends State<RestaurantMapScrollView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.mapTables),
+        title: Text(tr(LocaleKeys.mapTables)),
       ),
       body: Zoom(
         maxZoomHeight: 1200 ,

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../../api/resturant/resturants_provider.dart';
 import '../../domain/models.dart';
+import '../../translations/local_keys.g.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 import '../utils/const.dart';
@@ -89,7 +91,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                      width: 1.5
                  )
               ),
-              hintText: AppStrings.search,
+              hintText: tr(LocaleKeys.search),
               prefixIcon: IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {
@@ -139,7 +141,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 0
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text(AppStrings.rate)),
+                        child: Text(tr(LocaleKeys.rate))),
                   ),
                 ),
                 Expanded(
@@ -154,7 +156,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 1
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text(AppStrings.popular)),
+                        child: Text(tr(LocaleKeys.popular))),
                   ),
                 ),
                 Expanded(
@@ -165,12 +167,12 @@ class _RestaurantViewState extends State<RestaurantView> {
                       await showSimplePickerLocation(
                         context: context,
                         titleWidget: Center(
-                          child: Text( AppStrings.pickLocation,style: getRegularStyle(color: ColorManager.lightPrimary,
+                          child: Text( tr(LocaleKeys.pickLocation),style: getRegularStyle(color: ColorManager.lightPrimary,
                            fontSize: Sizer.getW(context) * 0.04,
                        ),),
                         ),
                         radius: AppSize.s14,
-                        textConfirmPicker: AppStrings.pick,
+                        textConfirmPicker: tr(LocaleKeys.pick),
                         initCurrentUserPosition: true,
                         initZoom: 14
                       ).then((value) {
@@ -196,7 +198,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                             color: currentSelect == 3
                                 ? ColorManager.lightPrimary
                                 : Colors.transparent),
-                        child: Text(AppStrings.gbs)),
+                        child: Text(tr(LocaleKeys.gbs))),
                   ),
                 ),
               ],

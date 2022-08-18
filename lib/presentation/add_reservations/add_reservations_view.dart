@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -10,6 +11,7 @@ import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:intl/intl.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/app_url/app_url.dart';
@@ -92,7 +94,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                            AppStrings.tableNumber,
+                            tr(LocaleKeys.tableNumber),
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035
@@ -130,7 +132,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                              AppStrings.personNumber,
+                              tr(LocaleKeys.personNumber),
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035
@@ -202,7 +204,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                            AppStrings.dateReservations,
+                            tr(LocaleKeys.dateReservations),
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035
@@ -246,7 +248,7 @@ class _AddReservationsViewState extends State<AddReservationsView> {
                         ),
                         child: ListTile(
                           title: Text(
-                            AppStrings.reviews,
+                            tr(LocaleKeys.reviews),
                             style: getRegularStyle(
                               color: ColorManager.lightPrimary,
                               fontSize: Sizer.getW(context) * 0.035

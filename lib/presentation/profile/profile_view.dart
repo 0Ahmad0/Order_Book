@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -12,6 +13,7 @@ import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/dataLocal.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/auth/auth_provider.dart';
@@ -57,7 +59,7 @@ class _ProfileViewState extends State<ProfileView> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text(AppStrings.profileText),
+        title: Text(tr(LocaleKeys.profileText)),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -98,7 +100,7 @@ class _ProfileViewState extends State<ProfileView> {
                             width: double.infinity,
                             height: Sizer.getH(context) * 0.45,
                             decoration: BoxDecoration(
-                                color: ColorManager.white,
+                                color: Advance.theme?ColorManager.blackF2:ColorManager.white,
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(AppSize.s50))),
                             child: GridView.builder(
@@ -183,7 +185,7 @@ class _ProfileViewState extends State<ProfileView> {
               maxLength: null,
               validator: (val) {
                 if (val!.trim().isEmpty) {
-                  return AppStrings.fieldNotEmpty;
+                  return tr(LocaleKeys.fieldNotEmpty);
                 }
                 return null;
               },
@@ -201,7 +203,7 @@ class _ProfileViewState extends State<ProfileView> {
                 edit = false;
                 setState((){});
               },
-              hintText: AppStrings.name,
+              hintText: tr(LocaleKeys.name),
               validFiled: type,
             ),
             const SizedBox(
@@ -217,7 +219,7 @@ class _ProfileViewState extends State<ProfileView> {
                 onChange: null,
                 validator: null,
                 prefixIcon: Icons.phone,
-                hintText: AppStrings.hintPhone,
+                hintText: tr(LocaleKeys.hintPhone),
                 validFiled: false,
               ),
             ),
@@ -225,7 +227,7 @@ class _ProfileViewState extends State<ProfileView> {
               height: AppSize.s10,
             ),
             ButtonApp(
-                text: AppStrings.saveText,
+                text: tr(LocaleKeys.saveText),
                 onTap: () async {
                   Const.LOADIG(context);
                   var result =await authProvider.updateProfile(Advance.token,name.text,1);
