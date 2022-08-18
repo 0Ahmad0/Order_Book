@@ -1,18 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orderbook/api/resturant/resturants_provider.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/shopping_cart/shopping_cart_view.dart';
+import 'package:orderbook/presentation/utils/const.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 
+import '../../api/app_url/app_url.dart';
+import '../../api/auth/auth_provider.dart';
 import '../resources/strings_manager.dart';
 import '../resources/style_manager.dart';
 
 class MealDetailsView extends StatefulWidget {
-  const MealDetailsView({Key? key}) : super(key: key);
-
+  //const MealDetailsView({Key? key}) : super(key: key);
+  final AuthProvider authProvider;
+  Item item;
+  MealDetailsView({required this.authProvider,required this.item});
   @override
   State<MealDetailsView> createState() => _MealDetailsViewState();
 }
@@ -22,11 +30,12 @@ class _MealDetailsViewState extends State<MealDetailsView> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.authProvider.cart!);
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Container(
+          (widget.authProvider.cart!.table_id!<0)?(SizedBox()):Container(
             height: Sizer.getW(context) * 0.15,
             padding: const EdgeInsets.symmetric(
                 horizontal: AppPadding.p18, vertical: AppPadding.p8),
@@ -39,7 +48,8 @@ class _MealDetailsViewState extends State<MealDetailsView> {
               children: [
                 Flexible(
                     child: Text(
-                  "${numMeals*100}\$",
+                      (widget.item!=null)?"${widget.item.price}":"-",
+                 // "${numMeals*100}\$",
                   style: getBoldStyle(
                       color: ColorManager.white,
                       fontSize: Sizer.getW(context) * 0.035),
@@ -87,7 +97,22 @@ class _MealDetailsViewState extends State<MealDetailsView> {
                       child: IconButton(
                         icon: Icon(Icons.add_shopping_cart),
                         onPressed: () {
-                          Get.to(()=>ShoppingCartView());
+                          widget.item.quantity="${numMeals}";
+                          bool check=false;
+                          for(Item element in widget.authProvider.cart!.items!){
+                            if(element.id==widget.item.id){
+                              check=true;
+                              element.quantity=widget.item.quantity!;
+                            }
+                          }
+                          if(!check){
+                            widget.authProvider.cart!.items!.add(widget.item);
+                           RestaurantsProvider.carts!.items!.add(widget.item);
+                          }
+                          print(widget.authProvider.cart!.items!.length);
+                          Navigator.pop(context);
+
+                          //Get.to(()=>kBottomNavigationBarHeight);
                         },
                       ),
                     )
@@ -101,14 +126,36 @@ class _MealDetailsViewState extends State<MealDetailsView> {
             children: [
               Stack(
                 children: [
-                  Image.asset(
+                  CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    height: Sizer.getW(context) * 0.6,
+                    imageUrl:
+                    "${AppUrl.baseUrlImage}${widget.item.image}",
+                    // "https://static.vecteezy.com/system/resources/previews/000/134/503/original/free-vector-food-illustration.jpg",
+                    imageBuilder: (context, imageProvider) =>
+                        Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                              //    colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)
+                            ),
+                          ),
+                        ),
+                    placeholder: (context, url) =>
+                        Const.SHOWLOADINGINDECATOR(),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.error),
+                  ),
+                  /*Image.asset(
                     ImagesAssets.loginBackground,
                     color: ColorManager.blackF2.withOpacity(.2),
                     colorBlendMode: BlendMode.darken,
                     width: double.infinity,
                     height: Sizer.getW(context) * 0.6,
                     fit: BoxFit.fill,
-                  ),
+                  ),*/
                   Positioned(
                     top: AppSize.s4,
                     left: Advance.language?AppSize.s10:null,
@@ -133,7 +180,8 @@ class _MealDetailsViewState extends State<MealDetailsView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Meal Name",
+                      "${widget.item.name}",
+                     // "Meal Name",
                       style: getBoldStyle(
                           color: ColorManager.blackF2,
                           fontSize: Sizer.getW(context) * 0.045),
@@ -143,25 +191,7 @@ class _MealDetailsViewState extends State<MealDetailsView> {
                     ),
                     Container(
                       child: Text(
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri"
-                        "Ahmad Mohamed Hariri",
+                        (widget.item!=null)?"${widget.item.description}":"-------------------",
                         style: getRegularStyle(color: ColorManager.lightGray),
                       ),
                     )

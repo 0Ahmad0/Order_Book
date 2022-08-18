@@ -250,7 +250,7 @@ class _HomeViewState extends State<HomeView> {
                                             ),
                                           ),
                                       placeholder: (context, url) =>
-                                          CircularProgressIndicator(),
+                                          Const.SHOWLOADINGINDECATOR(),
                                       errorWidget: (context, url, error) =>
                                           Icon(Icons.error),
                                     ),

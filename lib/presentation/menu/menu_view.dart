@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orderbook/api/resturant/resturants_provider.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/meal_details/meal_details_view.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
@@ -78,10 +79,17 @@ class _MenuViewState extends State<MenuView> {
   Future<void> getTable() async {
     //Const.LOADIG(context);
     var result;
+   // widget.authProvider.categories=[];
+
     if(widget.id_table<0){
       result = await widget.authProvider.menuVendor(Advance.token, widget.id);
+      RestaurantsProvider.carts=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.id,items: [],offers: []);
+      widget.authProvider.cart=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.id,items: [],offers: []);
     }else{
+
       result = await widget.authProvider.menuQr(Advance.token, widget.id_table);
+      RestaurantsProvider.carts=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.authProvider.id_vendor,items: [],offers: []);
+      widget.authProvider.cart=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.authProvider.id_vendor,items: [],offers: []);
     }
     setState(() {
 
@@ -106,9 +114,9 @@ class _MenuViewState extends State<MenuView> {
         elevation: 0.0,
 
             actions: [
-          (widget.id_table>=0)? IconButton(
+          (widget.id_table>=-1)? IconButton(
               onPressed: () {
-                Get.to(() => ShoppingCartView());
+                Get.to(() => ShoppingCartView( authProvider:widget.authProvider));
               },
               icon: Icon(Icons.shopping_cart)):SizedBox(),
         ],
@@ -156,7 +164,7 @@ class _MenuViewState extends State<MenuView> {
               )),
           Expanded(child: ListView(
             children: [
-              if (widget.authProvider.listCategories[currentIndex].items!=null &&widget.authProvider.listCategories[currentIndex].items!.length>0)
+              if (widget.authProvider.listCategories.length>currentIndex&&widget.authProvider.listCategories[currentIndex].items!=null &&widget.authProvider.listCategories[currentIndex].items!.length>0)
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -167,7 +175,7 @@ class _MenuViewState extends State<MenuView> {
                        // List items = menuItems["categorys"][index]["items"];
                         return GestureDetector(
                           onTap: () {
-                            Get.to(() => MealDetailsView());
+                            Get.to(() => MealDetailsView(authProvider: widget.authProvider,item: index,));
                           },
                           child: Stack(
                             children: [
@@ -272,7 +280,7 @@ class _MenuViewState extends State<MenuView> {
                                     size: Sizer.getW(context) * 0.15,
                                   ),
                                   onPressed: () {
-                                    Get.to(() => MealDetailsView());
+                                    Get.to(() => MealDetailsView(authProvider: widget.authProvider,item: index,));
                                   },
                                 ),
                               ):SizedBox()
@@ -283,7 +291,7 @@ class _MenuViewState extends State<MenuView> {
                     ],
                   ),
                 ),
-              if ( widget.authProvider.listCategories[currentIndex].subCategories!=null&&widget.authProvider.listCategories[currentIndex].subCategories!.length>0)
+              if ( widget.authProvider.listCategories.length>currentIndex&&widget.authProvider.listCategories[currentIndex].subCategories!=null&&widget.authProvider.listCategories[currentIndex].subCategories!.length>0)
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -298,7 +306,7 @@ class _MenuViewState extends State<MenuView> {
                               children: e.items!.map((e1) {
                                 return GestureDetector(
                                   onTap: () {
-                                    Get.to(() => MealDetailsView());
+                                    Get.to(() => MealDetailsView(authProvider: widget.authProvider,item: e1,));
                                   },
                                   child: Stack(
                                     children: [
@@ -332,7 +340,7 @@ class _MenuViewState extends State<MenuView> {
                                                             BlendMode.darken),
                                                         fit: BoxFit.fill,
                                                         image:CachedNetworkImageProvider(
-                                                          "${AppUrl.baseUrlImage}${e.image}",
+                                                          "${AppUrl.baseUrlImage}${e1.image}",
                                                         ),
                                                         /*AssetImage(
                                                             ImagesAssets.loginBackground),*/
@@ -410,7 +418,7 @@ class _MenuViewState extends State<MenuView> {
                                             size: Sizer.getW(context) * 0.15,
                                           ),
                                           onPressed: () {
-                                            Get.to(() => MealDetailsView());
+                                            Get.to(() => MealDetailsView(authProvider: widget.authProvider,item: e1,));
                                           },
                                         ),
                                       ):SizedBox()
@@ -426,7 +434,7 @@ class _MenuViewState extends State<MenuView> {
                     ],
                   ),
                 )
-              else if(widget.authProvider.listCategories[currentIndex].subCategories!.length<1&&widget.authProvider.listCategories[currentIndex].items!.length<1)
+              else if(widget.authProvider.listCategories.length>currentIndex&&widget.authProvider.listCategories[currentIndex].subCategories!.length<1&&widget.authProvider.listCategories[currentIndex].items!.length<1)
                 Container(
                   height: Sizer.getH(context) / 1.25,
                   alignment: Alignment.center,

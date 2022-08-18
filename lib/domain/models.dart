@@ -111,7 +111,7 @@ class RestaurantViews{
       latitude:  responseData['latitude'],
       id:responseData["id"],
       isFavorite:responseData["favourite"]!=null?responseData["favourite"]:false,
-      rate: responseData['rate']!=null?responseData['rate'].toString().substring(0,2):"3",
+      rate: responseData['rate']!=null?responseData['rate'].toString().substring(0,3):"3",
       images: responseData['images'],
     );
   }
@@ -258,6 +258,7 @@ class SubCategories{
 }
 //subCategories
 class Categories{
+  int?  vendor;
   String? name;
   String? image;
   int? id;
@@ -280,12 +281,14 @@ class Categories{
       name: responseData['name'],
       image: responseData['image'],
       id:  responseData['id'],
+        vendor:responseData['vendor'],
       subCategories:  temp ,
       items: temp1
+
     );
   }
 
-  Categories({this.name, this.image, this.id, this.subCategories,this.items});
+  Categories({this.name, this.image, this.id, this.subCategories,this.items,this.vendor});
 }
 //re
 class Reservations{

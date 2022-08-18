@@ -10,11 +10,27 @@ import 'package:orderbook/api/app_url/app_url.dart';
 import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/utils/dataLocal.dart';
+class CarJson {
+  int table_id;
+  int number_of_people;
+  String notes;
+  String date;
+  CarJson({required this.table_id, required this.date, required this.number_of_people, required this.notes});
+  Map<String, dynamic> TojsonData() {
+    var map = new Map<String, dynamic>();
+    map["table_id"] = table_id;
+    map["notes"] = notes;
+    map["number_of_people"] = number_of_people;
+    map["date"] = date;
+    return map;
+  }
+}
 class RestaurantsProvider extends ChangeNotifier{
   bool recRestaurant=false;
   List<RestaurantViews> listRestaurant= [];
   List<Tables> listTables= [];
   List<Categories> listCategories= [];
+  int id_vendor=0;
   List<String> categories= [];
   List<int>idCategories= [];
   List<Reservations> listPendingReservations= [];
@@ -28,6 +44,8 @@ class RestaurantsProvider extends ChangeNotifier{
   List<Orders> listCancelledOrders= [];
 
   Cart? cart;
+  static Cart? carts;
+  Item? item;
 
 
   Future<Map<String,dynamic>> addFav(String token,int idVendor) async{
@@ -46,9 +64,6 @@ class RestaurantsProvider extends ChangeNotifier{
     print( Uri.parse( "${AppUrl.addReservations}"));
     print( date);
     print( token);
-    print( Uri.parse( "${AppUrl.addReservations}"));
-    print( date);
-    print( token);
     List<Map> temp=[];
 
     //
@@ -56,7 +71,7 @@ class RestaurantsProvider extends ChangeNotifier{
         {
           "table_id":16,
           "number_of_people":3,
-          "date":"2022-08-26 16:00",
+          "date":"2022-08-27 16:00",
           "notes":"KKKKKKKKKK"
         });
     var request = http.MultipartRequest('POST', Uri.parse("${AppUrl.addReservations}"));
@@ -65,9 +80,29 @@ class RestaurantsProvider extends ChangeNotifier{
       "Authorization": "Bearer $token",
       "language":"en",
     });
-    request.fields['reservations'] = jsonEncode(temp);
+    request.fields['reservations'] = jsonEncode([{
+      "table_id":16,
+      "number_of_people":3,
+      "date":"2022-08-27 16:00",
+      "notes":"KKKKKKKKKK"
+    }]);
 
-    request.send();
+
+   // print(await request.send().catchError(onError2));
+    List<Map> carOptionJson = [];
+    CarJson carJson = new CarJson(table_id:16,number_of_people: 3,date: "2022-08-27 16:00",notes: "KKKKKKKKKK" );
+    carOptionJson.add(carJson.TojsonData());
+
+    var body = json.encode({
+      "reservations": carOptionJson
+    });
+
+    return await http.post(
+        Uri.parse( "${AppUrl.addReservations}"),
+        body: body,
+        headers: {'Content-type': 'application/json'}).then(onAddReservations).catchError(onError2);
+
+
     return {"G":"G"};
     /*List<Map> temp=[];
     temp.add(
@@ -92,6 +127,7 @@ class RestaurantsProvider extends ChangeNotifier{
     },body: encodedResults
     ).then(onAddReservations).catchError(onError2);*/
   }
+
   Future<Map<String,dynamic>> deleteFav(String token,int idVendor) async{
     print( Uri.parse( "${AppUrl.deleteFavourite}${idVendor}"));
     print( token);
@@ -197,6 +233,18 @@ class RestaurantsProvider extends ChangeNotifier{
     res=await acceptedReservations(token);
     res=await cancelledReservations(token);
     return res;
+  }
+  Future<Map<String,dynamic>> cancelledReservation(String token,int idReservation) async{
+    print( Uri.parse( "${AppUrl.cancelledReservation}${idReservation}"));
+    print( token);
+    return await put(
+      Uri.parse( "${AppUrl.cancelledReservation}${idReservation}")
+      ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    },
+    ).then(onCancelledReservation).catchError(onError2);
   }
 
   Future<Map<String,dynamic>> myPendingOrders(String token) async{
@@ -395,6 +443,7 @@ int getPrice(int index){
 
       //listTables=[];
       //listTrendingItems.clear();
+      responseData["data"]["vendor"]!=null?id_vendor=responseData["data"]["vendor"]:"";
       for(var element in responseData["data"]["categories"]){
         Categories categorie =Categories.fromJson(element);
 
@@ -689,6 +738,31 @@ int getPrice(int index){
       };
 
     }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+   Future<Map<String,dynamic>> onCancelledReservation(http.Response response)async{
+    var result;
+    // print(response);
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    //print(responseData);
+    print(responseData);
+    print("status code ${await response.statusCode}");
+    if(response.statusCode==200){
+      // User userData = User.fromJson(responseData);
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+      print(responseData);
+    }
+    else {
       result ={
         'status':false,
         'message':responseData["message"],

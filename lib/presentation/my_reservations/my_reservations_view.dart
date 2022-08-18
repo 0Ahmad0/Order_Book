@@ -157,7 +157,19 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                                               ),
                                               child: TextButton.icon(
                                                   icon: Icon(Icons.cancel,color: ColorManager.white,),
-                                                  onPressed: (){}, label: Text(tr(LocaleKeys.cancelOrder),
+                                                  onPressed: () async {
+                                                    print( widget.authProvider.listPendingReservations[index].id!);
+                                                    Const.LOADIG(context);
+                                                    Map<String, dynamic> result ={"message":"","status":""};
+                                                      result =await widget.authProvider.cancelledReservation(Advance.token, widget.authProvider.listPendingReservations[index].id!);
+                                                    print(result);
+                                                    Const.TOAST(context,textToast: result["message"]);
+                                                    Navigator.pop(context);
+                                                    if(result["status"]){
+                                                    }
+                                                    setState((){});
+
+                                                  }, label: Text(tr(LocaleKeys.cancelOrder),
                                                 style: getRegularStyle(color: ColorManager.white),)),
                                             ),
                                           ],

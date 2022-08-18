@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:orderbook/api/app_url/app_url.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
@@ -12,9 +14,12 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
 
-class ShoppingCartView extends StatefulWidget {
-  const ShoppingCartView({Key? key}) : super(key: key);
+import '../../api/auth/auth_provider.dart';
 
+class ShoppingCartView extends StatefulWidget {
+ // const ShoppingCartView({Key? key}) : super(key: key);
+  final AuthProvider authProvider;
+  ShoppingCartView({required this.authProvider});
   @override
   State<ShoppingCartView> createState() => _ShoppingCartViewState();
 }
@@ -22,6 +27,10 @@ class ShoppingCartView extends StatefulWidget {
 class _ShoppingCartViewState extends State<ShoppingCartView> {
   int numOrder = 1;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -36,8 +45,9 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
           children: [
             ListView.builder(
               padding: EdgeInsets.only(bottom: AppSize.s70),
-              itemCount: 15,
+              itemCount: widget.authProvider.cart!.items!.length,
               itemBuilder: (_, index) {
+                numOrder=int.parse("${widget.authProvider.cart!.items![index].quantity}");
                 return  Dismissible(
                   key: Key(index.toString()),
                   onDismissed: (val){
@@ -60,21 +70,23 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                               borderRadius: BorderRadius.circular(AppSize.s4),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: AssetImage(
-                                      ImagesAssets.loginBackground))),
+                                  image: CachedNetworkImageProvider(
+                                    "${AppUrl.baseUrlImage}${ widget.authProvider.cart!.items![index].image}",
+                                  ),)),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Meal Name",
+                        "${widget.authProvider.cart!.items![index].name}",
+                              //"Meal Name",
                               style: getBoldStyle(color: ColorManager.black,
                                   fontSize: Sizer.getW(context) * 0.035
                               ),
                             ),
                             const SizedBox(height: AppSize.s20,),
                             Text(
-                              "Price : ${numOrder*10}",
+                              "Price : ${widget.authProvider.cart!.items![index].price}",
                               style: getRegularStyle(color: ColorManager.black,
                                   fontSize: Sizer.getW(context) * 0.03
                               ),
@@ -94,14 +106,16 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
                                 padding: EdgeInsets.zero,
                                 onPressed: (){
                                   numOrder++;
+                                  widget.authProvider.cart!.items![index].quantity="${numOrder}" ;
                                   setState((){});
                                 }, icon: Icon(Icons.add,color: ColorManager.white,),),
-                              Text("${numOrder}",),
+                              Text("${widget.authProvider.cart!.items![index].quantity}",),
                               IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: (){
                                   if(numOrder>1){
                                     numOrder--;
+                                    widget.authProvider.cart!.items![index].quantity="${numOrder}" ;
                                     setState((){});
                                   }
                                 }, icon: Icon(Icons.remove,color: ColorManager.white,),),
