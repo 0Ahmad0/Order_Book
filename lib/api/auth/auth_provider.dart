@@ -55,7 +55,7 @@ class AuthProvider extends  HomeProvider{
   }
   Future<Map<String,dynamic>> Fcm(String token,String fcmToken) async{
 //    print( Uri.parse( AppUrl.login));
-    return await post(
+    return await put(
       Uri.parse( AppUrl.FCM_Token)
       ,headers: {
       "Accept":"application/json",
