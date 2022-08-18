@@ -142,6 +142,7 @@ class Offers{
     );
   }
 
+
   Offers(
       {this.id,
       this.name,
@@ -365,7 +366,6 @@ int? total_price;
     this.table_id,this.vendor_id,this.item,this.offers,this.total_price});
   toJson (){
     return {
-
     };
   }
 }
