@@ -175,7 +175,7 @@ class Item{
       name: responseData['name'],
       description:  responseData['description'],
       image:  responseData['image'],
-      price:responseData["price"],
+      price:responseData["price"]!=null?0:responseData["price"],
       quantity:responseData["quantity"]!=null?responseData["quantity"]:"",
       //restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
@@ -298,8 +298,9 @@ class Reservations{
   String? notes;
 
   factory Reservations.fromJson(Map<String,dynamic> responseData){
+
     return Reservations(
-      name: responseData['name'],
+      name: responseData['vendor']['name'],
       date: responseData['date'],
       id:  responseData['id'],
       status:  responseData['status'],
@@ -317,6 +318,47 @@ class Reservations{
   this.table_id,
   this.number_of_people,
   this.notes,});
+}
+
+//order
+class Orders{
+  String? name;
+  List<Offers>? offers;
+  List<Item>? item;
+  int? id;
+  String? status;
+  int? table_id;
+  int? vendor_id;
+
+  factory Orders.fromJson(Map<String,dynamic> responseData){
+    List<Offers> temp=[];
+    List<Item> temp1=[];
+
+    for(var item in responseData['offers']["data"]){
+      temp.add(Offers.fromJson(item));
+    }
+
+    for(var item in responseData['items']["data"]){
+
+      temp1.add(Item.fromJson(item));
+    }
+
+    return Orders(
+      name: responseData['vendor']['name'],
+      vendor_id: responseData['vendor_id'],
+      id:  responseData['id'],
+      status:  responseData['status'],
+      table_id:responseData["table_id"],
+      item: temp1,
+      offers: temp,
+    );
+  }
+
+  Orders({
+    this.name,
+    this.id,
+    this.status,
+    this.table_id,this.vendor_id,this.item,this.offers});
 }
 //table
 //StoryObject
