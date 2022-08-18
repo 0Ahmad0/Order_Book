@@ -66,6 +66,20 @@ class AuthProvider extends  HomeProvider{
       },
     ).then(onValueFcm).catchError(onError);
   }
+  Future<Map<String,dynamic>> language(String token,String language) async{
+//    print( Uri.parse( AppUrl.login));
+    return await put(
+      Uri.parse( AppUrl.Language)
+      ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token"
+      ,"language":language
+    },
+      body: {
+        "language":language
+      },
+    ).then(onValueLanguage).catchError(onError);
+  }
 
   Future<Map<String,dynamic>> Logout(String token) async{
 //    print( Uri.parse( AppUrl.login));
@@ -204,6 +218,26 @@ class AuthProvider extends  HomeProvider{
         'status':false,
         'message':responseData["message"],
         'data':responseData
+      };
+    }
+    return result;
+  }
+  static Future<Map<String,dynamic>> onValueLanguage(http.Response response)async{
+    var result;
+    //final Map<String,dynamic> responseData= json.decode(response.body);
+   // print(responseData);
+    print("status code ${response.statusCode}");
+    if(response.statusCode==200){
+      result ={
+        'status':true,
+        'message':"Successful Request",
+       // 'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        //'message':responseData["message"],
+        //'data':responseData
       };
     }
     return result;
