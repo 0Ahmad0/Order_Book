@@ -15,8 +15,6 @@ import '../../api/auth/auth_provider.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
 
 import '../../api/app_url/app_url.dart';
-import '../../domain/models.dart';
-import '../utils/const.dart';
 import '../utils/sizer.dart';
 
 class MyOrdersView extends StatefulWidget {
@@ -62,7 +60,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
-                            title: Text(tr(LocaleKeys.pendingReservation)/*AppStrings.currentOrders*/),
+                            title: Text("Pending Orders"/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listPendingOrders.length,
                                     (index) => Card(
@@ -172,7 +170,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
-                            title: Text(tr(LocaleKeys.rejected)/*AppStrings.currentOrders*/),
+                            title: Text("Rejected Orders"/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listRejectedOrders.length,
                                     (index) => Card(
@@ -227,7 +225,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
-                            title: Text(tr(LocaleKeys.cancelOrder)/*AppStrings.currentOrders*/),
+                            title: Text("Cancelled Orders"/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listCancelledOrders.length,
                                     (index) => Card(

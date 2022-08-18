@@ -329,7 +329,7 @@ class Orders{
   String? status;
   int? table_id;
   int? vendor_id;
-
+int? total_price;
   factory Orders.fromJson(Map<String,dynamic> responseData){
     List<Offers> temp=[];
     List<Item> temp1=[];
@@ -349,6 +349,7 @@ class Orders{
       id:  responseData['id'],
       status:  responseData['status'],
       table_id:responseData["table_id"],
+      total_price:responseData["total_price"],
       item: temp1,
       offers: temp,
     );
@@ -358,7 +359,7 @@ class Orders{
     this.name,
     this.id,
     this.status,
-    this.table_id,this.vendor_id,this.item,this.offers});
+    this.table_id,this.vendor_id,this.item,this.offers,this.total_price});
 }
 //table
 //StoryObject
