@@ -1,12 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:orderbook/api/auth/auth_provider.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import '../menu/menu_view.dart';
 import '../resources/color_manager.dart';
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -73,6 +78,7 @@ class _QrViewState extends State<QrView> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
+      Get.to(()=>MenuView(id: 0,id_table: int.parse(scanData.code!) ,authProvider: Provider.of<AuthProvider>(context),));
       setState(() {
         result = scanData;
       });
