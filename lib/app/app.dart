@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
               return GetMaterialApp(
                 supportedLocales: context.supportedLocales,
                 localizationsDelegates: context.localizationDelegates,
-                locale: context.locale,
+                locale: Get.locale,
                 debugShowCheckedModeBanner: false,
                 onGenerateRoute: RoutesGenerator.getRoute,
                 initialRoute: Routes.splashRoot,

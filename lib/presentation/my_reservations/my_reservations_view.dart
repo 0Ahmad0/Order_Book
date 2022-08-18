@@ -157,7 +157,9 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                                               ),
                                               child: TextButton.icon(
                                                   icon: Icon(Icons.cancel,color: ColorManager.white,),
-                                                  onPressed: (){}, label: Text(tr(LocaleKeys.cancelOrder),
+                                                  onPressed: (){
+                                                    
+                                                  }, label: Text(tr(LocaleKeys.cancelOrder),
                                                 style: getRegularStyle(color: ColorManager.white),)),
                                             ),
                                           ],
