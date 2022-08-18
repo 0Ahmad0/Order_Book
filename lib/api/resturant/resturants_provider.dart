@@ -27,6 +27,8 @@ class RestaurantsProvider extends ChangeNotifier{
   List<Orders> listServedOrders= [];
   List<Orders> listCancelledOrders= [];
 
+  Cart? cart;
+
 
   Future<Map<String,dynamic>> addFav(String token,int idVendor) async{
    print( Uri.parse( "${AppUrl.addFavourite}${idVendor}"));

@@ -361,6 +361,42 @@ int? total_price;
     this.status,
     this.table_id,this.vendor_id,this.item,this.offers,this.total_price});
 }
+
+class Cart{
+  int? table_id;
+  int? vendor_id;
+  List<Offers>? offers;
+  List<Item>? items;
+  Cart({this.table_id, this.vendor_id, this.offers, this.items});
+  factory Cart.fromJson(Map<String,dynamic> responseData){
+    List<Offers> temp=[];
+    List<Item> temp1=[];
+
+    for(var item in responseData['offers']){
+      temp.add(Offers.fromJson(item));
+    }
+
+    for(var item in responseData['items']){
+
+      temp1.add(Item.fromJson(item));
+    }
+    return Cart(
+      table_id: responseData["table_id"],
+      vendor_id: responseData["vendor_id"],
+      offers:  temp,
+      items:  temp1,
+    );
+  }
+  toJson(){
+    return {
+        'table_id':table_id,
+        'vendor_id':vendor_id,
+        'offers':offers,
+        'items':items,
+    };
+  }
+
+}
 //table
 //StoryObject
 class StoryObject{

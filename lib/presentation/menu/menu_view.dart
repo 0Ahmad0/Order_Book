@@ -104,12 +104,13 @@ class _MenuViewState extends State<MenuView> {
       appBar: AppBar(
         title: Text(tr(LocaleKeys.menuRestaurant)),
         elevation: 0.0,
-        actions: [
-          IconButton(
+
+            actions: [
+          (widget.id_table>=0)? IconButton(
               onPressed: () {
                 Get.to(() => ShoppingCartView());
               },
-              icon: Icon(Icons.shopping_cart))
+              icon: Icon(Icons.shopping_cart)):SizedBox(),
         ],
       ),
       body: Column(
@@ -126,7 +127,6 @@ class _MenuViewState extends State<MenuView> {
                       setState(() {});
                     },
                     child: Container(
-                      width: Sizer.getW(context) * 0.25,
                       padding: EdgeInsets.all(AppPadding.p10),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -136,13 +136,19 @@ class _MenuViewState extends State<MenuView> {
                                       ? ColorManager.lightPrimary
                                       : Colors.transparent,
                                   width: 2.5))),
-                      child: Text(
-                        //menuItems["categorys"][index]["name"],
-                          widget.authProvider.listCategories[index].name!,
-                        style: getRegularStyle(
-                            color: index == currentIndex
-                                ? ColorManager.lightPrimary
-                                : ColorManager.blackF2),
+                      child: Row(
+                        children: [
+                          Image.network("${AppUrl.baseUrlImage}""${widget.authProvider.listCategories[index].image!}"),
+                          const SizedBox(width: AppSize.s4,),
+                          Text(
+                            //menuItems["categorys"][index]["name"],
+                              widget.authProvider.listCategories[index].name!,
+                            style: getRegularStyle(
+                                color: index == currentIndex
+                                    ? ColorManager.lightPrimary
+                                    : ColorManager.blackF2),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -257,7 +263,7 @@ class _MenuViewState extends State<MenuView> {
                                   ],
                                 ),
                               ),
-                              Positioned(
+                              (widget.id_table>=0)?  Positioned(
                                 top: (Sizer.getW(context) * 0.45) / 4,
                                 right: AppSize.s16,
                                 child: IconButton(
@@ -269,7 +275,7 @@ class _MenuViewState extends State<MenuView> {
                                     Get.to(() => MealDetailsView());
                                   },
                                 ),
-                              )
+                              ):SizedBox()
                             ],
                           ),
                         );
@@ -395,7 +401,7 @@ class _MenuViewState extends State<MenuView> {
                                           ],
                                         ),
                                       ),
-                                      Positioned(
+                                      (widget.id_table>=0)?  Positioned(
                                         top: (Sizer.getW(context) * 0.45) / 4,
                                         right: AppSize.s16,
                                         child: IconButton(
@@ -407,7 +413,7 @@ class _MenuViewState extends State<MenuView> {
                                             Get.to(() => MealDetailsView());
                                           },
                                         ),
-                                      )
+                                      ):SizedBox()
                                     ],
                                   ),
                                 );
