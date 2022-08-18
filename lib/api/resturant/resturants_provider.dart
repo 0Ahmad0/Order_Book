@@ -10,6 +10,59 @@ import 'package:orderbook/api/app_url/app_url.dart';
 import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/utils/dataLocal.dart';
+
+import 'dart:convert';
+
+JobCreateRequestModel jobCreateRequestModelFromJson(String str) => JobCreateRequestModel.fromJson(json.decode(str));
+
+String jobCreateRequestModelToJson(JobCreateRequestModel data) => json.encode(data.toJson());
+
+class JobCreateRequestModel {
+  JobCreateRequestModel({
+    required this.reservations1,
+  });
+
+  List<Reservations1> reservations1;
+
+  factory JobCreateRequestModel.fromJson(Map<String, dynamic> json) => JobCreateRequestModel(
+    reservations1: List<Reservations1>.from(json["reservations"].map((x) => Reservations1.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "reservations": List<dynamic>.from(reservations1.map((x) => x.toJson())),
+  };
+}
+
+class Reservations1 {
+  Reservations1({
+    required this.table_id,
+     required this.notes,
+    required this.date,
+    required this.number_of_people
+  });
+
+  int table_id;
+  int number_of_people;
+  String date;
+  String notes;
+
+  factory Reservations1.fromJson(Map<String, dynamic> json) => Reservations1(
+    table_id: json["table_id"],
+    number_of_people: json["number_of_people"],
+    date: json["date"],
+    notes: json["notes"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "table_id": table_id,
+    "number_of_people": number_of_people,
+    "date": date,
+    "notes": notes,
+  };
+}
+
+
+
 class CarJson {
   int table_id;
   int number_of_people;
@@ -42,6 +95,7 @@ class RestaurantsProvider extends ChangeNotifier{
   List<Orders> listRejectedOrders= [];
   List<Orders> listServedOrders= [];
   List<Orders> listCancelledOrders= [];
+  List<Orders> listMyAcceptedOrders= [];
 
   Cart? cart;
   static Cart? carts;
@@ -62,70 +116,27 @@ class RestaurantsProvider extends ChangeNotifier{
   }
   Future<Map<String,dynamic>> addReservations(String token,int table_id,int number_of_people,String date,String notes) async{
     print( Uri.parse( "${AppUrl.addReservations}"));
-    print( date);
-    print( token);
-    List<Map> temp=[];
-
-    //
-    temp.add(
-        {
-          "table_id":16,
-          "number_of_people":3,
-          "date":"2022-08-27 16:00",
-          "notes":"KKKKKKKKKK"
-        });
     var request = http.MultipartRequest('POST', Uri.parse("${AppUrl.addReservations}"));
     request.headers.addAll({
       "Accept":"application/json",
       "Authorization": "Bearer $token",
       "language":"en",
     });
-    request.fields['reservations'] = jsonEncode([{
-      "table_id":16,
-      "number_of_people":3,
-      "date":"2022-08-27 16:00",
-      "notes":"KKKKKKKKKK"
-    }]);
-
-
-   // print(await request.send().catchError(onError2));
-    List<Map> carOptionJson = [];
-    CarJson carJson = new CarJson(table_id:16,number_of_people: 3,date: "2022-08-27 16:00",notes: "KKKKKKKKKK" );
-    carOptionJson.add(carJson.TojsonData());
-
-    var body = json.encode({
-      "reservations": carOptionJson
-    });
 
     return await http.post(
         Uri.parse( "${AppUrl.addReservations}"),
-        body: body,
-        headers: {'Content-type': 'application/json'}).then(onAddReservations).catchError(onError2);
+        headers: {"Accept":"application/json",
+          "Authorization": "Bearer $token",
+          "language":"en",},
+          body: {
+              "table_id":table_id,
+              "number_of_people":number_of_people,
+              "date":"2022-08-26 18:00",
+              "notes":notes
+          }).then(onAddReservations).catchError(onError2);
 
 
-    return {"G":"G"};
-    /*List<Map> temp=[];
-    temp.add(
-    {
-        "table_id":16,
-        "number_of_people":3,
-        "date":"2022-08-25 16:00",
-        "notes":"KKKKKKKKKK"
-        });
-    Map<String, List<Map>> results = {
-      "reservations": temp
 
-    };
-
-    final encodedResults = jsonEncode(results);
-    return await post(
-      Uri.parse( "${AppUrl.addReservations}"),
-        headers: {
-      "Accept":"application/json",
-      "Authorization": "Bearer $token",
-      "language":"en"
-    },body: encodedResults
-    ).then(onAddReservations).catchError(onError2);*/
   }
 
   Future<Map<String,dynamic>> deleteFav(String token,int idVendor) async{
@@ -295,6 +306,18 @@ class RestaurantsProvider extends ChangeNotifier{
     }
     ).then(onCancelledOrders).catchError(onError2);
   }
+  Future<Map<String,dynamic>> myAcceptedOrders(String token) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+    return await get(
+        Uri.parse( "${AppUrl.myAcceptedOrders}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onMyAcceptedOrders).catchError(onError2);
+  }
 int getPrice(int index){
     return listPendingOrders[index].id!*250;
 }
@@ -304,6 +327,7 @@ int getPrice(int index){
     res=await myRejectedOrders(token);
     res=await myServedOrders(token);
     res=await myCancelledOrders(token);
+    res=await myAcceptedOrders(token);
     return res;
   }
 
@@ -589,6 +613,41 @@ int getPrice(int index){
         Reservations reservations =Reservations.fromJson(element);
 
         listCancelledReservations.add(reservations);
+
+        // idCategories.add(table.id!);
+      }
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+  Future<Map<String,dynamic>> onMyAcceptedOrders(http.Response response)async{
+    var result;
+    //listTrendingItems.clear();
+    listAcceptedReservations=[];
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+
+    if(response.statusCode==200){
+
+      //listTables=[];
+      //listTrendingItems.clear();
+      for(var element in responseData["data"]){
+
+        Reservations reservations =Reservations.fromJson(element);
+
+        listAcceptedReservations.add(reservations);
 
         // idCategories.add(table.id!);
       }

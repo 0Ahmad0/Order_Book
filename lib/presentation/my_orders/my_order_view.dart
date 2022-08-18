@@ -182,6 +182,125 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                           child: ExpansionTile(
                             childrenPadding: EdgeInsets.zero,
                             initiallyExpanded: true,
+                            title: Text("Accepted Orders"/*AppStrings.currentOrders*/),
+                            children: List.generate(
+                                widget.authProvider.listMyAcceptedOrders.length,
+                                    (index) => Card(
+                                  margin: const EdgeInsets.all(AppMargin.m8),
+                                  child: InkWell(
+                                    onTap: (){
+                                      Get.dialog(Center(
+                                        child: Container(
+                                          padding: EdgeInsets.all(AppPadding.p10),
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: AppMargin.m20,
+                                            vertical: AppMargin.m10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.white,
+                                            borderRadius:
+                                            BorderRadius.circular(AppSize.s14),
+                                          ),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "Items",
+                                                  style:
+                                                  getBoldStyle(color: ColorManager.lightPrimary,
+                                                      fontSize: Sizer.getW(context) * 0.05                                             ),
+                                                ),
+                                                Divider(),
+                                                Expanded(child: ListView.builder(
+                                                  itemCount: widget.authProvider.listMyAcceptedOrders[index].item!.length,
+                                                  itemBuilder: (_,indexs){
+                                                    return Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          margin: EdgeInsets.only(bottom: AppMargin.m10),
+                                                          width: Sizer.getW(context) *
+                                                              0.3,
+                                                          height: Sizer.getW(context)
+                                                              * 0.3,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(AppSize.s14),
+                                                              image: DecorationImage(
+                                                                fit: BoxFit.fill,
+                                                                image: CachedNetworkImageProvider(
+                                                                  "${AppUrl.baseUrlImage}${widget.authProvider.listMyAcceptedOrders[index].item![indexs].image}",
+                                                                ),
+                                                              )
+                                                          ),),
+                                                        Text("${widget.authProvider.listMyAcceptedOrders[index].item![indexs].name}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                        Text("${widget.authProvider.listMyAcceptedOrders[index].item![indexs].quantity}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                      ],
+                                                    );
+                                                  },
+                                                ))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ));
+
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        buildListTile(
+                                            text:
+                                            "Order Number : ${widget.authProvider.listMyAcceptedOrders[index].id}",
+                                            icon: Icons.food_bank_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Num Orders : ${(widget.authProvider.listMyAcceptedOrders[index].offers!.length+
+                                                widget.authProvider.listRejectedOrders[index].item!.length)}",
+                                            icon: Icons.numbers_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text:
+                                            "Restaurant Name : ${widget.authProvider.listMyAcceptedOrders[index].name}",
+                                            icon: Icons.restaurant_menu),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Price Order : ${widget.authProvider.listMyAcceptedOrders[index].total_price}",
+                                            icon: Icons.monetization_on),
+                                        Divider(
+                                          height: 0,
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        )),
+                    const SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppSize.s14),
+                            color: ColorManager.lightGray.withOpacity(.2)),
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            dividerColor: Colors.transparent,
+                          ),
+                          child: ExpansionTile(
+                            childrenPadding: EdgeInsets.zero,
+                            initiallyExpanded: true,
                             title: Text("ServedOrders"/*AppStrings.currentOrders*/),
                             children: List.generate(
                                 widget.authProvider.listServedOrders.length,
@@ -303,7 +422,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                             initiallyExpanded: true,
                             title: Text("Rejected Orders"/*AppStrings.currentOrders*/),
                             children: List.generate(
-                                widget.authProvider.listRejectedOrders.length,
+                                widget.authProvider.listAcceptedReservations.length,
                                     (index) => Card(
                                   margin: const EdgeInsets.all(AppMargin.m8),
                                   child: InkWell(

@@ -83,13 +83,13 @@ class _MenuViewState extends State<MenuView> {
 
     if(widget.id_table<0){
       result = await widget.authProvider.menuVendor(Advance.token, widget.id);
-      RestaurantsProvider.carts=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.id,items: [],offers: []);
-      widget.authProvider.cart=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.id,items: [],offers: []);
+      RestaurantsProvider.carts=Cart(table_id: -1/*widget.id_table*/,vendor_id: widget.id,items: [],offers: []);
+      widget.authProvider.cart=Cart(table_id: -1/*widget.id_table*/,vendor_id: widget.id,items: [],offers: []);
     }else{
 
       result = await widget.authProvider.menuQr(Advance.token, widget.id_table);
-      RestaurantsProvider.carts=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.authProvider.id_vendor,items: [],offers: []);
-      widget.authProvider.cart=Cart(table_id: 1/*widget.id_table*/,vendor_id: widget.authProvider.id_vendor,items: [],offers: []);
+      RestaurantsProvider.carts=Cart(table_id: widget.id_table,vendor_id: widget.authProvider.id_vendor,items: [],offers: []);
+      widget.authProvider.cart=Cart(table_id: widget.id_table,vendor_id: widget.authProvider.id_vendor,items: [],offers: []);
     }
     setState(() {
 
@@ -114,7 +114,7 @@ class _MenuViewState extends State<MenuView> {
         elevation: 0.0,
 
             actions: [
-          (widget.id_table>=-1)? IconButton(
+          (widget.id_table>=0)? IconButton(
               onPressed: () {
                 Get.to(() => ShoppingCartView( authProvider:widget.authProvider));
               },

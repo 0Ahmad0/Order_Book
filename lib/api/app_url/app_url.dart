@@ -32,6 +32,7 @@ class AppUrl{
   static const String myCancelledOrders =baseUrl+"order/getMyCancelledOrders";
   static const String myServedOrders =baseUrl+"order/getMyServedOrders";
   static const String myRejectedOrders =baseUrl+"order/getMyRejectedOrders";
+  static const String myAcceptedOrders =baseUrl+"order/getMyAcceptedOrders";
   static const String FCM_Token =baseUrl+"user/FCM_Token";
   static const String Language =baseUrl+"user/updateLanguage";
   static const String cancelledReservation =baseUrl+"reservation/cancel/";

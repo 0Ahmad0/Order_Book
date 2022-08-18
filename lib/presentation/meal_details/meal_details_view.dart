@@ -27,10 +27,9 @@ class MealDetailsView extends StatefulWidget {
 
 class _MealDetailsViewState extends State<MealDetailsView> {
   int numMeals = 1;
-
   @override
   Widget build(BuildContext context) {
-    print(widget.authProvider.cart!);
+    print(widget.authProvider.cart!.table_id);
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
