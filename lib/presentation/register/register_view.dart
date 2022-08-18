@@ -19,6 +19,7 @@ import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:orderbook/presentation/utils/user_storage_data.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import '../login/login_view.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
@@ -45,6 +46,15 @@ class _RegisterViewState extends State<RegisterView> {
     "phoneNumber": false,
   };
 
+  void submit()async{
+    if(phoneNumber.text.isEmpty){
+      var appSingiterId = await SmsAutoFill().getAppSignature;
+      Map sentOTP = {
+        "mobile_number": phoneNumber.text,
+        "app_signatuer_id":appSingiterId,
+      };
+    }
+  }
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -177,11 +187,11 @@ class _RegisterViewState extends State<RegisterView> {
                                         onTap: () async {
                                           Const.LOADIG(context);
                                           var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
-
                                           Const.TOAST(context,textToast: result["message"]);
                                           Navigator.pop(context);
                                           if(result["status"]){
                                             if (_formKey.currentState!.validate()) {
+                                              submit();
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder:
                                                       (ctx)=>OTPView(

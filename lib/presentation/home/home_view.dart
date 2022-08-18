@@ -340,7 +340,7 @@ class _HomeViewState extends State<HomeView> {
           angle: 290,
           child: Text(
             //index == 0 ? "" :
-            "Offer ${index * 2}%",
+            " Offer ",
             textAlign: TextAlign.center,
             style: getMediumStyle(
                 color: ColorManager.white,

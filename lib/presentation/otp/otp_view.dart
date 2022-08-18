@@ -72,6 +72,16 @@ class _OTPViewState extends State<OTPView> {
 
     }
   }
+
+  String codeValue = "";
+  @override
+  void initState(){
+    super.initState();
+    listenOtp();
+  }
+  void listenOtp()async{
+    await SmsAutoFill().listenForCode();
+  }
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -133,8 +143,7 @@ class _OTPViewState extends State<OTPView> {
                               ColorManager.white),
                         ),
                         autoFocus: true,
-                        currentCode: "",
-
+                        currentCode: codeValue,
                         onCodeSubmitted: (val) {
                           print("Done");
                           Get.dialog(
@@ -160,6 +169,8 @@ class _OTPViewState extends State<OTPView> {
                           });
                         },
                         onCodeChanged: (val) async {
+                          codeValue = val!;
+                          setState((){});
                           if(val!=null&&val.length>5){
                             await (widget.register)?register(authProvider):login(authProvider);
 
@@ -172,7 +183,8 @@ class _OTPViewState extends State<OTPView> {
 
                           }
                         },
-                        codeLength: 6),
+                        codeLength: 6,
+                    ),
                     const SizedBox(height: AppSize.s10,),
                     TextButton(onPressed: (){}, child: Text(
                       tr(LocaleKeys.otpNotReceive),
