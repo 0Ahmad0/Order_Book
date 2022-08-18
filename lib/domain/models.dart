@@ -140,6 +140,7 @@ class Offers{
 
    //   restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
+
   }
 
 
@@ -180,6 +181,13 @@ class Item{
       quantity:responseData["quantity"]!=null?responseData["quantity"]:"",
       //restaurant: responseData['restaurant']!={}?Restaurant.fromJson(responseData['restaurant']):Restaurant(address: "", imagesRestaurant: [], details: "", phoneNumber: "", name: "", imageLogo: ""),
     );
+  }
+  toJson(){
+    return{
+      "id":id,
+      "notes":description,
+      "quantity":quantity,
+    };
   }
 }
 //table
@@ -396,11 +404,15 @@ class Cart{
     );
   }
   toJson(){
+    List<Item> temp =[];
+    for(Item item in items!){
+      temp.add(item.toJson());
+    }
     return {
         'table_id':table_id,
         'vendor_id':vendor_id,
         'offers':offers,
-        'items':items,
+        'items':temp,
     };
   }
 

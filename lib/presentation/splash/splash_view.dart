@@ -78,6 +78,7 @@ with SingleTickerProviderStateMixin{
       duration: const Duration(seconds:  AppConstants.splashDelay),
       vsync: this,
     );
+    
     super.initState();
     startDelay();
   }

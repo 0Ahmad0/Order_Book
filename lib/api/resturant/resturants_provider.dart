@@ -138,7 +138,7 @@ class RestaurantsProvider extends ChangeNotifier{
 
 
   }
-  Future<Map<String,dynamic>> addOrder(String token,Orders orders) async{
+  Future<Map<String,dynamic>> addOrder(String token,Cart cart) async{
     print( Uri.parse( "${AppUrl.addReservations}"));
     var request = http.MultipartRequest('POST', Uri.parse("${AppUrl.addReservations}"));
     request.headers.addAll({
@@ -152,7 +152,7 @@ class RestaurantsProvider extends ChangeNotifier{
         headers: {"Accept":"application/json",
           "Authorization": "Bearer $token",
           "language":"en",},
-        body: orders).then(onAddReservations).catchError(onError2);
+        body: cart.toJson()).then(onAddReservations).catchError(onError2);
 
 
 
