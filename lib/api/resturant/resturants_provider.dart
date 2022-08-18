@@ -138,7 +138,7 @@ class RestaurantsProvider extends ChangeNotifier{
 
 
   }
-  Future<Map<String,dynamic>> addOrder(String token,Cart cart) async{
+  Future<Map<String,dynamic>> addOrder(String token) async{
     print( Uri.parse( "${AppUrl.addReservations}"));
     var request = http.MultipartRequest('POST', Uri.parse("${AppUrl.addReservations}"));
     request.headers.addAll({
@@ -146,17 +146,48 @@ class RestaurantsProvider extends ChangeNotifier{
       "Authorization": "Bearer $token",
       "language":"en",
     });
-
+    Item item=Item(id: 1,quantity: "7",description: "ffff");
+    List<Item> items=[];
+    items.add(item);
+    Offers offer=Offers(id: 1,description: "ffff");
+    List<Offers> offers=[];
+    offers.add(offer);
+    Cart cart=Cart(table_id: 10,vendor_id: 1,offers: offers,items: items);
+    print(cart.toJson());
     return await http.post(
         Uri.parse( "${AppUrl.addReservations}"),
         headers: {"Accept":"application/json",
           "Authorization": "Bearer $token",
           "language":"en",},
-        body: cart.toJson()).then(onAddReservations).catchError(onError2);
-
-
-
+        body: cart.toJson()).then(onAddorder).catchError(onError2);
   }
+  static Future<Map<String,dynamic>> onAddorder(http.Response response)async{
+    var result;
+    //print(response);
+    print(response);
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    //print(responseData);
+    print(responseData);
+    print("status code ${await response.statusCode}");
+    if(response.statusCode==200){
+      // User userData = User.fromJson(responseData);
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+      print(responseData);
+    }
+    else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
+
 
   Future<Map<String,dynamic>> deleteFav(String token,int idVendor) async{
     print( Uri.parse( "${AppUrl.deleteFavourite}${idVendor}"));

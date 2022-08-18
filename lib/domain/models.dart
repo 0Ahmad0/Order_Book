@@ -142,8 +142,6 @@ class Offers{
     );
 
   }
-
-
   Offers(
       {this.id,
       this.name,
@@ -153,6 +151,13 @@ class Offers{
       this.from_date,
       this.restaurantViews,
       this.to_date});
+  toJson(){
+    return{
+      "id":id,
+      "notes":description,
+      "quantity":"1",
+    };
+  }
 }
 //item
 class Item{
@@ -404,14 +409,18 @@ class Cart{
     );
   }
   toJson(){
-    List<Item> temp =[];
+    List temp =[];
     for(Item item in items!){
       temp.add(item.toJson());
+    }
+    List temp1 =[];
+    for(Offers elemet in offers!){
+      temp1.add(elemet.toJson());
     }
     return {
         'table_id':table_id,
         'vendor_id':vendor_id,
-        'offers':offers,
+        'offers':temp1,
         'items':temp,
     };
   }

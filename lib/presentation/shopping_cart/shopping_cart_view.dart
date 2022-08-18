@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:orderbook/api/app_url/app_url.dart';
+import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
@@ -15,6 +16,7 @@ import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
 
 import '../../api/auth/auth_provider.dart';
+import '../utils/const.dart';
 
 class ShoppingCartView extends StatefulWidget {
  // const ShoppingCartView({Key? key}) : super(key: key);
@@ -129,7 +131,14 @@ class _ShoppingCartViewState extends State<ShoppingCartView> {
               },
             ),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  Const.LOADIG(context);
+                  var result =await widget.authProvider.addOrder(Advance.token);
+                  print(result);
+                  Const.TOAST(context,textToast: result["message"]);
+                  Navigator.pop(context);
+
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
