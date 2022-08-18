@@ -117,6 +117,7 @@ class RestaurantsProvider extends ChangeNotifier{
   Future<Map<String,dynamic>> menuVendor(String token,int id) async{
 //    print( Uri.parse( AppUrl.login));
     recRestaurant=false;
+
     return await get(
         Uri.parse( "${AppUrl.menuVendor}${id}")
         ,headers: {
@@ -223,7 +224,7 @@ class RestaurantsProvider extends ChangeNotifier{
 //    print( Uri.parse( AppUrl.login));
     recRestaurant=false;
     return await get(
-        Uri.parse( "${AppUrl.myPendingOrders}")
+        Uri.parse( "${AppUrl.myCancelledOrders}")
         ,headers: {
       "Accept":"application/json",
       "Authorization": "Bearer $token",
@@ -370,6 +371,7 @@ int getPrice(int index){
     listCategories=[];
     categories=[];
     idCategories=[];
+
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
@@ -378,8 +380,7 @@ int getPrice(int index){
 
       //listTables=[];
       //listTrendingItems.clear();
-      for(var element in responseData["data"]){
-
+      for(var element in responseData["data"]["categories"]){
         Categories categorie =Categories.fromJson(element);
 
         listCategories.add(categorie);

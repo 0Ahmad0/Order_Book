@@ -73,6 +73,9 @@ class _MenuViewState extends State<MenuView> {
   Future<void> getTable() async {
     //Const.LOADIG(context);
     var result = await widget.authProvider.menuVendor(Advance.token, widget.id);
+    setState(() {
+
+    });
     //Navigator.pop(context);
     //Const.TOAST(context,textToast: result["message"]);
     // print(widget.authProvider.categories.length);
@@ -105,7 +108,7 @@ class _MenuViewState extends State<MenuView> {
               height: Sizer.getW(context) * 0.125,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: menuItems["categorys"].length,
+                itemCount: widget.authProvider.listCategories.length,
                 itemBuilder: (_, index) {
                   return GestureDetector(
                     onTap: () {
@@ -124,7 +127,8 @@ class _MenuViewState extends State<MenuView> {
                                       : Colors.transparent,
                                   width: 2.5))),
                       child: Text(
-                        menuItems["categorys"][index]["name"],
+                        //menuItems["categorys"][index]["name"],
+                          widget.authProvider.listCategories[index].name!,
                         style: getRegularStyle(
                             color: index == currentIndex
                                 ? ColorManager.lightPrimary
@@ -136,15 +140,16 @@ class _MenuViewState extends State<MenuView> {
               )),
           Expanded(child: ListView(
             children: [
-              if (menuItems["categorys"][currentIndex]["items"].isNotEmpty)
+              if (widget.authProvider.listCategories[currentIndex].items!.length>0)
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      ...menuItems["categorys"][currentIndex]["items"]
+                      ...widget.authProvider.listCategories[currentIndex].items!
                           .map((index) {
-                        List subCat =
-                        menuItems["categorys"][index]["sub_category"];
-                        List items = menuItems["categorys"][index]["items"];
+                       ;
+                        //List subCat =
+                        //menuItems["categorys"][index]["sub_category"];
+                       // List items = menuItems["categorys"][index]["items"];
                         return GestureDetector(
                           onTap: () {
                             Get.to(() => MealDetailsView());
@@ -199,7 +204,8 @@ class _MenuViewState extends State<MenuView> {
                                                   children: [
                                                     Icon(Icons.restaurant),
                                                     Text(
-                                                      " ${"Albaghel"}",
+                                                "${index.name}",
+                                                     // " ${"Albaghel"}",
                                                       style: getRegularStyle(
                                                           color:
                                                           ColorManager.white,
@@ -224,7 +230,8 @@ class _MenuViewState extends State<MenuView> {
                                                     children: [
                                                       Icon(Icons.monetization_on),
                                                       Text(
-                                                        " ${100}\$",
+                                              "${index.price}",
+                                                        //" ${100}\$",
                                                         style: getRegularStyle(
                                                             color: ColorManager
                                                                 .white,
@@ -260,18 +267,18 @@ class _MenuViewState extends State<MenuView> {
                     ],
                   ),
                 ),
-              if (menuItems["categorys"][currentIndex]["sub_category"].isNotEmpty)
+              if ( widget.authProvider.listCategories[currentIndex].subCategories!.length>0)
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      ...menuItems["categorys"][currentIndex]["sub_category"]
+                      ...widget.authProvider.listCategories[currentIndex].subCategories!
                           .map((e) {
                         print(e);
                         return Column(
                           children: [
                             ExpansionTile(
                               childrenPadding: EdgeInsets.zero,
-                              title: Center(child: Text("Sub",style: getRegularStyle(color: ColorManager.lightPrimary),)),
+                              title: Center(child: Text("${e}",style: getRegularStyle(color: ColorManager.lightPrimary),)),
                               children: li.map((e) {
                                 return GestureDetector(
                                   onTap: () {

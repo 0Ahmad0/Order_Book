@@ -69,38 +69,102 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                 widget.authProvider.listPendingOrders.length,
                                     (index) => Card(
                                   margin: const EdgeInsets.all(AppMargin.m8),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      buildListTile(
-                                          text:
-                                          "Order Number : ${widget.authProvider.listPendingOrders[index].id}",
-                                          icon: Icons.food_bank_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listPendingOrders[index].offers!.length+
-                                              widget.authProvider.listPendingOrders[index].item!.length)}",
-                                          icon: Icons.numbers_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text:
-                                          "Restaurant Name : ${widget.authProvider.listPendingOrders[index].name}",
-                                          icon: Icons.restaurant_menu),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
-                                          icon: Icons.monetization_on),
-                                      Divider(
-                                        height: 0,
-                                      ),
+                                  child: InkWell(
+                                    onTap: (){
+                                      Get.dialog(Center(
+                                        child: Container(
+                                          padding: EdgeInsets.all(AppPadding.p10),
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: AppMargin.m20,
+                                            vertical: AppMargin.m10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.white,
+                                            borderRadius:
+                                            BorderRadius.circular(AppSize.s14),
+                                          ),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "Items",
+                                                  style:
+                                                  getBoldStyle(color: ColorManager.lightPrimary,
+                                                      fontSize: Sizer.getW(context) * 0.05                                             ),
+                                                ),
+                                                Divider(),
+                                                Expanded(child: ListView.builder(
+                                                  itemCount: widget.authProvider.listPendingOrders[index].item!.length,
+                                                  itemBuilder: (_,indexs){
+                                                    return Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          margin: EdgeInsets.only(bottom: AppMargin.m10),
+                                                          width: Sizer.getW(context) *
+                                                              0.3,
+                                                          height: Sizer.getW(context)
+                                                              * 0.3,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(AppSize.s14),
+                                                              image: DecorationImage(
+                                                                  fit: BoxFit.fill,
+                                                                  image: CachedNetworkImageProvider(
+                                                                    "${AppUrl.baseUrlImage}${widget.authProvider.listPendingOrders[index].item![indexs].image}",
+                                                                  ),
+                                                              )
+                                                          ),),
+                                                        Text("${widget.authProvider.listPendingOrders[index].item![indexs].name}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                        Text("${widget.authProvider.listPendingOrders[index].item![indexs].quantity}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                      ],
+                                                    );
+                                                  },
+                                                ))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ));
 
-                                    ],
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        buildListTile(
+                                            text:
+                                            "Order Number : ${widget.authProvider.listPendingOrders[index].id}",
+                                            icon: Icons.food_bank_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Num Orders : ${(widget.authProvider.listPendingOrders[index].offers!.length+
+                                                widget.authProvider.listPendingOrders[index].item!.length)}",
+                                            icon: Icons.numbers_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text:
+                                            "Restaurant Name : ${widget.authProvider.listPendingOrders[index].name}",
+                                            icon: Icons.restaurant_menu),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Price Order : ${widget.authProvider.listPendingOrders[index].total_price}",
+                                            icon: Icons.monetization_on),
+                                        Divider(
+                                          height: 0,
+                                        ),
+
+                                      ],
+                                    ),
                                   ),
                                 )),
                           ),
@@ -124,38 +188,102 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                 widget.authProvider.listServedOrders.length,
                                     (index) => Card(
                                   margin: const EdgeInsets.all(AppMargin.m8),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      buildListTile(
-                                          text:
-                                          "Order Number : ${widget.authProvider.listServedOrders[index].id}",
-                                          icon: Icons.food_bank_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listServedOrders[index].offers!.length+
-                                              widget.authProvider.listServedOrders[index].item!.length)}",
-                                          icon: Icons.numbers_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text:
-                                          "Restaurant Name : ${widget.authProvider.listServedOrders[index].name}",
-                                          icon: Icons.restaurant_menu),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
-                                          icon: Icons.monetization_on),
-                                      Divider(
-                                        height: 0,
-                                      ),
+                                  child: InkWell(
+                                    onTap: (){
+                                      Get.dialog(Center(
+                                        child: Container(
+                                          padding: EdgeInsets.all(AppPadding.p10),
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: AppMargin.m20,
+                                            vertical: AppMargin.m10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.white,
+                                            borderRadius:
+                                            BorderRadius.circular(AppSize.s14),
+                                          ),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "Items",
+                                                  style:
+                                                  getBoldStyle(color: ColorManager.lightPrimary,
+                                                      fontSize: Sizer.getW(context) * 0.05                                             ),
+                                                ),
+                                                Divider(),
+                                                Expanded(child: ListView.builder(
+                                                  itemCount: widget.authProvider.listServedOrders[index].item!.length,
+                                                  itemBuilder: (_,indexs){
+                                                    return Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          margin: EdgeInsets.only(bottom: AppMargin.m10),
+                                                          width: Sizer.getW(context) *
+                                                              0.3,
+                                                          height: Sizer.getW(context)
+                                                              * 0.3,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(AppSize.s14),
+                                                              image: DecorationImage(
+                                                                  fit: BoxFit.fill,
+                                                                  image: CachedNetworkImageProvider(
+                                                                    "${AppUrl.baseUrlImage}${widget.authProvider.listServedOrders[index].item![indexs].image}",
+                                                                  ),
+                                                              )
+                                                          ),),
+                                                        Text("${widget.authProvider.listServedOrders[index].item![indexs].name}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                        Text("${widget.authProvider.listServedOrders[index].item![indexs].quantity}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                      ],
+                                                    );
+                                                  },
+                                                ))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ));
 
-                                    ],
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        buildListTile(
+                                            text:
+                                            "Order Number : ${widget.authProvider.listServedOrders[index].id}",
+                                            icon: Icons.food_bank_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Num Orders : ${(widget.authProvider.listServedOrders[index].offers!.length+
+                                                widget.authProvider.listServedOrders[index].item!.length)}",
+                                            icon: Icons.numbers_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text:
+                                            "Restaurant Name : ${widget.authProvider.listServedOrders[index].name}",
+                                            icon: Icons.restaurant_menu),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Price Order : ${widget.authProvider.listServedOrders[index].total_price}",
+                                            icon: Icons.monetization_on),
+                                        Divider(
+                                          height: 0,
+                                        ),
+
+                                      ],
+                                    ),
                                   ),
                                 )),
                           ),
@@ -179,38 +307,102 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                 widget.authProvider.listRejectedOrders.length,
                                     (index) => Card(
                                   margin: const EdgeInsets.all(AppMargin.m8),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      buildListTile(
-                                          text:
-                                          "Order Number : ${widget.authProvider.listRejectedOrders[index].id}",
-                                          icon: Icons.food_bank_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listRejectedOrders[index].offers!.length+
-                                              widget.authProvider.listRejectedOrders[index].item!.length)}",
-                                          icon: Icons.numbers_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text:
-                                          "Restaurant Name : ${widget.authProvider.listRejectedOrders[index].name}",
-                                          icon: Icons.restaurant_menu),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
-                                          icon: Icons.monetization_on),
-                                      Divider(
-                                        height: 0,
-                                      ),
+                                  child: InkWell(
+                                    onTap: (){
+                                      Get.dialog(Center(
+                                        child: Container(
+                                          padding: EdgeInsets.all(AppPadding.p10),
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: AppMargin.m20,
+                                            vertical: AppMargin.m10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.white,
+                                            borderRadius:
+                                            BorderRadius.circular(AppSize.s14),
+                                          ),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "Items",
+                                                  style:
+                                                  getBoldStyle(color: ColorManager.lightPrimary,
+                                                      fontSize: Sizer.getW(context) * 0.05                                             ),
+                                                ),
+                                                Divider(),
+                                                Expanded(child: ListView.builder(
+                                                  itemCount: widget.authProvider.listRejectedOrders[index].item!.length,
+                                                  itemBuilder: (_,indexs){
+                                                    return Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          margin: EdgeInsets.only(bottom: AppMargin.m10),
+                                                          width: Sizer.getW(context) *
+                                                              0.3,
+                                                          height: Sizer.getW(context)
+                                                              * 0.3,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(AppSize.s14),
+                                                              image: DecorationImage(
+                                                                  fit: BoxFit.fill,
+                                                                  image: CachedNetworkImageProvider(
+                                                                    "${AppUrl.baseUrlImage}${widget.authProvider.listRejectedOrders[index].item![indexs].image}",
+                                                                  ),
+                                                              )
+                                                          ),),
+                                                        Text("${widget.authProvider.listRejectedOrders[index].item![indexs].name}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                        Text("${widget.authProvider.listRejectedOrders[index].item![indexs].quantity}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                      ],
+                                                    );
+                                                  },
+                                                ))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ));
 
-                                    ],
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        buildListTile(
+                                            text:
+                                            "Order Number : ${widget.authProvider.listRejectedOrders[index].id}",
+                                            icon: Icons.food_bank_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Num Orders : ${(widget.authProvider.listRejectedOrders[index].offers!.length+
+                                                widget.authProvider.listRejectedOrders[index].item!.length)}",
+                                            icon: Icons.numbers_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text:
+                                            "Restaurant Name : ${widget.authProvider.listRejectedOrders[index].name}",
+                                            icon: Icons.restaurant_menu),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Price Order : ${widget.authProvider.listRejectedOrders[index].total_price}",
+                                            icon: Icons.monetization_on),
+                                        Divider(
+                                          height: 0,
+                                        ),
+
+                                      ],
+                                    ),
                                   ),
                                 )),
                           ),
@@ -234,38 +426,102 @@ class _MyOrdersViewState extends State<MyOrdersView> {
                                 widget.authProvider.listCancelledOrders.length,
                                     (index) => Card(
                                   margin: const EdgeInsets.all(AppMargin.m8),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      buildListTile(
-                                          text:
-                                          "Order Number : ${widget.authProvider.listCancelledOrders[index].id}",
-                                          icon: Icons.food_bank_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Num Orders : ${(widget.authProvider.listCancelledOrders[index].offers!.length+
-                                              widget.authProvider.listCancelledOrders[index].item!.length)}",
-                                          icon: Icons.numbers_rounded),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text:
-                                          "Restaurant Name : ${widget.authProvider.listCancelledOrders[index].name}",
-                                          icon: Icons.restaurant_menu),
-                                      Divider(
-                                        height: 0,
-                                      ),
-                                      buildListTile(
-                                          text: "Price Order : ${widget.authProvider.getPrice(index)}",
-                                          icon: Icons.monetization_on),
-                                      Divider(
-                                        height: 0,
-                                      ),
+                                  child: InkWell(
+                                    onTap: (){
+                                      Get.dialog(Center(
+                                        child: Container(
+                                          padding: EdgeInsets.all(AppPadding.p10),
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: AppMargin.m20,
+                                            vertical: AppMargin.m10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.white,
+                                            borderRadius:
+                                            BorderRadius.circular(AppSize.s14),
+                                          ),
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "Items",
+                                                  style:
+                                                  getBoldStyle(color: ColorManager.lightPrimary,
+                                                      fontSize: Sizer.getW(context) * 0.05                                             ),
+                                                ),
+                                                Divider(),
+                                                Expanded(child: ListView.builder(
+                                                  itemCount: widget.authProvider.listCancelledOrders[index].item!.length,
+                                                  itemBuilder: (_,indexs){
+                                                    return Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          margin: EdgeInsets.only(bottom: AppMargin.m10),
+                                                          width: Sizer.getW(context) *
+                                                              0.3,
+                                                          height: Sizer.getW(context)
+                                                              * 0.3,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(AppSize.s14),
+                                                              image: DecorationImage(
+                                                                  fit: BoxFit.fill,
+                                                                  image: CachedNetworkImageProvider(
+                                                                    "${AppUrl.baseUrlImage}${widget.authProvider.listCancelledOrders[index].item![indexs].image}",
+                                                                  ),
+                                                              )
+                                                          ),),
+                                                        Text("${widget.authProvider.listCancelledOrders[index].item![indexs].name}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                        Text("${widget.authProvider.listCancelledOrders[index].item![indexs].quantity}",style: getRegularStyle(
+                                                            color: ColorManager.lightPrimary
+                                                        ),),
+                                                      ],
+                                                    );
+                                                  },
+                                                ))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ));
 
-                                    ],
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        buildListTile(
+                                            text:
+                                            "Order Number : ${widget.authProvider.listCancelledOrders[index].id}",
+                                            icon: Icons.food_bank_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Num Orders : ${(widget.authProvider.listCancelledOrders[index].offers!.length+
+                                                widget.authProvider.listCancelledOrders[index].item!.length)}",
+                                            icon: Icons.numbers_rounded),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text:
+                                            "Restaurant Name : ${widget.authProvider.listCancelledOrders[index].name}",
+                                            icon: Icons.restaurant_menu),
+                                        Divider(
+                                          height: 0,
+                                        ),
+                                        buildListTile(
+                                            text: "Price Order : ${widget.authProvider.listCancelledOrders[index].total_price}",
+                                            icon: Icons.monetization_on),
+                                        Divider(
+                                          height: 0,
+                                        ),
+
+                                      ],
+                                    ),
                                   ),
                                 )),
                           ),
@@ -338,68 +594,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
   buildListTile({icon, text}) {
     return ListTile(
       dense: true,
-      onTap: () {
-        Get.dialog(Center(
-          child: Container(
-            padding: EdgeInsets.all(AppPadding.p10),
-            margin: EdgeInsets.symmetric(
-              horizontal: AppMargin.m20,
-              vertical: AppMargin.m10,
-            ),
-            decoration: BoxDecoration(
-              color: ColorManager.white,
-              borderRadius:
-              BorderRadius.circular(AppSize.s14),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: Column(
-                children: [
-                  Text(
-                    "Items",
-                    style:
-                    getBoldStyle(color: ColorManager.lightPrimary,
-                        fontSize: Sizer.getW(context) * 0.05                                             ),
-                  ),
-                  Divider(),
-                  Expanded(child: ListView.builder(
-                    itemCount: 15,
-                    itemBuilder: (_,index){
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: AppMargin.m10),
-                            width: Sizer.getW(context) *
-                                0.3,
-                            height: Sizer.getW(context)
-                                * 0.3,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(AppSize.s14),
-                                image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage(
-                                        ImagesAssets.loginBackground
-                                    )
-                                )
-                            ),),
-                          Text("Name",style: getRegularStyle(
-                              color: ColorManager.lightPrimary
-                          ),),
-                          Text("Quantity",style: getRegularStyle(
-                              color: ColorManager.lightPrimary
-                          ),),
-                        ],
-                      );
-                    },
-                  ))
-                ],
-              ),
-            ),
-          ),
-        ));
-
-      },
+      onTap: null,
       leading: Icon(icon),
       title: Text(
         text,

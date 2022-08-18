@@ -45,13 +45,16 @@ class _MapTablesViewState extends State<MapTablesView> {
   Future<void> getTable() async {
     widget.authProvider.categories=[];
     await  widget.authProvider.table(Advance.token,widget.id);
+    setState(() {
 
+    });
    // print(widget.authProvider.categories.length);
   }
   void initState() {
     // TODO: implement initState
     getTable();
     super.initState();
+
   }
   Widget build(BuildContext context) {
 
