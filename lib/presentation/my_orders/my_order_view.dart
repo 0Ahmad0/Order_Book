@@ -15,6 +15,8 @@ import '../../api/auth/auth_provider.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
 
 import '../../api/app_url/app_url.dart';
+import '../../domain/models.dart';
+import '../utils/const.dart';
 import '../utils/sizer.dart';
 
 class MyOrdersView extends StatefulWidget {
