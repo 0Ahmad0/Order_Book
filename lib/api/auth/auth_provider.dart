@@ -53,6 +53,19 @@ class AuthProvider extends  HomeProvider{
       },
     ).then(onValueLog).catchError(onError);
   }
+  Future<Map<String,dynamic>> Fcm(String token,String fcmToken) async{
+//    print( Uri.parse( AppUrl.login));
+    return await post(
+      Uri.parse( AppUrl.FCM_Token)
+      ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token"
+    },
+      body: {
+        'FCM_Token':fcmToken,
+      },
+    ).then(onValueFcm).catchError(onError);
+  }
 
   Future<Map<String,dynamic>> Logout(String token) async{
 //    print( Uri.parse( AppUrl.login));
@@ -175,6 +188,26 @@ class AuthProvider extends  HomeProvider{
     }
       return result;
     }
+  static Future<Map<String,dynamic>> onValueFcm(http.Response response)async{
+    var result;
+    final Map<String,dynamic> responseData= json.decode(response.body);
+    print(responseData);
+    print("status code ${response.statusCode}");
+    if(response.statusCode==200){
+      result ={
+        'status':true,
+        'message':"Successful Request",
+        'data':responseData
+      };
+    }else {
+      result ={
+        'status':false,
+        'message':responseData["message"],
+        'data':responseData
+      };
+    }
+    return result;
+  }
   static Future<Map<String,dynamic>> onValueOut(http.Response response)async{
     var result;
      Map<String,dynamic> responseData= {};
