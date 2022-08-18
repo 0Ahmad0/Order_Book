@@ -15,6 +15,7 @@ import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/const.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 
@@ -36,7 +37,7 @@ class _OTPViewState extends State<OTPView> {
   Future<void> register(AuthProvider authProvider) async {
     Const.LOADIG(context);
     //  var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "ii");
-    var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, "io5f520");
+    var result =await authProvider.register("", "",widget.user.name, widget.user.phoneNumber, widget.user.avatarId, Const.getDeviceId().toString());
     // var result =await authProvider.register("", "","temp", "+963970807997", 1, "igjui70iikii");
     print(result["message"]);
     Const.TOAST(context,textToast: result["message"]);
