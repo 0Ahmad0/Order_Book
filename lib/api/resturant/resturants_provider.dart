@@ -129,11 +129,30 @@ class RestaurantsProvider extends ChangeNotifier{
           "Authorization": "Bearer $token",
           "language":"en",},
           body: {
-              "table_id":table_id,
-              "number_of_people":number_of_people,
+              "table_id":table_id.toString(),
+              "number_of_people":number_of_people.toString(),
               "date":"2022-08-26 18:00",
               "notes":notes
           }).then(onAddReservations).catchError(onError2);
+
+
+
+  }
+  Future<Map<String,dynamic>> addOrder(String token,Orders orders) async{
+    print( Uri.parse( "${AppUrl.addReservations}"));
+    var request = http.MultipartRequest('POST', Uri.parse("${AppUrl.addReservations}"));
+    request.headers.addAll({
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":"en",
+    });
+
+    return await http.post(
+        Uri.parse( "${AppUrl.addReservations}"),
+        headers: {"Accept":"application/json",
+          "Authorization": "Bearer $token",
+          "language":"en",},
+        body: orders).then(onAddReservations).catchError(onError2);
 
 
 

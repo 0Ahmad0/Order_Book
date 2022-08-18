@@ -28,6 +28,8 @@ class AppUrl{
   static const String acceptedReservations =baseUrl+"reservation/getMyAcceptedReservations";
   static const String myRejectedReservations =baseUrl+"reservation/getMyRejectedReservations";
 
+  static const String addOrder =baseUrl+"order/create";
+
   static const String myPendingOrders=baseUrl+"order/getMyPendingOrders";
   static const String myCancelledOrders =baseUrl+"order/getMyCancelledOrders";
   static const String myServedOrders =baseUrl+"order/getMyServedOrders";

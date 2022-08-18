@@ -363,6 +363,11 @@ int? total_price;
     this.id,
     this.status,
     this.table_id,this.vendor_id,this.item,this.offers,this.total_price});
+  toJson (){
+    return {
+
+    };
+  }
 }
 
 class Cart{
