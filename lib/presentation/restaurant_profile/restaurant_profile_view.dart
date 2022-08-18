@@ -198,7 +198,7 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                     //var result =await  widget.authProvidere.menuVendor(Advance.token,widget.restaurant.id!);
                     //Navigator.pop(context);
                     //Const.TOAST(context,textToast: result["message"]);
-                    Get.to(()=>MenuView(id: widget.restaurant.id!,authProvider: widget.authProvidere,));
+                    Get.to(()=>MenuView(id: widget.restaurant.id!,id_table: -1,authProvider: widget.authProvidere,));
                   },
                 ),
                 const SizedBox(height: AppSize.s10,),

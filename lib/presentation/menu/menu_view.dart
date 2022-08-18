@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 
+import '../../api/app_url/app_url.dart';
 import '../../api/auth/auth_provider.dart';
 import '../../domain/models.dart';
 import '../resources/assets_manager.dart';
@@ -20,9 +22,10 @@ import '../utils/const.dart';
 class MenuView extends StatefulWidget {
   // const MenuView({Key? key}) : super(key: key);
   final int id;
+  final int id_table;
   final AuthProvider authProvider;
 
-  MenuView({required this.id, required this.authProvider});
+  MenuView({required this.id,required this.id_table, required this.authProvider});
 
   @override
   State<MenuView> createState() => _MenuViewState();
@@ -74,7 +77,12 @@ class _MenuViewState extends State<MenuView> {
   @override
   Future<void> getTable() async {
     //Const.LOADIG(context);
-    var result = await widget.authProvider.menuVendor(Advance.token, widget.id);
+    var result;
+    if(widget.id_table<0){
+      result = await widget.authProvider.menuVendor(Advance.token, widget.id);
+    }else{
+      result = await widget.authProvider.menuQr(Advance.token, widget.id_table);
+    }
     setState(() {
 
     });
@@ -91,7 +99,7 @@ class _MenuViewState extends State<MenuView> {
 
   @override
   Widget build(BuildContext context) {
-    List li = menuItems["categorys"][currentIndex]["sub_category"];
+    //List li = menuItems["categorys"][currentIndex]["sub_category"];
     return Scaffold(
       appBar: AppBar(
         title: Text(tr(LocaleKeys.menuRestaurant)),
@@ -142,13 +150,12 @@ class _MenuViewState extends State<MenuView> {
               )),
           Expanded(child: ListView(
             children: [
-              if (widget.authProvider.listCategories[currentIndex].items!.length>0)
+              if (widget.authProvider.listCategories[currentIndex].items!=null &&widget.authProvider.listCategories[currentIndex].items!.length>0)
                 SingleChildScrollView(
                   child: Column(
                     children: [
                       ...widget.authProvider.listCategories[currentIndex].items!
                           .map((index) {
-                       ;
                         //List subCat =
                         //menuItems["categorys"][index]["sub_category"];
                        // List items = menuItems["categorys"][index]["items"];
@@ -185,8 +192,8 @@ class _MenuViewState extends State<MenuView> {
                                                         .withOpacity(.55),
                                                     BlendMode.darken),
                                                 fit: BoxFit.fill,
-                                                image: AssetImage(
-                                                    ImagesAssets.loginBackground),
+                                                image: CachedNetworkImageProvider(
+                                                "${AppUrl.baseUrlImage}${index.image}"),
                                               )),
                                         )),
                                     SizedBox(
@@ -222,7 +229,7 @@ class _MenuViewState extends State<MenuView> {
                                             color: ColorManager.white,
                                             width: 0.0,
                                           ),
-                                          Expanded(
+                                          (index.price!=null&&index.price!>0)?Expanded(
                                               child: Container(
                                                   alignment: Alignment.center,
                                                   color: ColorManager.blackF2,
@@ -242,7 +249,8 @@ class _MenuViewState extends State<MenuView> {
                                                                 0.035),
                                                       ),
                                                     ],
-                                                  ))),
+                                                  )))
+                                          :SizedBox(),
                                         ],
                                       ),
                                     )
@@ -269,7 +277,7 @@ class _MenuViewState extends State<MenuView> {
                     ],
                   ),
                 ),
-              if ( widget.authProvider.listCategories[currentIndex].subCategories!.length>0)
+              if ( widget.authProvider.listCategories[currentIndex].subCategories!=null&&widget.authProvider.listCategories[currentIndex].subCategories!.length>0)
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -280,8 +288,8 @@ class _MenuViewState extends State<MenuView> {
                           children: [
                             ExpansionTile(
                               childrenPadding: EdgeInsets.zero,
-                              title: Center(child: Text("${e}",style: getRegularStyle(color: ColorManager.lightPrimary),)),
-                              children: li.map((e) {
+                              title: Center(child: Text("${e.name}",style: getRegularStyle(color: ColorManager.lightPrimary),)),
+                              children: e.items!.map((e1) {
                                 return GestureDetector(
                                   onTap: () {
                                     Get.to(() => MealDetailsView());
@@ -317,8 +325,11 @@ class _MenuViewState extends State<MenuView> {
                                                                 .withOpacity(.55),
                                                             BlendMode.darken),
                                                         fit: BoxFit.fill,
-                                                        image: AssetImage(
-                                                            ImagesAssets.loginBackground),
+                                                        image:CachedNetworkImageProvider(
+                                                          "${AppUrl.baseUrlImage}${e.image}",
+                                                        ),
+                                                        /*AssetImage(
+                                                            ImagesAssets.loginBackground),*/
                                                       )),
                                                 )),
                                             SizedBox(
@@ -339,7 +350,8 @@ class _MenuViewState extends State<MenuView> {
                                                           children: [
                                                             Icon(Icons.restaurant),
                                                             Text(
-                                                              " ${"Albaghel"}",
+                                                              //" ${"Albaghel"}",
+                                                              "${e1.name}",
                                                               style: getRegularStyle(
                                                                   color: ColorManager
                                                                       .white,
@@ -354,7 +366,7 @@ class _MenuViewState extends State<MenuView> {
                                                     color: ColorManager.white,
                                                     width: 0.0,
                                                   ),
-                                                  Expanded(
+                                                  (e1.price!=null&&e1.price!>0)?Expanded(
                                                       child: Container(
                                                           alignment: Alignment.center,
                                                           color: ColorManager.blackF2,
@@ -365,8 +377,8 @@ class _MenuViewState extends State<MenuView> {
                                                             children: [
                                                               Icon(Icons
                                                                   .monetization_on),
-                                                              Text(
-                                                                " ${100}\$",
+                                                              Text("${e1.price}",
+                                                                //" ${100}\$",
                                                                 style: getRegularStyle(
                                                                     color:
                                                                     ColorManager
@@ -376,7 +388,7 @@ class _MenuViewState extends State<MenuView> {
                                                                         0.035),
                                                               ),
                                                             ],
-                                                          ))),
+                                                          ))):SizedBox(),
                                                 ],
                                               ),
                                             )
@@ -408,7 +420,7 @@ class _MenuViewState extends State<MenuView> {
                     ],
                   ),
                 )
-              else
+              else if(widget.authProvider.listCategories[currentIndex].subCategories!.length<1&&widget.authProvider.listCategories[currentIndex].items!.length<1)
                 Container(
                   height: Sizer.getH(context) / 1.25,
                   alignment: Alignment.center,

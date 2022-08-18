@@ -127,6 +127,19 @@ class RestaurantsProvider extends ChangeNotifier{
     }
     ).then(onMenuVendor).catchError(onError2);
   }
+  Future<Map<String,dynamic>> menuQr(String token,int id_table) async{
+//    print( Uri.parse( AppUrl.login));
+    recRestaurant=false;
+
+    return await get(
+        Uri.parse( "${AppUrl.menuQr}${id_table}")
+        ,headers: {
+      "Accept":"application/json",
+      "Authorization": "Bearer $token",
+      "language":Advance.language?"en":"ar"
+    }
+    ).then(onMenuVendor).catchError(onError2);
+  }
   Future<Map<String,dynamic>> pendingReservations(String token) async{
 //    print( Uri.parse( AppUrl.login));
     recRestaurant=false;
