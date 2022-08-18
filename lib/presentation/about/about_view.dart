@@ -8,6 +8,9 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../translations/local_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 class AboutView extends StatefulWidget {
   const AboutView({Key? key}) : super(key: key);
 
@@ -27,7 +30,7 @@ class _AboutViewState extends State<AboutView> {
         child: Icon(Icons.share),
       ),
       appBar: AppBar(
-        title: Text(AppStrings.about),
+        title: Text(tr(LocaleKeys.about)),
       ),
       body: Container(
         color: ColorManager.lightGray.withOpacity(.2),
@@ -52,26 +55,26 @@ class _AboutViewState extends State<AboutView> {
                       width: Sizer.getW(context) * 0.1,
                       height: Sizer.getW(context) * 0.1,
                     ),
-                    title: Text(AppStrings.appName),
+                    title: Text(tr(LocaleKeys.appName)),
                   ),
 
                   buildListTile(
                     onTap: () {},
                     icon: Icons.info,
-                    title: AppStrings.version,
+                    title: tr(LocaleKeys.version),
                   ),
                   Divider(
                     height: 0.0,
                   ),
                   buildListTile(
                       onTap: () {}, icon: Icons.cached, title:
-                  AppStrings.Changelog),
+                  tr(LocaleKeys.Changelog)),
                   Divider(
                     height: 0.0,
                   ),
                   buildListTile(
                       onTap: () {}, icon: Icons.download_done, title:
-                  AppStrings.License),
+                  tr(LocaleKeys.License)),
                 ],
               ),
             ),
@@ -86,13 +89,13 @@ class _AboutViewState extends State<AboutView> {
               child: Column(
                 children: [
                   ListTile(
-                    title: Text(AppStrings.Author),
+                    title: Text(tr(LocaleKeys.Author)),
                   ),
                   buildListTile(
                     onTap: () {},
                     icon: Icons.person,
-                    title: AppStrings.appName,
-                    subtitle: AppStrings.Syria,
+                    title: tr(LocaleKeys.appName),
+                    subtitle: tr(LocaleKeys.Syria),
                   ),
                   Divider(
                     height: 0.0,
@@ -100,7 +103,7 @@ class _AboutViewState extends State<AboutView> {
                   buildListTile(
                       onTap: () {},
                       icon: Icons.download,
-                      title: AppStrings.download),
+                      title: tr(LocaleKeys.download)),
                 ],
               ),
             ),
@@ -115,21 +118,21 @@ class _AboutViewState extends State<AboutView> {
               child: Column(
                 children: [
                   ListTile(
-                    title: Text(AppStrings.appName),
+                    title: Text(tr(LocaleKeys.appName)),
                   ),
                   buildListTile(
                       onTap: () {},
                       icon: Icons.work,
-                      title: AppStrings.info,
-                      subtitle: AppStrings.Syria),
+                      title: tr(LocaleKeys.info),
+                      subtitle: tr(LocaleKeys.Syria)),
                   Divider(
                     height: 0.0,
                   ),
                   buildListTile(
                       onTap: () {},
                       icon: Icons.location_pin,
-                      title: AppStrings.location,
-                      subtitle: AppStrings.Syria),
+                      title: tr(LocaleKeys.location),
+                      subtitle: tr(LocaleKeys.Syria)),
                 ],
               ),
             ),

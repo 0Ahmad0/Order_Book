@@ -16,6 +16,7 @@ import 'package:orderbook/presentation/resources/assets_manager.dart';
 import 'package:orderbook/presentation/resources/color_manager.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
@@ -103,15 +104,15 @@ class _LoginViewState extends State<LoginView> {
                         maxLength: 10,
                         validator: (val) {
                           if (val!.trim().isEmpty) {
-                            return AppStrings.fieldNotEmpty;
+                            return tr(LocaleKeys.fieldNotEmpty);
                           }
                           if (!val
                               .toString()
                               .isPhoneNumber || val.length != 10) {
-                            return AppStrings.validPhone;
+                            return tr(LocaleKeys.validPhone);
                           }
                           if (!val.startsWith("09")) {
-                            return AppStrings.phoneStart09;
+                            return tr(LocaleKeys.phoneStart09);
                           }
                           return null;
                         },
@@ -127,7 +128,7 @@ class _LoginViewState extends State<LoginView> {
                           }
                         },
                         prefixIcon: Icons.phone,
-                        hintText: AppStrings.hintPhone,
+                        hintText: tr(LocaleKeys.hintPhone),
                         validFiled: type,
 
                       ),
@@ -135,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
                         height: AppSize.s20,
                       ),
                       ButtonApp(
-                        text: AppStrings.loginText,
+                        text: tr(LocaleKeys.loginText),
                         fontSize: Sizer.getW(context) * 0.05,
                         onTap: () async {
                           print(Advance.language);
@@ -225,7 +226,7 @@ class _LoginViewState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            AppStrings.dontHaveAccount,
+                            tr(LocaleKeys.dontHaveAccount),
                             style: getRegularStyle(color: ColorManager.black),
                           ),
                           GestureDetector(
@@ -238,7 +239,7 @@ class _LoginViewState extends State<LoginView> {
                             child: Container(
                               padding: const EdgeInsets.all(AppPadding.p8),
                               child: Text(
-                                AppStrings.signupText,
+                                tr(LocaleKeys.signupText),
                                 style: getLightStyle(
                                     color: ColorManager.lightSecondary,
                                     fontSize: Sizer.getW(context) * 0.038),
@@ -279,7 +280,7 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppStrings.appName,
+                  tr(LocaleKeys.appName),
                   style: getBoldStyle(
                       fontSize: Sizer.getW(context) * 0.08,
                       color: ColorManager.white),
@@ -288,7 +289,7 @@ class _LoginViewState extends State<LoginView> {
                   padding:
                   const EdgeInsets.symmetric(horizontal: AppPadding.p20),
                   child: Text(
-                    AppStrings.loginWelcomeText,
+                    tr(LocaleKeys.loginWelcomeText),
                     textAlign: TextAlign.center,
                     style: getLightStyle(
                         fontSize: Sizer.getW(context) * 0.04,

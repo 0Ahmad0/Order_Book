@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/domain/models.dart';
@@ -5,6 +6,7 @@ import 'package:orderbook/presentation/meal_details/meal_details_view.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/shopping_cart/shopping_cart_view.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/auth/auth_provider.dart';
@@ -92,7 +94,7 @@ class _MenuViewState extends State<MenuView> {
     List li = menuItems["categorys"][currentIndex]["sub_category"];
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.menuRestaurant),
+        title: Text(tr(LocaleKeys.menuRestaurant)),
         elevation: 0.0,
         actions: [
           IconButton(

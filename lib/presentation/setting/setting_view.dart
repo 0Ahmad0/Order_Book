@@ -6,6 +6,7 @@ import 'package:orderbook/data/local/storage.dart';
 import 'package:orderbook/domain/models.dart';
 import 'package:orderbook/presentation/resources/strings_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/local/change_theme.dart';
@@ -29,7 +30,7 @@ class _SettingViewState extends State<SettingView> {
     final appModel = Provider.of<AppModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.setting),
+        title: Text(tr(LocaleKeys.setting)),
         elevation: 0.0,
       ),
       body: Padding(
@@ -58,7 +59,7 @@ class _SettingViewState extends State<SettingView> {
                   ),
                   title: ListTile(
                     title: Text(
-                      AppStrings.language,
+                      tr(LocaleKeys.language),
                       style: getRegularStyle(
                           color: ColorManager.lightPrimary,
                           fontSize: Sizer.getW(context) * 0.035
@@ -67,8 +68,8 @@ class _SettingViewState extends State<SettingView> {
                     leading: Icon(Icons.language),
                     subtitle: Text(
                     Advance.language
-                        ? AppStrings.englishText
-                        :AppStrings.arabicText
+                        ? tr(LocaleKeys.englishText)
+                        :tr(LocaleKeys.arabicText)
                     ,style: getLightStyle(
                         color: ColorManager.darkPrimary
                     ),),
@@ -89,7 +90,7 @@ class _SettingViewState extends State<SettingView> {
                         );
                         setState((){});
                       },
-                      title: Text(AppStrings.englishText,style: getRegularStyle(color: ColorManager.lightPrimary,
+                      title: Text(tr(LocaleKeys.englishText),style: getRegularStyle(color: ColorManager.lightPrimary,
                       fontSize: Sizer.getW(context) * 0.035,
                       ),),
                       leading: SizedBox(),
@@ -124,7 +125,7 @@ class _SettingViewState extends State<SettingView> {
                         );
                         setState((){});
                       },
-                      title: Text(AppStrings.arabicText,style: getRegularStyle(color: ColorManager.lightPrimary,
+                      title: Text(tr(LocaleKeys.arabicText),style: getRegularStyle(color: ColorManager.lightPrimary,
                         fontSize: Sizer.getW(context) * 0.035,
                       ),),
                       leading: SizedBox(),
@@ -160,7 +161,7 @@ class _SettingViewState extends State<SettingView> {
               ),
               child: ListTile(
                 title: Text(
-                  AppStrings.theme,
+                  tr(LocaleKeys.theme),
                   style: getRegularStyle(
                       color: ColorManager.lightPrimary,
                       fontSize: Sizer.getW(context) * 0.035
@@ -168,8 +169,8 @@ class _SettingViewState extends State<SettingView> {
                 ),
                   subtitle: Text(
                   appModel.darkTheme
-                      ? AppStrings.darkMode
-                      :AppStrings.lightMode
+                      ? tr(LocaleKeys.darkMode)
+                      :tr(LocaleKeys.lightMode)
                   ,style: getLightStyle(
                       color: ColorManager.darkPrimary
                   ),),
@@ -194,9 +195,7 @@ class _SettingViewState extends State<SettingView> {
               ),
 
             ),
-
-
-
+            // Text(tr(LocaleKeys.language),style: getBoldStyle(color: ColorManager.redOTP),)
           ],
         ),
       ),

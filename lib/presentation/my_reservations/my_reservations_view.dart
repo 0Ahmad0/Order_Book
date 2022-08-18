@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orderbook/presentation/add_reservations/add_reservations_view.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../api/auth/auth_provider.dart';
 import '../../domain/models.dart';
+import '../../translations/local_keys.g.dart';
 import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
@@ -57,7 +59,7 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                               childrenPadding: EdgeInsets.zero,
 
                               initiallyExpanded: true,
-                              title: Text("Accepted Reservations"/*AppStrings.currentReservation*/),
+                              title: Text(tr(LocaleKeys.acceptreservation)/*AppStrings.currentReservation*/),
                               children: List.generate(
                                   widget.authProvider.listAcceptedReservations.length,
                                       (index) => Card(
@@ -67,13 +69,13 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                                       children: [
                                         buildListTile(
                                             text:
-                                            "Table Number : ${widget.authProvider.listAcceptedReservations[index].id}",
+                                            "${tr(LocaleKeys.tableNumber)} : ${widget.authProvider.listAcceptedReservations[index].id}",
                                             icon: Icons.table_restaurant),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
-                                            text: "Persons Number : ${widget.authProvider.listAcceptedReservations[index].number_of_people}",
+                                            text: "${tr(LocaleKeys.personNumber)} : ${widget.authProvider.listAcceptedReservations[index].number_of_people}",
                                             icon: Icons.groups),
                                         Divider(
                                           height: 0,
@@ -81,14 +83,14 @@ class _MyReservationsViewState extends State<MyReservationsView> {
 
                                         buildListTile(
                                             text:
-                                            "Restaurant Name : ${widget.authProvider.listAcceptedReservations[index].name}",
+                                            "${tr(LocaleKeys.restaurantName)} : ${widget.authProvider.listAcceptedReservations[index].name}",
                                             icon: Icons.restaurant_menu),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
                                             text:
-                                            "Date Of Reservation : ${widget.authProvider.listAcceptedReservations[index].date}",
+                                            "${tr(LocaleKeys.dateReservations)} : ${widget.authProvider.listAcceptedReservations[index].date}",
                                             icon: Icons.date_range),
                                       ],
                                     ),
@@ -108,9 +110,9 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                             ),
                             child: ExpansionTile(
                               childrenPadding: EdgeInsets.zero,
-                              title: Text("Pending Reservations"/*AppStrings.currentReservation*/),
+                              title: Text(tr(LocaleKeys.pendingReservation)/*AppStrings.currentReservation*/),
                               children: List.generate(
-                                  widget.authProvider.listPendingReservations.length,
+                                 widget.authProvider.listPendingReservations.length,
                                       (index) => Card(
                                     margin: const EdgeInsets.all(AppMargin.m8),
                                     child: Column(
@@ -118,13 +120,13 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                                       children: [
                                         buildListTile(
                                             text:
-                                            "Table Number : ${widget.authProvider.listPendingReservations[index].id}",
+                                            "${tr(LocaleKeys.tableNumber)} : ${widget.authProvider.listPendingReservations[index].id}",
                                             icon: Icons.table_restaurant),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
-                                            text: "Persons Number : ${widget.authProvider.listPendingReservations[index].number_of_people}",
+                                             text: "${tr(LocaleKeys.personNumber)} : ${widget.authProvider.listPendingReservations[index].number_of_people}",
                                             icon: Icons.groups),
                                         Divider(
                                           height: 0,
@@ -132,15 +134,34 @@ class _MyReservationsViewState extends State<MyReservationsView> {
 
                                         buildListTile(
                                             text:
-                                            "Restaurant Name : ${widget.authProvider.listPendingReservations[index].name}",
+                                            "${tr(LocaleKeys.restaurantName)} : ${widget.authProvider.listPendingReservations[index].name}",
                                             icon: Icons.restaurant_menu),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
                                             text:
-                                            "Date Of Reservation : ${widget.authProvider.listPendingReservations[index].date}",
+                                            "${tr(LocaleKeys.dateReservations)} : ${widget.authProvider.listPendingReservations[index].date}",
                                             icon: Icons.date_range),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: AppPadding.p8
+                                              ),
+                                              margin: EdgeInsets.all(AppMargin.m8),
+                                              decoration: BoxDecoration(
+                                                color: ColorManager.redOTP,
+                                                borderRadius: BorderRadius.circular(AppSize.s4)
+                                              ),
+                                              child: TextButton.icon(
+                                                  icon: Icon(Icons.cancel,color: ColorManager.white,),
+                                                  onPressed: (){}, label: Text(tr(LocaleKeys.cancelOrder),
+                                                style: getRegularStyle(color: ColorManager.white),)),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
                                   )),
@@ -159,7 +180,7 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                             ),
                             child: ExpansionTile(
                               childrenPadding: EdgeInsets.zero,
-                              title: Text(/*AppStrings.currentReservation*/"Rejected Reservations"),
+                              title: Text(/*AppStrings.currentReservation*/tr(LocaleKeys.rejected)),
                               children: List.generate(
                                   widget.authProvider.listRejectedReservations.length,
                                       (index) => Card(
@@ -169,13 +190,13 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                                       children: [
                                         buildListTile(
                                             text:
-                                            "Table Number : ${widget.authProvider.listRejectedReservations[index].id}",
+                                            "${tr(LocaleKeys.tableNumber)} : ${widget.authProvider.listRejectedReservations[index].id}",
                                             icon: Icons.table_restaurant),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
-                                            text: "Persons Number : ${widget.authProvider.listRejectedReservations[index].number_of_people}",
+                                            text: "${LocaleKeys.personNumber} : ${widget.authProvider.listRejectedReservations[index].number_of_people}",
                                             icon: Icons.groups),
                                         Divider(
                                           height: 0,
@@ -183,14 +204,14 @@ class _MyReservationsViewState extends State<MyReservationsView> {
 
                                         buildListTile(
                                             text:
-                                            "Restaurant Name : ${widget.authProvider.listRejectedReservations[index].name}",
+                                            "${tr(LocaleKeys.restaurantName)} : ${widget.authProvider.listRejectedReservations[index].name}",
                                             icon: Icons.restaurant_menu),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
                                             text:
-                                            "Date Of Reservation : ${widget.authProvider.listRejectedReservations[index].date}",
+                                            "${tr(LocaleKeys.dateReservations)} : ${widget.authProvider.listRejectedReservations[index].date}",
                                             icon: Icons.date_range),
                                       ],
                                     ),
@@ -210,7 +231,7 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                             ),
                             child: ExpansionTile(
                               childrenPadding: EdgeInsets.zero,
-                              title: Text("Cancelled Reservations"/*AppStrings.currentReservation*/),
+                              title: Text(tr(LocaleKeys.cancelreservation)/*AppStrings.currentReservation*/),
                               children: List.generate(
                                   widget.authProvider.listCancelledReservations.length,
                                       (index) => Card(
@@ -220,13 +241,13 @@ class _MyReservationsViewState extends State<MyReservationsView> {
                                       children: [
                                         buildListTile(
                                             text:
-                                            "Table Number : ${widget.authProvider.listCancelledReservations[index].id}",
+                                            "${tr(LocaleKeys.tableNumber)} : ${widget.authProvider.listCancelledReservations[index].id}",
                                             icon: Icons.table_restaurant),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
-                                            text: "Persons Number : ${widget.authProvider.listCancelledReservations[index].number_of_people}",
+                                            text: "${tr(LocaleKeys.personNumber)} : ${widget.authProvider.listCancelledReservations[index].number_of_people}",
                                             icon: Icons.groups),
                                         Divider(
                                           height: 0,
@@ -234,14 +255,14 @@ class _MyReservationsViewState extends State<MyReservationsView> {
 
                                         buildListTile(
                                             text:
-                                            "Restaurant Name : ${widget.authProvider.listCancelledReservations[index].name}",
+                                            "${LocaleKeys.restaurantName} : ${widget.authProvider.listCancelledReservations[index].name}",
                                             icon: Icons.restaurant_menu),
                                         Divider(
                                           height: 0,
                                         ),
                                         buildListTile(
                                             text:
-                                            "Date Of Reservation : ${widget.authProvider.listCancelledReservations[index].date}",
+                                            "${LocaleKeys.dateReservations} : ${widget.authProvider.listCancelledReservations[index].date}",
                                             icon: Icons.date_range),
                                       ],
                                     ),

@@ -75,5 +75,17 @@
   "download": "تحميل من الانترنت",
   "info" : "ايتي انفو",
   "location": "الموقع",
-  "scancode": "امسح الباركود"
+  "scancode": "امسح الباركود",
+  "selectFloorFirst" : "اختر الطابق اول",
+  "rejected": "الحجوزات المرفوضة",
+  "cancelOrder": "إلغاء الحجز",
+  "restaurantName": "اسم المطعم",
+  "acceptreservation": "الحجوزات المقبولة",
+  "cancelreservation" : "الحجوزات الملغية",
+  "priceOrder": "سعر الصنف",
+  "numberOrder": "رقم الطلب",
+  "numberOrders": "عدد الطلبات",
+  "send_report": "تم ارسال البلاغ"
+
+
 }

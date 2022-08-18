@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:animate_icons/animate_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -18,6 +19,7 @@ import 'package:orderbook/presentation/resources/theme_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 import 'package:story/story.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
@@ -87,7 +89,7 @@ class _HomeViewState extends State<HomeView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppStrings.offers,
+            tr(LocaleKeys.offers),
             style: getRegularStyle(
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),
@@ -124,7 +126,7 @@ class _HomeViewState extends State<HomeView> {
           },
         ),
           Text(
-            AppStrings.publisherItems,
+            tr(LocaleKeys.publisherItems),
             style: getRegularStyle(
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),
@@ -157,7 +159,7 @@ class _HomeViewState extends State<HomeView> {
           ),
 
           Text(
-            AppStrings.publisherRestaurant,
+            tr(LocaleKeys.publisherRestaurant),
             style: getRegularStyle(
                 color: ColorManager.lightSecondary,
                 fontSize: Sizer.getW(context) * 0.035),

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,10 +12,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 import '../../api/auth/auth_provider.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 
 import '../../api/app_url/app_url.dart';
-import '../../domain/models.dart';
-import '../utils/const.dart';
 import '../utils/sizer.dart';
 
 class MyOrdersView extends StatefulWidget {
@@ -30,7 +27,6 @@ class MyOrdersView extends StatefulWidget {
 class _MyOrdersViewState extends State<MyOrdersView> {
   @override
   Widget build(BuildContext context) {
-    widget.authProvider = Provider.of<AuthProvider>(context);
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppPadding.p20,

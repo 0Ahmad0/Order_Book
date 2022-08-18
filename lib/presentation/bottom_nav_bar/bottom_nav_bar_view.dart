@@ -1,5 +1,6 @@
 
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_icons/animate_icons.dart';
 import 'package:orderbook/domain/models.dart';
@@ -17,6 +18,7 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/restaurant/restaurant_view.dart';
 import 'package:orderbook/presentation/setting/setting_view.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
@@ -40,22 +42,22 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
   void fillList(){
     _pages = [
       {
-        "title" : AppStrings.qrCode,
+        "title" : tr(LocaleKeys.qrCode),
         "content" :QrView()
       },
       {
-        "title" : AppStrings.reservations,
+        "title" : tr(LocaleKeys.reservations),
         "content" :MyReservationsView()
       },
       {
-        "title" : AppStrings.homeText,
+        "title" : tr(LocaleKeys.homeText),
         "content" :HomeView()
       },
-      {"title": AppStrings.restaurant,
+      {"title": tr(LocaleKeys.restaurant),
         "content": RestaurantView()
       },
       {
-        "title": AppStrings.orders,
+        "title": tr(LocaleKeys.orders),
         "content": MyOrdersView()
       },
     ];
@@ -120,7 +122,9 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                       DataLocal.user.phoneNumber.isEmpty?
                       "+963 954872922":
                       DataLocal.user.phoneNumber,
-                      style: getLightStyle(color: ColorManager.blackF2),
+                      style: getLightStyle(
+                          color: appModel.darkTheme?ColorManager.white4:ColorManager.blackF2
+                      ),
                     ),
                     currentAccountPicture: GestureDetector(
                       onTap: (){
@@ -168,7 +172,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                   Hero(
                     tag: Advance.avatarImage,
                     child: buildListTileDrawer(
-                        text: AppStrings.myProfile,
+                        text: tr(LocaleKeys.myProfile),
                         leadingIcon: Icons.account_circle,
                         traling: null,
                         onTap: () {
@@ -179,9 +183,10 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                   ),
                   Divider(
                     height: 0,
+                    color: appModel.darkTheme?ColorManager.white4:ColorManager.lightPrimary,
                   ),
                   buildListTileDrawer(
-                      text: AppStrings.setting,
+                      text: tr(LocaleKeys.setting),
                       leadingIcon: Icons.settings,
                       traling: null,
                       onTap: () {
@@ -191,9 +196,10 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                       }),
                   Divider(
                     height: 0,
+                    color: appModel.darkTheme?ColorManager.white4:ColorManager.lightPrimary,
                   ),
                   buildListTileDrawer(
-                      text: AppStrings.about,
+                      text: tr(LocaleKeys.about),
                       leadingIcon: Icons.info,
                       traling: null,
                       onTap: () {
@@ -204,17 +210,21 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
                       }),
                   Divider(
                     height: 0,
+                    color: appModel.darkTheme?ColorManager.white4:ColorManager.lightPrimary,
                   ),
                   buildListTileDrawer(
-                      text: AppStrings.reports,
+                      text: tr(LocaleKeys.reports),
                       leadingIcon: Icons.report_problem,
                       traling: null,
-                      onTap: () {}),
+                      onTap: () {
+                        Const.TOAST(context,textToast: tr(LocaleKeys.send_report));
+                      }),
                   Divider(
                     height: 0,
+                    color: appModel.darkTheme?ColorManager.white4:ColorManager.lightPrimary,
                   ),
                   buildListTileDrawer(
-                      text: AppStrings.logout,
+                      text: tr(LocaleKeys.logout),
                       leadingIcon: Icons.logout,
                       traling: null,
                       onTap: () async{
@@ -247,7 +257,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
               ),
               Column(
                 children: [
-                  Text(AppStrings.appVersion,
+                  Text(tr(LocaleKeys.appVersion),
                     textAlign: TextAlign.center,
                     style: getLightStyle(color: ColorManager.black,),
                   ),
@@ -257,6 +267,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
             ],
           )),
       bottomNavigationBar: WaterDropNavBar(
+        backgroundColor: !appModel.darkTheme?Colors.white:ColorManager.black,
         waterDropColor: ColorManager.lightPrimary,
         inactiveIconColor: ColorManager.lightGray,
         bottomPadding: 5,
@@ -289,7 +300,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
     return ListTile(
       title: Text(
         text,
-        style: getRegularStyle(color: ColorManager.black),
+        style: getRegularStyle(color: ColorManager.lightPrimary),
       ),
       leading: Icon(leadingIcon),
       trailing: traling,

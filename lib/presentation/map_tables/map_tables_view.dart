@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orderbook/api/app_url/app_url.dart';
@@ -12,6 +13,7 @@ import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/restaurant_map_scroll/restaurant_map_scroll_view.dart';
 import 'package:orderbook/presentation/utils/const.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 import 'package:orderbook/domain/models.dart' as models;
 import '../../api/auth/auth_provider.dart';
@@ -70,11 +72,11 @@ class _MapTablesViewState extends State<MapTablesView> {
               ),);
 
             }else{
-              Const.TOAST(context,textToast: AppStrings.selectFloorFirst);
+              Const.TOAST(context,textToast: tr(LocaleKeys.selectFloorFirst));
             }
           }, icon: Icon(Icons.map)),
         ],
-        title: Text(AppStrings.mapTables),
+        title: Text(tr(LocaleKeys.mapTables)),
         elevation: 0.0,
       ),
       body: Padding(
@@ -83,7 +85,7 @@ class _MapTablesViewState extends State<MapTablesView> {
         child:Column(
           children: [
             DropdownButtonFormField<String>(
-                hint: Text(AppStrings.selectFloor),
+                hint: Text(tr(LocaleKeys.selectFloor)),
                 items: List.generate(
                     widget.authProvider.categories.length>0?widget.authProvider.categories.length:0,
                     // floors["floors"].length,

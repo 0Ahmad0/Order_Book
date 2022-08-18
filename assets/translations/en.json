@@ -76,4 +76,14 @@
   "info" : "ITE-Info",
   "location": "Location",
   "scancode": "Scan Code",
+  "selectFloorFirst" : "selectFloorFirst",
+  "rejected": "Rejected Reservations",
+  "cancelOrder" : "cancel Order",
+  "restaurantName": "restaurantName",
+  "acceptreservation": "Accept Reservation",
+  "cancelreservation": "Cancel Reservation",
+  "priceOrder": "Price Order",
+  "numberOrder": "Order Number",
+  "numberOrders": "Numbers Orders",
+  "send_report": "Send report"
 }

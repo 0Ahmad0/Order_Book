@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter_svg/parser.dart';
@@ -16,6 +17,7 @@ import 'package:orderbook/presentation/resources/style_manager.dart';
 import 'package:orderbook/presentation/resources/values_manager.dart';
 import 'package:orderbook/presentation/utils/sizer.dart';
 import 'package:orderbook/presentation/utils/user_storage_data.dart';
+import 'package:orderbook/translations/local_keys.g.dart';
 import 'package:provider/provider.dart';
 import '../login/login_view.dart';
 import '../resources/assets_manager.dart';
@@ -79,7 +81,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       maxLength: null,
                                       validator: (val) {
                                         if (val!.trim().isEmpty) {
-                                          return AppStrings.fieldNotEmpty;
+                                          return tr(LocaleKeys.fieldNotEmpty);
                                         }
                                         //TODO start with number and [~!@#$%^&*]
                                         // if(!val.toString().isPhoneNumber){
@@ -97,7 +99,7 @@ class _RegisterViewState extends State<RegisterView> {
                                         }
                                       },
                                       prefixIcon: Icons.person,
-                                      hintText: AppStrings.firstName,
+                                      hintText: tr(LocaleKeys.firstName),
                                       validFiled: checkValidate["firstName"],
                                     ),
                                     const SizedBox(
@@ -111,7 +113,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       maxLength: null,
                                       validator: (val) {
                                         if (val!.trim().isEmpty) {
-                                          return AppStrings.fieldNotEmpty;
+                                          return tr(LocaleKeys.fieldNotEmpty);
                                         }
                                         //TODO start with number and [~!@#$%^&*]
                                         // if(!val.toString().isPhoneNumber){
@@ -129,7 +131,7 @@ class _RegisterViewState extends State<RegisterView> {
                                         }
                                       },
                                       prefixIcon: Icons.person,
-                                      hintText: AppStrings.lastName,
+                                      hintText: tr(LocaleKeys.lastName),
                                       validFiled: checkValidate["lastName"],
                                     ),
                                     const SizedBox(
@@ -143,14 +145,14 @@ class _RegisterViewState extends State<RegisterView> {
                                       maxLength: 10,
                                       validator: (val) {
                                         if (val!.trim().isEmpty) {
-                                          return AppStrings.fieldNotEmpty;
+                                          return tr(LocaleKeys.fieldNotEmpty);
                                         }
                                         if (!val.toString().isPhoneNumber ||
                                             val.length != 10) {
-                                          return AppStrings.validPhone;
+                                          return tr(LocaleKeys.validPhone);
                                         }
                                         if (!val.startsWith("09")) {
-                                          return AppStrings.phoneStart09;
+                                          return tr(LocaleKeys.phoneStart09);
                                         }
                                         return null;
                                       },
@@ -164,14 +166,14 @@ class _RegisterViewState extends State<RegisterView> {
                                         }
                                       },
                                       prefixIcon: Icons.phone,
-                                      hintText: AppStrings.hintPhone,
+                                      hintText: tr(LocaleKeys.hintPhone),
                                       validFiled: checkValidate["phoneNumber"],
                                     ),
                                     const SizedBox(
                                       height: AppSize.s20,
                                     ),
                                     ButtonApp(
-                                        text: AppStrings.signupText,
+                                        text: tr(LocaleKeys.signupText),
                                         onTap: () async {
                                           Const.LOADIG(context);
                                           var result =await authProvider.checkNumber( phoneNumber.text.replaceFirst("0","+963" ));
@@ -204,7 +206,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          AppStrings.alreadyHaveAccount,
+                                          tr(LocaleKeys.alreadyHaveAccount),
                                           style:
                                           getRegularStyle(color: ColorManager.black),
                                         ),
@@ -219,7 +221,7 @@ class _RegisterViewState extends State<RegisterView> {
                                           child: Container(
                                             padding: const EdgeInsets.all(AppPadding.p8),
                                             child: Text(
-                                              AppStrings.loginText,
+                                              tr(LocaleKeys.loginText),
                                               style: getLightStyle(
                                                   color: ColorManager.lightSecondary,
                                                   fontSize: Sizer.getW(context) * 0.038),
@@ -249,7 +251,7 @@ class _RegisterViewState extends State<RegisterView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              AppStrings.createAccount,
+              tr(LocaleKeys.createAccount),
               style: getBoldStyle(
                   color: ColorManager.white,
                   fontSize: Sizer.getW(context) * 0.07),
@@ -257,7 +259,7 @@ class _RegisterViewState extends State<RegisterView> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
               child: Text(
-                AppStrings.registerWelcomeText,
+                tr(LocaleKeys.registerWelcomeText),
                 textAlign: TextAlign.center,
                 style: getRegularStyle(
                     color: ColorManager.white4,
