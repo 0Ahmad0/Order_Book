@@ -298,8 +298,9 @@ class Reservations{
   String? notes;
 
   factory Reservations.fromJson(Map<String,dynamic> responseData){
+
     return Reservations(
-      name: responseData['name'],
+      name: responseData['vendor']['name'],
       date: responseData['date'],
       id:  responseData['id'],
       status:  responseData['status'],
@@ -333,16 +334,17 @@ class Orders{
     List<Offers> temp=[];
     List<Item> temp1=[];
 
-    for(var item in responseData['offers']){
-
+    for(var item in responseData['offers']["data"]){
       temp.add(Offers.fromJson(item));
     }
-    for(var item in responseData['items']){
+
+    for(var item in responseData['items']["data"]){
 
       temp1.add(Item.fromJson(item));
     }
+
     return Orders(
-      name: responseData['name'],
+      name: responseData['vendor']['name'],
       vendor_id: responseData['vendor_id'],
       id:  responseData['id'],
       status:  responseData['status'],

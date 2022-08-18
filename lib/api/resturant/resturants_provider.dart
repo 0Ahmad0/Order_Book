@@ -231,7 +231,9 @@ class RestaurantsProvider extends ChangeNotifier{
     }
     ).then(onCancelledOrders).catchError(onError2);
   }
-
+int getPrice(int index){
+    return listPendingOrders[index].id!*250;
+}
   Future<Map<String,dynamic>> myOrders(String token) async{
     var res;
     res= await myPendingOrders(token);
@@ -417,9 +419,7 @@ class RestaurantsProvider extends ChangeNotifier{
       for(var element in responseData["data"]){
 
         Reservations reservations =Reservations.fromJson(element);
-
         listPendingReservations.add(reservations);
-
         // idCategories.add(table.id!);
       }
       result ={
@@ -440,7 +440,7 @@ class RestaurantsProvider extends ChangeNotifier{
   Future<Map<String,dynamic>> onRejectedReservations(http.Response response)async{
     var result;
     //listTrendingItems.clear();
-    listPendingReservations=[];
+    listRejectedReservations=[];
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
@@ -453,7 +453,7 @@ class RestaurantsProvider extends ChangeNotifier{
 
         Reservations reservations =Reservations.fromJson(element);
 
-        listPendingReservations.add(reservations);
+        listRejectedReservations.add(reservations);
 
         // idCategories.add(table.id!);
       }
@@ -475,7 +475,7 @@ class RestaurantsProvider extends ChangeNotifier{
   Future<Map<String,dynamic>> onAcceptedReservations(http.Response response)async{
     var result;
     //listTrendingItems.clear();
-    listPendingReservations=[];
+    listAcceptedReservations=[];
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
@@ -488,7 +488,7 @@ class RestaurantsProvider extends ChangeNotifier{
 
         Reservations reservations =Reservations.fromJson(element);
 
-        listPendingReservations.add(reservations);
+        listAcceptedReservations.add(reservations);
 
         // idCategories.add(table.id!);
       }
@@ -510,7 +510,7 @@ class RestaurantsProvider extends ChangeNotifier{
   Future<Map<String,dynamic>> onCancelledReservations(http.Response response)async{
     var result;
     //listTrendingItems.clear();
-    listPendingReservations=[];
+    listCancelledReservations=[];
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
@@ -523,7 +523,7 @@ class RestaurantsProvider extends ChangeNotifier{
 
         Reservations reservations =Reservations.fromJson(element);
 
-        listPendingReservations.add(reservations);
+        listCancelledReservations.add(reservations);
 
         // idCategories.add(table.id!);
       }
@@ -550,7 +550,6 @@ class RestaurantsProvider extends ChangeNotifier{
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
-
     if(response.statusCode==200){
 
       //listTables=[];
@@ -585,7 +584,6 @@ class RestaurantsProvider extends ChangeNotifier{
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
-
     if(response.statusCode==200){
 
       //listTables=[];
@@ -617,10 +615,10 @@ class RestaurantsProvider extends ChangeNotifier{
     var result;
     //listTrendingItems.clear();
     listRejectedOrders=[];
+
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
-
     if(response.statusCode==200){
 
       //listTables=[];
@@ -630,7 +628,6 @@ class RestaurantsProvider extends ChangeNotifier{
         Orders orders =Orders.fromJson(element);
 
         listRejectedOrders.add(orders);
-
         // idCategories.add(table.id!);
       }
       result ={
@@ -652,6 +649,7 @@ class RestaurantsProvider extends ChangeNotifier{
     var result;
     //listTrendingItems.clear();
     listServedOrders=[];
+
     final Map<String,dynamic> responseData= json.decode(response.body);
     print(responseData);
     print("status code ${response.statusCode}");
