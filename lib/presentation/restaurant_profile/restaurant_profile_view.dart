@@ -17,10 +17,10 @@ import 'package:provider/provider.dart';
 
 import '../../api/app_url/app_url.dart';
 import '../../api/auth/auth_provider.dart';
-import '../../api/resturant/resturants_provider.dart';
+
 import '../../translations/local_keys.g.dart';
 import '../map_tables/map_tables_view.dart';
-import '../restaurant_map_scroll/restaurant_map_scroll_view.dart';
+
 import '../utils/const.dart';
 
 
@@ -195,9 +195,12 @@ class _RestaurantProfileViewState extends State<RestaurantProfileView> {
                   text: tr(LocaleKeys.menuRestaurant),
                   onTap: () async {
                     //Const.LOADIG(context);
-                    //var result =await  widget.authProvidere.menuVendor(Advance.token,widget.restaurant.id!);
+                    //print("${AppUrl.addReservations}");
+                   var result =await  widget.authProvidere.menuVendor(Advance.token,widget.restaurant.id!);
+                    //var result =await  widget.authProvidere.addOrder(Advance.token);
                     //Navigator.pop(context);
-                    //Const.TOAST(context,textToast: result["message"]);
+                   // print(result);
+                   // Const.TOAST(context,textToast: result["message"]);
                     Get.to(()=>MenuView(id: widget.restaurant.id!,id_table: -1,authProvider: widget.authProvidere,));
                   },
                 ),
@@ -244,7 +247,7 @@ class _FavoriteSectionState extends State<FavoriteSection> {
           onPressed: () async {
             Const.LOADIG(context);
             Map<String, dynamic> result ={"message":"","status":""};
-            print(widget.isFavorite);
+            print("${widget.isFavorite}");
             if( widget.isFavorite){
 
                 result =await widget.authProvider.deleteFav(Advance.token, widget.id);

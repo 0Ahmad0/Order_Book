@@ -139,27 +139,56 @@ class RestaurantsProvider extends ChangeNotifier{
 
   }
   Future<Map<String,dynamic>> addOrder(String token) async{
-    print( Uri.parse( "${AppUrl.addReservations}"));
-    var request = http.MultipartRequest('POST', Uri.parse("${AppUrl.addReservations}"));
+    print( Uri.parse( "${AppUrl.addOrder}"));
+    /*var request = http.MultipartRequest('POST', Uri.parse("${AppUrl.addReservations}"));
     request.headers.addAll({
       "Accept":"application/json",
       "Authorization": "Bearer $token",
       "language":"en",
-    });
-    Item item=Item(id: 1,quantity: "7",description: "ffff");
-    List<Item> items=[];
+    });*/
+   // Item item=Item(id: 1,quantity: "7",description: "ffff");
+    var mapTemp=Map<String,dynamic>();
+    mapTemp['id']="1";
+    mapTemp['notes']="7";
+    mapTemp['quantity']="sdf";
+    var mapListTemp=Map<String,dynamic>();
+    mapListTemp['temps']=[mapTemp];
+    print(mapListTemp);
+    var mapOffer=Map<String,dynamic>();
+    mapOffer['id']=1;
+    mapOffer['notes']=7;
+    mapOffer['quantity']="sdf";
+    var mapListOffer=Map<String,dynamic>();
+    mapListOffer['offers']=[];
+    print(mapListOffer);
+    var map=Map<String,dynamic>();
+    int id1=1;
+    int id2=2;
+    map['table_id']=1;
+    map['vendor_id']=2;
+    map['items']=[mapTemp];
+    map['offers']=[mapOffer];
+    print(jsonDecode(jsonEncode(map))['items']);
+
+    /*List<Item> items=[];
     items.add(item);
     Offers offer=Offers(id: 1,description: "ffff");
     List<Offers> offers=[];
     offers.add(offer);
     Cart cart=Cart(table_id: 10,vendor_id: 1,offers: offers,items: items);
-    print(cart.toJson());
+    print(cart.toJson());*/
     return await http.post(
-        Uri.parse( "${AppUrl.addReservations}"),
+        Uri.parse( "${AppUrl.addOrder}"),
         headers: {"Accept":"application/json",
           "Authorization": "Bearer $token",
           "language":"en",},
-        body: cart.toJson()).then(onAddorder).catchError(onError2);
+        body: {
+          'table_id':"1",
+          'vendor_id':"2",
+          'items':jsonEncode(map['items']),
+          'offers':jsonEncode(mapListOffer),
+        }//cart.toJson()
+    ).then(onAddorder).catchError(onError2);
   }
   static Future<Map<String,dynamic>> onAddorder(http.Response response)async{
     var result;
