@@ -10,7 +10,6 @@ One of my works is the "ORDER BOOK" application, an application to manage restau
 <div>
 <img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/4.jpg' width="200px">
 <img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-14-15-17-20-977_com.example.orderbook.jpg' width="200px">
-<img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-14-15-17-49-863_com.example.orderbook.jpg' width="200px">
 <img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-17-23-15-15-567_com.example.orderbook.jpg' width="200px">
 <img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-19-00-15-06-644_com.example.orderbook.jpg' width="200px">
 <img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-19-00-15-17-759_com.example.orderbook.jpg' width="200px">
