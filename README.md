@@ -10,11 +10,9 @@ One of my works is the "ORDER BOOK" application, an application to manage restau
 <center>
 <img src='https://github.com/0Ahmad0/Order_Book/blob/master/assets/images/photo_2023-03-27_09-41-06.jpg' width="200px">
 <center/>
-## Screenshots
+## ScreenShots
 <div>
 <img src='https://github.com/0Ahmad0/Order_Book/screenshots/4.jpg' width="200px">
-
-
 </div>
 
 ## Feedback
