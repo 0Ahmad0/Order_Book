@@ -8,12 +8,11 @@ One of my works is the "ORDER BOOK" application, an application to manage restau
 
 ## ScreenShots
 <div>
-https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-14-15-17-20-977_com.example.orderbook.jpg
+<img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-14-15-17-20-977_com.example.orderbook.jpg' width="200px">
 </div>
 
 ## LOGO
-<img src='https://github.com/0Ahmad0/Order_Book/blob/master/assets/images/photo_2023-03-27_09-41-06.jpg' width="200px">
-
+<img src='https://github.com/0Ahmad0/Order_Book/blob/master/screenshots/Screenshot_2022-08-14-15-17-20-977_com.example.orderbook.jpg' width="200px">
 
 ## Feedback
 
